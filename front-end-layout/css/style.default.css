@@ -37,6 +37,7 @@ canvas {
 
 .container-fluid {
   padding: 0 30px;
+
 }
 
 @media (max-width: 575px) {
@@ -96,6 +97,7 @@ table {
 
 .content-inner {
   position: relative;
+  margin-left: 250px;
   width: calc(100% - 250px);
   min-height: calc(100vh - 70px);
   padding-bottom: 60px;
@@ -385,6 +387,9 @@ nav.side-navbar {
   color: #686a76;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  height: 100%;
+  overflow: auto;
   z-index: 9;
   /*==== Sidebar Header ====*/
   /*==== Sidebar Menu ====*/
@@ -2032,11 +2037,20 @@ STYLE SWITCHER FOR DEMO
 }
 
 .navbar-brand {
-  display: inline-block;
+  display: block;
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
   margin-right: 1rem;
   font-size: 1.25rem;
+}
+
+.brand-text {
+  font-weight: 700;
+  font-size: 2.5em;
+  letter-spacing: 1px;
+  padding-left: 1em;
+  color: #fb565e;
+  font-family: "Dosis", sans-serif;
 }
 
 .navbar-toggler {
@@ -2787,7 +2801,7 @@ STYLE SWITCHER FOR DEMO
  * 3. TYPE  
  */
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
