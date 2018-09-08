@@ -57,7 +57,7 @@ canvas {
 }
 
 header.page-header {
-  padding: 20px 0;
+  padding: 5px 0;
 }
 
 table {
@@ -689,36 +689,38 @@ nav.navbar .container-fluid {
   width: 100%;
 }
 
-nav.navbar .menu-btn {
+/* --- hide/show left menu button styles --- */
+
+header.page-header .menu-btn {
   margin-right: 20px;
   font-size: 1.2em;
   -webkit-transition: all 0.7s;
   transition: all 0.7s;
 }
 
-nav.navbar .menu-btn span {
+header.page-header .menu-btn span {
   width: 20px;
   height: 2px;
-  background: #fff;
+  background: #2f333e;
   display: block;
   margin: 4px auto 0;
   -webkit-transition: all 0.3s cubic-bezier(0.81, -0.33, 0.345, 1.375);
   transition: all 0.3s cubic-bezier(0.81, -0.33, 0.345, 1.375);
 }
 
-nav.navbar .menu-btn span:nth-of-type(2) {
+header.page-header .menu-btn span:nth-of-type(2) {
   position: relative;
   width: 35px;
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
 }
 
-nav.navbar .menu-btn span:nth-of-type(2)::before, nav.navbar .menu-btn span:nth-of-type(2)::after {
+header.page-header .menu-btn span:nth-of-type(2)::before, header.page-header .menu-btn span:nth-of-type(2)::after {
   content: '';
   width: 6px;
   height: 2px;
   display: block;
-  background: #fff;
+  background: #2f333e;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
   position: absolute;
@@ -728,7 +730,7 @@ nav.navbar .menu-btn span:nth-of-type(2)::before, nav.navbar .menu-btn span:nth-
   transition: all 0.7s;
 }
 
-nav.navbar .menu-btn span:nth-of-type(2)::after {
+header.page-header .menu-btn span:nth-of-type(2)::after {
   -webkit-transform: rotate(145deg);
   transform: rotate(145deg);
   position: absolute;
@@ -736,20 +738,21 @@ nav.navbar .menu-btn span:nth-of-type(2)::after {
   left: 0;
 }
 
-nav.navbar .menu-btn.active span:first-of-type {
+header.page-header .menu-btn.active span:first-of-type {
   -webkit-transform: translateY(12px);
   transform: translateY(12px);
 }
 
-nav.navbar .menu-btn.active span:nth-of-type(2) {
+header.page-header .menu-btn.active span:nth-of-type(2) {
   -webkit-transform: none;
   transform: none;
 }
 
-nav.navbar .menu-btn.active span:last-of-type {
+header.page-header .menu-btn.active span:last-of-type {
   -webkit-transform: translateY(-12px);
   transform: translateY(-12px);
 }
+/* end of toggle button */
 
 nav.navbar .nav-link {
   position: relative;
@@ -1244,12 +1247,14 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 .client .client-title h3 {
   font-weight: 500;
   color: #555;
+  display: inline-block;
 }
 
 .client .client-title span {
-  font-size: 0.9em;
-  color: #aaa;
-  display: block;
+  font-weight: 500;
+  color: #555;
+  margin-left: 7px;
+  display: inline-block;
 }
 
 .client .client-title a {
@@ -1280,6 +1285,25 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 
 .client .client-social a {
   color: #aaa;
+}
+
+/*.w3-content {
+  max-width:800px;
+}*/
+
+.mySlides {
+  display:none;
+  width: 100%;
+}
+
+.w3-left, .w3-right, .w3-badge {
+  cursor:pointer;
+}
+
+.w3-badge {
+  height:13px;
+  width:13px;
+  padding:0;
 }
 
 /*====== Total Overdue Box ======*/
@@ -2043,11 +2067,20 @@ STYLE SWITCHER FOR DEMO
 }
 
 .navbar-brand {
-  display: inline-block;
+  display: block;
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
-  margin-right: 1rem;
+  margin-right: 0rem;
   font-size: 1.25rem;
+}
+
+.brand-text {
+  font-weight: 700;
+  font-size: 2.5em;
+  letter-spacing: 1px;
+  text-align: center;
+  color: #fb565e;
+  font-family: "Dosis", sans-serif;
 }
 
 .navbar-toggler {
@@ -2798,7 +2831,7 @@ STYLE SWITCHER FOR DEMO
  * 3. TYPE  
  */
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -3339,6 +3372,10 @@ a > code {
   border: 0 solid #eee;
   border-radius: 0;
 }
+
+/*.client.card {
+  margin-top: 3em;
+}*/
 
 .card > .list-group:first-child .list-group-item:first-child {
   border-top-left-radius: 0;

@@ -174,3 +174,10 @@ $(document).ready(function () {
     });
 
 });
+
+// ------------------------------------------------------ //
+// Prevent user img carusel to change slides
+// ------------------------------------------------------ //
+$('.carousel').carousel({
+  interval: 0
+});
