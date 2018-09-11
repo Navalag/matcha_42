@@ -158,10 +158,10 @@
 					    	    <div class="card-body">
 					    	    	<div class="row">
 					    	    		<div class="col-sm-6">
-					    	    			<div class="wrap-custom-file">
+					    	    			<div class="wrap-custom-file main-image">
 				    	    			    <input type="file" name="image1" id="image1" accept=".gif, .jpg, .png" />
 				    	    			    <label  for="image1">
-				    	    			      <span>Select Image One</span>
+				    	    			      <span>Select Main Image</span>
 				    	    			      <i class="fa fa-plus-circle"></i>
 				    	    			    </label>
 				    	    			  </div>
@@ -208,7 +208,7 @@
 					    	    		</div>
 					    	    	</div>
 					    	    </div>
-					    	    <div class="card-body">
+					    	    <!-- <div class="card-body">
 				    	    		<div class="row">
 				    	    		  <div class="col-sm-2 photo-preview">
 				    	    		    <img class="demo" src="img/json.png" onclick="currentDiv(1)">
@@ -225,42 +225,59 @@
 				    	    		  <div class="col-sm-2 photo-preview">
 				    	    		    <img class="demo" src="img/jay.png" onclick="currentDiv(5)">
 				    	    		  </div>
-				    	    		  <div class="col-sm-2 photo-preview demo text-center">
+				    	    		  <div class="col-sm-2 photo-preview demo text-center"> -->
 				    	    		  	<!-- <form id="imageUploadForm" class="imageUploadForm">
 			    	    		  	    <span class="helpText" id="helpText"></span>
 			    	    		  	    <input type='file' id="file" class="uploadButton" accept="image/*" />
 			    	    		  	  </form> -->
 				    	    		    <!-- <a href="#"><i class="fas fa-plus"></i></a> -->
-				    	    		  </div>
+				    	    		  <!-- </div>
 				    	    		</div>
 				    	    	  <img class="mySlides" src="img/json.png">
 				    	    	  <img class="mySlides" src="img/ecma.png">
 				    	    	  <img class="mySlides" src="img/jay.png">
 				    	    	  <img class="mySlides" src="img/jay.png">
 				    	    	  <img class="mySlides" src="img/jay.png">
-					    	    </div>
+					    	    </div> -->
 					    	    <div class="card-body">
 					    	      <!-- <p>Lorem ipsum dolor sit amet consectetur.</p> -->
 					    	      <form>
     	      		      	<div class="form-group">
-    	      	      	    <label class="form-control-label">Bio</label>
-    	      	      	    <textarea class="form-control" rows="4"></textarea>
+    	      	      	    <label class="form-control-label">About me:</label>
+    	      	      	    <textarea class="form-control" rows="4" maxlength="250"></textarea>
+    	      	      	    <small><span id="remain">0</span>/250</small>
     	      	      	  </div>
-    	      	      	  <p class="mt-5">What are you passioned about?</p>
     	      	      	  <div class="form-group">
-    	      	      	    <label class="form-control-label">Choose your interests:</label>
-  	      	      	      <select multiple="" class="form-control">
-  	      	      	        <option>option 1</option>
-  	      	      	        <option>option 2</option>
-  	      	      	        <option>option 3</option>
-  	      	      	        <option>option 4</option>
-  	      	      	        <option>option 5</option>
-  	      	      	        <option>option 6</option>
-  	      	      	        <option>option 7</option>
-  	      	      	        <option>option 8</option>
+					    	          <label class="form-control-label">User Name</label>
+					    	          <input type="text" class="form-control" value="codeGuy" maxlength="100">
+					    	        </div>
+					    	        <div class="form-group">
+					    	          <label class="form-control-label">First Name</label>
+					    	          <input type="text" class="form-control" value="Andrew" maxlength="100">
+					    	        </div>
+					    	        <div class="form-group">
+					    	          <label class="form-control-label">Last Name</label>
+					    	          <input type="text" class="form-control" value="Galavan" maxlength="100">
+					    	        </div>
+    	      	      	  <p class="mt-5 bright-heading">What are you passioned about?</p>
+    	      	      	  <div class="form-group">
+    	      	      	    <!-- <label class="form-control-label">Choose your interests:</label> -->
+  	      	      	      <select multiple="" class="form-control" data-placeholder="Add interests">
+  	      	      	        <option>photo</option>
+  	      	      	        <option>yoga</option>
+  	      	      	        <option>films</option>
+  	      	      	        <option>rock</option>
+  	      	      	        <option>pop</option>
+  	      	      	        <option>veg</option>
+  	      	      	        <option>steaks</option>
+  	      	      	        <option>music</option>
+  	      	      	        <option>gum</option>
+  	      	      	        <option>workout</option>
+  	      	      	        <option>make up</option>
+  	      	      	        <option>fun</option>
   	      	      	      </select>
     	      	      	  </div>
-    	      	      	  <p class="mt-5">Share your social media links</p>
+    	      	      	  <p class="mt-5 bright-heading">Share your social media links</p>
 					    	        <div class="form-group">
 					    	          <label class="form-control-label">Instagram</label>
 					    	          <input type="text" class="form-control">
@@ -310,12 +327,12 @@
 		  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 		  crossorigin="anonymous"></script> -->
 		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/popper.js/umd/popper.min.js"> </script>
+		<!-- <script src="vendor/popper.js/umd/popper.min.js"> </script> -->
 		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-		<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
-		<script src="vendor/chart.js/Chart.min.js"></script>
+		<!-- <script src="vendor/jquery.cookie/jquery.cookie.js"> </script> -->
+		<!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
 		<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
-		<script src="js/charts-home.js"></script>
+		<!-- <script src="js/charts-home.js"></script> -->
 		<!-- Main File-->
 		<script src="js/front.js"></script>
 	</body>

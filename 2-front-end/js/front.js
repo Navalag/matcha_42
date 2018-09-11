@@ -147,31 +147,31 @@ $(document).ready(function () {
 	// For demo purposes, can be deleted
 	// ------------------------------------------------------ //
 
-	var stylesheet = $('link#theme-stylesheet');
-	$("<link id='new-stylesheet' rel='stylesheet'>").insertAfter(stylesheet);
-	var alternateColour = $('link#new-stylesheet');
+	// var stylesheet = $('link#theme-stylesheet');
+	// $("<link id='new-stylesheet' rel='stylesheet'>").insertAfter(stylesheet);
+	// var alternateColour = $('link#new-stylesheet');
 
-	if ($.cookie("theme_csspath")) {
-		alternateColour.attr("href", $.cookie("theme_csspath"));
-	}
+	// if ($.cookie("theme_csspath")) {
+	// 	alternateColour.attr("href", $.cookie("theme_csspath"));
+	// }
 
-	$("#colour").change(function () {
+	// $("#colour").change(function () {
 
-		if ($(this).val() !== '') {
+	// 	if ($(this).val() !== '') {
 
-			var theme_csspath = 'css/style.' + $(this).val() + '.css';
+	// 		var theme_csspath = 'css/style.' + $(this).val() + '.css';
 
-			alternateColour.attr("href", theme_csspath);
+	// 		alternateColour.attr("href", theme_csspath);
 
-			$.cookie("theme_csspath", theme_csspath, {
-				expires: 365,
-				path: document.URL.substr(0, document.URL.lastIndexOf('/'))
-			});
+	// 		$.cookie("theme_csspath", theme_csspath, {
+	// 			expires: 365,
+	// 			path: document.URL.substr(0, document.URL.lastIndexOf('/'))
+	// 		});
 
-		}
+	// 	}
 
-		return false;
-	});
+	// 	return false;
+	// });
 
 
 
@@ -188,90 +188,86 @@ $('.carousel').carousel({
 // Upload Photo
 // ------------------------------------------------------ //
 // vars
-let result = document.querySelector('.result'),
-img_result = document.querySelector('.img-result'),
-img_w = document.querySelector('.img-w'),
-img_h = document.querySelector('.img-h'),
-options = document.querySelector('.options'),
-save = document.querySelector('.save'),
-cropped = document.querySelector('.cropped'),
-dwn = document.querySelector('.download'),
-upload = document.querySelector('#file-input'),
-cropper = '';
+// let result = document.querySelector('.result'),
+// img_result = document.querySelector('.img-result'),
+// img_w = document.querySelector('.img-w'),
+// img_h = document.querySelector('.img-h'),
+// options = document.querySelector('.options'),
+// save = document.querySelector('.save'),
+// cropped = document.querySelector('.cropped'),
+// dwn = document.querySelector('.download'),
+// upload = document.querySelector('#file-input'),
+// cropper = '';
 
-// on change show image with crop options
-upload.addEventListener('change', (e) => {
-  if (e.target.files.length) {
-		// start file reader
-	const reader = new FileReader();
-	reader.onload = (e)=> {
-	  if(e.target.result){
-				// create new image
-				let img = document.createElement('img');
-				img.id = 'image';
-				img.src = e.target.result
-				// clean result before
-				result.innerHTML = '';
-				// append new image
-				result.appendChild(img);
-				// show save btn and options
-				save.classList.remove('hide');
-				options.classList.remove('hide');
-				// init cropper
-				cropper = new Cropper(img);
-	  }
-	};
-	reader.readAsDataURL(e.target.files[0]);
-  }
-});
+// // on change show image with crop options
+// upload.addEventListener('change', (e) => {
+//   if (e.target.files.length) {
+// 		// start file reader
+// 	const reader = new FileReader();
+// 	reader.onload = (e)=> {
+// 	  if(e.target.result){
+// 				// create new image
+// 				let img = document.createElement('img');
+// 				img.id = 'image';
+// 				img.src = e.target.result
+// 				// clean result before
+// 				result.innerHTML = '';
+// 				// append new image
+// 				result.appendChild(img);
+// 				// show save btn and options
+// 				save.classList.remove('hide');
+// 				options.classList.remove('hide');
+// 				// init cropper
+// 				cropper = new Cropper(img);
+// 	  }
+// 	};
+// 	reader.readAsDataURL(e.target.files[0]);
+//   }
+// });
 
-// save on click
-save.addEventListener('click',(e)=>{
-  e.preventDefault();
-  // get result to data uri
-  let imgSrc = cropper.getCroppedCanvas({
-		width: img_w.value // input value
-	}).toDataURL();
-  // remove hide class of img
-  cropped.classList.remove('hide');
-	img_result.classList.remove('hide');
-	// show image cropped
-  cropped.src = imgSrc;
-  dwn.classList.remove('hide');
-  dwn.download = 'imagename.png';
-  dwn.setAttribute('href',imgSrc);
-});
+// // save on click
+// save.addEventListener('click',(e)=>{
+//   e.preventDefault();
+//   // get result to data uri
+//   let imgSrc = cropper.getCroppedCanvas({
+// 		width: img_w.value // input value
+// 	}).toDataURL();
+//   // remove hide class of img
+//   cropped.classList.remove('hide');
+// 	img_result.classList.remove('hide');
+// 	// show image cropped
+//   cropped.src = imgSrc;
+//   dwn.classList.remove('hide');
+//   dwn.download = 'imagename.png';
+//   dwn.setAttribute('href',imgSrc);
+// });
 
 
 // ------------------------------------------------------ //
 // Edit profile photo preview
 // ------------------------------------------------------ //
-var slideIndex = 1;
-showDivs(slideIndex);
+// var slideIndex = 1;
+// showDivs(slideIndex);
 
-// function plusDivs(n) {
-//   showDivs(slideIndex += n);
+// function currentDiv(n) {
+//   showDivs(slideIndex = n);
 // }
 
-function currentDiv(n) {
-  showDivs(slideIndex = n);
-}
-
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("demo");
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length}
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].setAttribute("style", "opacity: .6;");
-  }
-  x[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].setAttribute("style", "opacity: 1;");
-}
+// function showDivs(n) {
+//   var i;
+//   var x = document.getElementsByClassName("mySlides");
+//   var dots = document.getElementsByClassName("demo");
+//   if (n > x.length) {slideIndex = 1}
+//   if (n < 1) {slideIndex = x.length}
+//   for (i = 0; i < x.length; i++) {
+//     x[i].style.display = "none";
+//   }
+//   for (i = 0; i < dots.length; i++) {
+//     dots[i].setAttribute("style", "opacity: .6;");
+//   }
+//   x[slideIndex-1].style.display = "block";
+//   dots[slideIndex-1].setAttribute("style", "opacity: 1;");
+// }
 
 // ------------------------------------------------------ //
 // CUSTOM FILE INPUTS FOR IMAGES
@@ -279,14 +275,13 @@ function showDivs(n) {
 // image file name on selection.
 // ------------------------------------------------------ //
 
-$(document).load(function() {
+$(document).ready(function() {
 	$('input[type="file"]').each(function(){
 	  // Refs
 	  var $file = $(this),
 	      $label = $file.next('label'),
 	      $labelText = $label.find('span'),
 	      labelDefault = $labelText.text();
-	  console.log("check");
 	  // When a new file is selected
 	  $file.on('change', function(event){
 	    var fileName = $file.val().split( '\\' ).pop(),
@@ -308,9 +303,118 @@ $(document).load(function() {
 	// End ready function
 });
 
+// ------------------------------------------------------ //
+// Control char amount in textarea
+// ------------------------------------------------------ //
+var textlimit = 250;
 
+$('textarea.form-control').keyup(function() {
+  var tlength = $(this).val().length;
+  $(this).val($(this).val().substring(0,textlimit));
+  var tlength = $(this).val().length;
+  remain = parseInt(tlength);
+  $('#remain').text(remain);
+});
 
+// ------------------------------------------------------ //
+// Select interests on edit profile
+// ------------------------------------------------------ //
 
+$(document).ready(function() {
+
+    var select = $('select[multiple]');
+    var options = select.find('option');
+
+    var div = $('<div />').addClass('selectMultiple');
+    var active = $('<div />');
+    var list = $('<ul />');
+    var placeholder = select.data('placeholder');
+
+    var span = $('<span />').text(placeholder).appendTo(active);
+
+    options.each(function() {
+        var text = $(this).text();
+        if($(this).is(':selected')) {
+            active.append($('<a />').html('<em>' + text + '</em><i></i>'));
+            span.addClass('hide');
+        } else {
+            list.append($('<li />').html(text));
+        }
+    });
+
+    active.append($('<div />').addClass('arrow'));
+    div.append(active).append(list);
+
+    select.wrap(div);
+
+    $(document).on('click', '.selectMultiple ul li', function(e) {
+        var select = $(this).parent().parent();
+        var li = $(this);
+        li.prev().addClass('beforeRemove');
+        li.next().addClass('afterRemove');
+        li.addClass('remove');
+        var a = $('<a />').addClass('notShown').html('<em>' + li.text() + '</em><i></i>').hide().appendTo(select.children('div'));
+        a.slideDown(400, function() {
+            setTimeout(function() {
+                a.addClass('shown');
+                select.children('div').children('span').addClass('hide');
+                select.find('option:contains(' + li.text() + ')').prop('selected', true);
+            }, 500);
+        });
+        setTimeout(function() {
+            if(li.prev().is(':last-child')) {
+                li.prev().removeClass('beforeRemove');
+            }
+            if(li.next().is(':first-child')) {
+                li.next().removeClass('afterRemove');
+            }
+            setTimeout(function() {
+                li.prev().removeClass('beforeRemove');
+                li.next().removeClass('afterRemove');
+            }, 200);
+
+            li.slideUp(400, function() {
+                li.remove();
+            });
+        }, 600);
+    });
+
+    $(document).on('click', '.selectMultiple > div a', function(e) {
+        var select = $(this).parent().parent();
+        var self = $(this);
+        self.removeClass().addClass('remove');
+        select.addClass('open');
+        setTimeout(function() {
+            self.addClass('disappear');
+            setTimeout(function() {
+                self.animate({
+                    width: 0,
+                    height: 0,
+                    padding: 0,
+                    margin: 0
+                }, 300, function() {
+                    var li = $('<li />').text(self.children('em').text()).addClass('notShown').appendTo(select.find('ul'));
+                    li.slideDown(400, function() {
+                        li.addClass('show');
+                        setTimeout(function() {
+                            select.find('option:contains(' + self.children('em').text() + ')').prop('selected', false);
+                            if(!select.find('option:selected').length) {
+                                select.children('div').children('span').removeClass('hide');
+                            }
+                            li.removeClass();
+                        }, 400);
+                    });
+                    self.remove();
+                })
+            }, 300);
+        }, 400);
+    });
+
+    $(document).on('click', '.selectMultiple > div .arrow, .selectMultiple > div span', function(e) {
+        $(this).parent().parent().toggleClass('open');
+    });
+
+});
 
 
 
