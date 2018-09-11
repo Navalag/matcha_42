@@ -272,3 +272,63 @@ function showDivs(n) {
   x[slideIndex-1].style.display = "block";
   dots[slideIndex-1].setAttribute("style", "opacity: 1;");
 }
+
+// ------------------------------------------------------ //
+// CUSTOM FILE INPUTS FOR IMAGES
+// Custom file inputs with image preview and 
+// image file name on selection.
+// ------------------------------------------------------ //
+
+$(document).load(function() {
+	$('input[type="file"]').each(function(){
+	  // Refs
+	  var $file = $(this),
+	      $label = $file.next('label'),
+	      $labelText = $label.find('span'),
+	      labelDefault = $labelText.text();
+	  console.log("check");
+	  // When a new file is selected
+	  $file.on('change', function(event){
+	    var fileName = $file.val().split( '\\' ).pop(),
+	        tmppath = URL.createObjectURL(event.target.files[0]);
+	    //Check successfully selection
+			if( fileName ){
+	      $label
+	        .addClass('file-ok')
+	        .css('background-image', 'url(' + tmppath + ')');
+				$labelText.text(fileName);
+	    }else{
+	      $label.removeClass('file-ok');
+				$labelText.text(labelDefault);
+	    }
+	  });
+	  
+	// End loop of file input elements  
+	});
+	// End ready function
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
