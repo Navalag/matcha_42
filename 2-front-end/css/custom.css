@@ -219,7 +219,7 @@ body {
 .wrap-custom-file {
   position: relative;
   display: inline-block;
-  width: 150px;
+  width: 90%;
   height: 150px;
   /*margin: 0 0.5rem 1rem;*/
   text-align: center;
