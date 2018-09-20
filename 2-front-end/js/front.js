@@ -25,7 +25,7 @@ $(document).ready(function () {
 	// Tooltips init
 	// ------------------------------------------------------ //    
 
-	$('[data-toggle="tooltip"]').tooltip()    
+	// $('[data-toggle="tooltip"]').tooltip(); 
 
 
 	// ------------------------------------------------------- //
@@ -88,7 +88,7 @@ $(document).ready(function () {
 			}
 		});
 
-	});    
+	});
 
 	// ------------------------------------------------------- //
 	// Material Inputs
@@ -180,9 +180,9 @@ $(document).ready(function () {
 // ------------------------------------------------------ //
 // Prevent user img carusel to change slides
 // ------------------------------------------------------ //
-$('.carousel').carousel({
-  interval: 0
-});
+// $('.carousel').carousel({
+// 	interval: 0
+// });
 
 // ------------------------------------------------------ //
 // Upload Photo
@@ -277,27 +277,27 @@ $('.carousel').carousel({
 
 $(document).ready(function() {
 	$('input[type="file"]').each(function(){
-	  // Refs
-	  var $file = $(this),
-		  $label = $file.next('label'),
-		  $labelText = $label.find('span'),
-		  labelDefault = $labelText.text();
-	  // When a new file is selected
-	  $file.on('change', function(event){
+		// Refs
+		var $file = $(this),
+			$label = $file.next('label'),
+			$labelText = $label.find('span'),
+			labelDefault = $labelText.text();
+		// When a new file is selected
+		$file.on('change', function(event){
 		var fileName = $file.val().split( '\\' ).pop(),
 			tmppath = URL.createObjectURL(event.target.files[0]);
 		//Check successfully selection
 			if( fileName ){
-		  $label
+			$label
 			.addClass('file-ok')
 			.css('background-image', 'url(' + tmppath + ')');
 				$labelText.text(fileName);
 		}else{
-		  $label.removeClass('file-ok');
+			$label.removeClass('file-ok');
 				$labelText.text(labelDefault);
 		}
-	  });
-	  
+		});
+		
 	// End loop of file input elements  
 	});
 	// End ready function
@@ -309,11 +309,11 @@ $(document).ready(function() {
 var textlimit = 250;
 
 $('textarea.form-control').keyup(function() {
-  var tlength = $(this).val().length;
-  $(this).val($(this).val().substring(0,textlimit));
-  var tlength = $(this).val().length;
-  remain = parseInt(tlength);
-  $('#remain').text(remain);
+	var tlength = $(this).val().length;
+	$(this).val($(this).val().substring(0,textlimit));
+	var tlength = $(this).val().length;
+	remain = parseInt(tlength);
+	$('#remain').text(remain);
 });
 
 // ------------------------------------------------------ //
@@ -420,13 +420,171 @@ $(document).ready(function() {
 
 });
 
+// ------------------------------------------------------ //
+// Show input[range] slider value on page
+// ------------------------------------------------------ //
 
+var slider = document.getElementById("rangeMaxDistance");
+var output = document.querySelector(".slidecontainer span");
+output.innerHTML = slider.value  + " km"; // Display the default slider value
 
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+	output.innerHTML = this.value + " km";
+}
 
+// ------------------------------------------------------ //
+// Input range multiple value for age gap
+// ------------------------------------------------------ //
 
+// $(document).ready(function() {
 
+//   var parent = document.querySelector("#age-gap");
+//   if(!parent) return;
 
+//   var
+//     rangeS = parent.querySelectorAll("input[type=range].age"),
+//     numberS = parent.querySelectorAll("input[type=number].age");
 
+//   rangeS.forEach(function(el) {
+//     el.oninput = function() {
+//       var slide1 = parseFloat(rangeS[0].value),
+//         	slide2 = parseFloat(rangeS[1].value);
+
+//       if (slide1 > slide2) {
+// 				[slide1, slide2] = [slide2, slide1];
+//         // var tmp = slide2;
+//         // slide2 = slide1;
+//         // slide1 = tmp;
+//       }
+
+//       numberS[0].value = slide1;
+//       numberS[1].value = slide2;
+//     }
+//   });
+
+//   numberS.forEach(function(el) {
+//     el.oninput = function() {
+// 			var number1 = parseFloat(numberS[0].value),
+// 					number2 = parseFloat(numberS[1].value);
+			
+//       if (number1 > number2) {
+//         var tmp = number1;
+//         numberS[0].value = number2;
+//         numberS[1].value = tmp;
+//       }
+
+//       rangeS[0].value = number1;
+//       rangeS[1].value = number2;
+
+//     }
+//   });
+
+// });
+
+// ------------------------------------------------------ //
+// Input range multiple value for rating gap
+// ------------------------------------------------------ //
+
+// $(document).ready(function() {
+
+//   var parent = document.querySelector("#rating-gap");
+//   if(!parent) return;
+
+//   var
+//     rangeS = parent.querySelectorAll("input[type=range].rating"),
+//     numberS = parent.querySelectorAll("input[type=number].rating");
+
+//   rangeS.forEach(function(el) {
+//     el.oninput = function() {
+//       var slide1 = parseFloat(rangeS[0].value),
+//         	slide2 = parseFloat(rangeS[1].value);
+
+//       if (slide1 > slide2) {
+// 				[slide1, slide2] = [slide2, slide1];
+//         // var tmp = slide2;
+//         // slide2 = slide1;
+//         // slide1 = tmp;
+//       }
+
+//       numberS[0].value = slide1;
+//       numberS[1].value = slide2;
+//     }
+//   });
+
+//   numberS.forEach(function(el) {
+//     el.oninput = function() {
+// 			var number1 = parseFloat(numberS[0].value),
+// 					number2 = parseFloat(numberS[1].value);
+			
+//       if (number1 > number2) {
+//         var tmp = number1;
+//         numberS[0].value = number2;
+//         numberS[1].value = tmp;
+//       }
+
+//       rangeS[0].value = number1;
+//       rangeS[1].value = number2;
+
+//     }
+//   });
+
+// });
+
+// Initialize slider-1:
+$(document).ready(function() {
+	$('.noUi-handle').on('click', function() {
+		$(this).width(50);
+	});
+	var rangeSlider = document.getElementById('slider-range');
+	// var moneyFormat = wNumb({
+	// 	decimals: 0,
+	// 	thousand: ',',
+	// 	prefix: '$'
+	// });
+	noUiSlider.create(rangeSlider, {
+		start: [18, 33],
+		// step: 1,
+		range: {
+			'min': [18],
+			'max': [55]
+		},
+		// format: moneyFormat,
+		connect: true
+	});
+	
+	// Set visual min and max values and also update value hidden form inputs
+	rangeSlider.noUiSlider.on('update', function(values, handle) {
+		document.getElementById('slider-range-value1').innerHTML = values[0];
+		document.getElementById('slider-range-value2').innerHTML = values[1];
+		document.getElementsByName('min-value').value = values[0];
+		document.getElementsByName('max-value').value = values[1];
+	});
+});
+
+// Initialize slider-2:
+// $(document).ready(function() {
+// 	$('.noUi-handle').on('click', function() {
+// 		$(this).width(50);
+// 	});
+// 	var rangeSlider2 = document.getElementById('slider-range-2');
+// 	noUiSlider.create(rangeSlider2, {
+// 		start: [50],
+// 		// step: 1,
+// 		range: {
+// 			'min': [0],
+// 			'max': [100]
+// 		},
+// 		// format: moneyFormat,
+// 		connect: true
+// 	});
+	
+// 	// Set visual min and max values and also update value hidden form inputs
+// 	rangeSlider2.noUiSlider.on('update', function(values, handle) {
+// 		document.getElementById('slider-distanse').innerHTML = values[0];
+// 		document.getElementsByName('max-distanse').value = values[0];
+// 	});
+// });
 
 
 
