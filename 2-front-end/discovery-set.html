@@ -17,6 +17,8 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
 		<link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
 		<link href="https://fonts.googleapis.com/css?family=Dosis:400,500,600,700" rel="stylesheet">
+		<!-- noUIslider styles -->
+		<link rel="stylesheet" href="vendor/noUiSlider-12.0.0/distribute/nouislider.min.css">
 		<!-- theme stylesheet-->
 		<link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
 		<!-- Custom stylesheet - for your changes-->
@@ -133,113 +135,120 @@
 										</div>
 
 										<div class="card-body">
-											<form class="form-horizontal">
-												<div class="form-group row mt-3">
-													<div class="slidecontainer">
-													  <label for="rangeMaxDistance">Maximum Distance</label>
-													  <span></span>
-													  <input type="range" min="1" max="100" value="50" class="form-control-range slider" id="rangeMaxDistance">
+											<form class="form-horizontal mt-4">
+
+												<div class="form-group row">
+													<div class="container">
+														<div class="row">
+													    <div class="col-sm-12">
+													    	<label class="mb-4">Maximum distance</label>
+													      <div id="slider-distance"></div>
+													    </div>
+													  </div>
+													  <div class="row slider-labels">
+													    <div class="col-sm-6 mt-2">
+													      <span id="value-distanse"></span> km
+													    </div>
+													  </div>
+													  <div class="row">
+													    <div class="col-sm-12">
+													      <input type="hidden" name="max-distanse" value="">
+													    </div>
+													  </div>
+													</div>
+												</div>
+
+												<!-- <div class="line"></div> -->
+
+												<div class="form-group row">
+													<div class="container">
+														<div class="row">
+													    <div class="col-sm-12">
+													    	<label class="mb-4">Age Range</label>
+													      <div id="slider-age-gap"></div>
+													    </div>
+													  </div>
+													  <div class="row slider-labels">
+													    <div class="col-sm-6 mt-3">
+													      <span id="value-age-min"></span>
+													    </div>
+													    <div class="col-sm-6 text-right mt-3">
+													      <span id="value-age-max"></span>
+													    </div>
+													  </div>
+													  <div class="row">
+													    <div class="col-sm-12">
+												        <input type="hidden" name="min-age" value="">
+												        <input type="hidden" name="max-age" value="">
+													    </div>
+													  </div>
+													</div>
+												</div>
+
+												<!-- <div class="line"></div> -->
+
+												<div class="form-group row">
+													<div class="container">
+														<div class="row">
+													    <div class="col-sm-12">
+													    	<label class="mb-4">Fame Rating Range</label>
+													      <div id="slider-rating-gap"></div>
+													    </div>
+													  </div>
+													  <div class="row slider-labels">
+													    <div class="col-sm-6 mt-3">
+													      <span id="value-rating-min"></span>
+													    </div>
+													    <div class="col-sm-6 text-right mt-3">
+													      <span id="value-rating-max"></span>
+													    </div>
+													  </div>
+													  <div class="row">
+													    <div class="col-sm-12">
+												        <input type="hidden" name="min-rating" value="">
+												        <input type="hidden" name="max-rating" value="">
+													    </div>
+													  </div>
 													</div>
 												</div>
 
 												<div class="line"></div>
 
 												<div class="form-group row">
-												  <label class="col-sm-3 form-control-label">Looking for:</label>
-												  <div class="col-sm-9">
+													<div class="container">
+														<label class="mb-4">Looking for:</label>
 												    <select name="account" class="form-control mb-3">
 												      <option>man</option>
 												      <option>woman</option>
 												      <option>man and woman</option>
 												    </select>
-												  </div>
-												</div>
-
-												<!-- <div class="line"></div>
-
-												<div class="form-group row range-slider" id="age-gap">
-													<div class="slidecontainer">
-														<label>Age gap:</label>
-														<span>
-												    	<input class="age" type="number" value="18" min="18" max="99"/> - 
-												    	<input class="age" type="number" value="30" min="18" max="99"/>
-												  	</span>
-												  	<input class="age" value="18" min="18" max="55" type="range"/>
-										  			<input class="age" value="30" min="18" max="55" type="range"/>
 													</div>
 												</div>
+												<!-- <div class="line"></div> -->
 
-												<div class="line"></div>
-
-												<div class="form-group row range-slider" id="rating-gap">
-													<div class="slidecontainer">
-														<label>Fame rating:</label>
-														<span>
-												    	<input class="rating" type="number" value="18" min="0" max="99"/> - 
-												    	<input class="rating" type="number" value="30" min="0" max="99"/>
-												  	</span>
-												  	<input class="rating" value="0" min="0" max="100" step="5" type="range"/>
-										  			<input class="rating" value="50" min="0" max="100" step="5" type="range"/>
-													</div>
-												</div> -->
+												<div class="form-group">
+    	      	      	    <label class="mb-4">Filter By Interests:</label>
+  	      	      	      <select multiple="" class="form-control" data-placeholder="Add interests">
+  	      	      	        <option selected>photo</option>
+  	      	      	        <option selected>yoga</option>
+  	      	      	        <option selected>films</option>
+  	      	      	        <option>rock</option>
+  	      	      	        <option>pop</option>
+  	      	      	        <option>veg</option>
+  	      	      	        <option>steaks</option>
+  	      	      	        <option>music</option>
+  	      	      	        <option>gum</option>
+  	      	      	        <option>workout</option>
+  	      	      	        <option>make up</option>
+  	      	      	        <option>fun</option>
+  	      	      	      </select>
+    	      	      	  </div>
 
 												<div class="line"></div>
 
 												<div class="form-group row">
-													<div class="container">
-														<div class="row">
-													    <div class="col-sm-12">
-													      <div id="slider-range"></div>
-													    </div>
-													  </div>
-													  <div class="row slider-labels">
-													    <div class="col-sm-6 caption">
-													      <span id="slider-range-value1"></span>
-													    </div>
-													    <div class="col-sm-6 text-right caption">
-													      <span id="slider-range-value2"></span>
-													    </div>
-													  </div>
-													  <div class="row">
-													    <div class="col-sm-12">
-													      <!-- <form> -->
-													        <input type="hidden" name="min-value" value="">
-													        <input type="hidden" name="max-value" value="">
-													      <!-- </form> -->
-													    </div>
-													  </div>
-													</div>
-												</div>
-
-												<div class="line"></div>
-
-												<div class="form-group row">
-													<div class="container">
-														<div class="row">
-													    <div class="col-sm-12">
-													      <div id="slider-range-2"></div>
-													    </div>
-													  </div>
-													  <div class="row slider-labels">
-													    <div class="col-sm-6 caption">
-													      <span id="slider-distanse"></span>
-													    </div>
-													  </div>
-													  <div class="row">
-													    <div class="col-sm-12">
-													      <!-- <form> -->
-													      <input type="hidden" name="max-distanse" value="">
-													      <!-- </form> -->
-													    </div>
-													  </div>
-													</div>
-												</div>
-
-												<div class="line"></div>
-
-												<div class="form-group row">
-													<div class="col-sm-4 offset-sm-3">
-														<button type="submit" class="btn btn-primary">Save changes</button>
+													<div class="col-md-12 text-center">
+														<button type="submit" class="btn btn-primary">Save settings</button>
 													</div>
 												</div>
 
@@ -269,6 +278,9 @@
 			</div>
 		</div>
 		<!-- JavaScript files-->
+		<!-- <script src='https://baam.agency/codepen/noUiSlider/nouislider.min.js'></script> -->
+		<!-- <script src='https://baam.agency/codepen/wnumb-1.1.0/wNumb.js'></script> -->
+
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="vendor/popper.js/umd/popper.min.js"> </script>
 		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -277,8 +289,11 @@
 		<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
 		<script src="js/charts-home.js"></script>
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+		<script src="vendor/wnumb-1.1.0/wNumb.js"></script>
+		<script src="vendor/noUiSlider-12.0.0/distribute/nouislider.min.js"></script>
 		<!-- Main File-->
-		<script src="js/sliders.js"></script>
+		<!-- <script src="js/sliders.js"></script> -->
 		<script src="js/front.js"></script>
 	</body>
 </html>

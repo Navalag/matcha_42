@@ -16,6 +16,7 @@ https://bootstrapious.com/p/admin-template
 */
 body {
 	overflow-x: hidden;
+	outline:none;
 }
 
 a,

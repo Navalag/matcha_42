@@ -424,14 +424,14 @@ $(document).ready(function() {
 // Show input[range] slider value on page
 // ------------------------------------------------------ //
 
-var slider = document.getElementById("rangeMaxDistance");
-var output = document.querySelector(".slidecontainer span");
-output.innerHTML = slider.value  + " km"; // Display the default slider value
+// var slider = document.getElementById("rangeMaxDistance");
+// var output = document.querySelector(".slidecontainer span");
+// output.innerHTML = slider.value  + " km"; // Display the default slider value
 
-// Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-	output.innerHTML = this.value + " km";
-}
+// // Update the current slider value (each time you drag the slider handle)
+// slider.oninput = function() {
+// 	output.innerHTML = this.value + " km";
+// }
 
 // ------------------------------------------------------ //
 // Input range multiple value for age gap
@@ -531,66 +531,82 @@ slider.oninput = function() {
 
 // });
 
-// Initialize slider-1:
+// Initialize slider distance:
 $(document).ready(function() {
-	$('.noUi-handle').on('click', function() {
-		$(this).width(50);
+	var rangeDistance = document.getElementById('slider-distance');
+	noUiSlider.create(rangeDistance, {
+		start: [50],
+		step: 5,
+		connect: [true, false],
+		range: {
+			'min': [10],
+			'max': [100]
+		},
+		format: wNumb({
+        decimals: 0
+    })
 	});
-	var rangeSlider = document.getElementById('slider-range');
-	// var moneyFormat = wNumb({
-	// 	decimals: 0,
-	// 	thousand: ',',
-	// 	prefix: '$'
-	// });
-	noUiSlider.create(rangeSlider, {
+	
+	// Set visual min and max values and also update value hidden form inputs
+	rangeDistance.noUiSlider.on('update', function(values, handle) {
+		document.getElementById('value-distanse').innerHTML = values[handle];
+		document.getElementsByName('max-distanse').value = values[handle];
+	});
+});
+
+// Initialize slider age gap:
+$(document).ready(function() {
+	var rangeAge = document.getElementById('slider-age-gap');
+	noUiSlider.create(rangeAge, {
 		start: [18, 33],
 		// step: 1,
+		padding: [1, 1],
+		margin: 5,
 		range: {
-			'min': [18],
-			'max': [55]
+			'min': [17],
+			'max': [56]
 		},
-		// format: moneyFormat,
+		format: wNumb({
+        decimals: 0
+    }),
 		connect: true
 	});
 	
 	// Set visual min and max values and also update value hidden form inputs
-	rangeSlider.noUiSlider.on('update', function(values, handle) {
-		document.getElementById('slider-range-value1').innerHTML = values[0];
-		document.getElementById('slider-range-value2').innerHTML = values[1];
-		document.getElementsByName('min-value').value = values[0];
-		document.getElementsByName('max-value').value = values[1];
+	rangeAge.noUiSlider.on('update', function(values, handle) {
+		document.getElementById('value-age-min').innerHTML = values[0];
+		document.getElementById('value-age-max').innerHTML = values[1];
+		document.getElementsByName('min-age').value = values[0];
+		document.getElementsByName('max-age').value = values[1];
 	});
 });
 
-// Initialize slider-2:
-// $(document).ready(function() {
-// 	$('.noUi-handle').on('click', function() {
-// 		$(this).width(50);
-// 	});
-// 	var rangeSlider2 = document.getElementById('slider-range-2');
-// 	noUiSlider.create(rangeSlider2, {
-// 		start: [50],
-// 		// step: 1,
-// 		range: {
-// 			'min': [0],
-// 			'max': [100]
-// 		},
-// 		// format: moneyFormat,
-// 		connect: true
-// 	});
+// Initialize slider fame rating gap:
+$(document).ready(function() {
+	var rangeRating = document.getElementById('slider-rating-gap');
+	noUiSlider.create(rangeRating, {
+		start: [40, 70],
+		// step: 1,
+		padding: [1, 1],
+		margin: 20,
+		range: {
+			'min': [-1],
+			'max': [101]
+		},
+		format: wNumb({
+        decimals: 0
+    }),
+		connect: true
+	});
 	
-// 	// Set visual min and max values and also update value hidden form inputs
-// 	rangeSlider2.noUiSlider.on('update', function(values, handle) {
-// 		document.getElementById('slider-distanse').innerHTML = values[0];
-// 		document.getElementsByName('max-distanse').value = values[0];
-// 	});
-// });
-
-
-
-
-
-
+	// Set visual min and max values and also update value hidden form inputs
+	rangeRating.noUiSlider.on('update', function(values, handle) {
+		document.getElementById('value-rating-min').innerHTML = values[0];
+		document.getElementById('value-rating-max').innerHTML = values[1];
+		document.getElementsByName('min-rating').value = values[0];
+		document.getElementsByName('max-rating').value = values[1];
+	});
+});
 
 
 
