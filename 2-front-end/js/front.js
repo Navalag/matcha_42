@@ -612,11 +612,11 @@ $(document).ready(function() {
 // Tinder style swiping
 // ------------------------------------------------------ //
 
-$('.tinderresult').hide()
-$('#resultbutton').click(function(){
-    var random = Math.floor(Math.random() * $('.tinderresult').length);
-    $('.tinderresult').hide().eq(random).show();
-});
+// $('.tinderresult').hide()
+// $('#resultbutton').click(function(){
+//   var random = Math.floor(Math.random() * $('.tinderresult').length);
+//   $('.tinderresult').hide().eq(random).show();
+// });
 
 'use strict';
 
@@ -624,13 +624,14 @@ var tinderContainer = document.querySelector('.tinder');
 var allCards = document.querySelectorAll('.tinder--card');
 var nope = document.getElementById('nope');
 var love = document.getElementById('love');
+var machScreen = document.querySelector('.match-screen');
 
 function initCards(card, index) {
   var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
 
   newCards.forEach(function (card, index) {
     card.style.zIndex = allCards.length - index;
-    card.style.transform = 'scale(' + (20 - index) / 20 + ') translateY(-' + 30 * index + 'px)';
+    // card.style.transform = 'scale(' + (20 - index) / 20 + ') translateY(-' + 30 * index + 'px)';
     card.style.opacity = (10 - index) / 10;
   });
   
@@ -662,6 +663,10 @@ allCards.forEach(function (el) {
 
   hammertime.on('panend', function (event) {
     el.classList.remove('moving');
+    if (tinderContainer.classList.contains('tinder_love')) {
+    	machScreen.style.zIndex = 999;
+      machScreen.style.opacity = 1;
+    }
     tinderContainer.classList.remove('tinder_love');
     tinderContainer.classList.remove('tinder_nope');
 
@@ -680,7 +685,6 @@ allCards.forEach(function (el) {
       var xMulti = event.deltaX * 0.03;
       var yMulti = event.deltaY / 80;
       var rotate = xMulti * yMulti;
-
       event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
       initCards();
     }
@@ -700,6 +704,8 @@ function createButtonListener(love) {
 
     if (love) {
       card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
+      machScreen.style.zIndex = 999;
+      machScreen.style.opacity = 1;
     } else {
       card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
     }
@@ -716,5 +722,7 @@ var loveListener = createButtonListener(true);
 nope.addEventListener('click', nopeListener);
 love.addEventListener('click', loveListener);
 
-
-
+machScreen.querySelector('.match-return-btn').addEventListener('click', function(){
+	machScreen.style.opacity = 0;
+	machScreen.style.zIndex = 0;
+});

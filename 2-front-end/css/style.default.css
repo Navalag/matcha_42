@@ -2809,6 +2809,11 @@ STYLE SWITCHER FOR DEMO
 	border-radius: 0.2rem;
 }
 
+.btn--arrow-back {
+	padding: 0 2em;
+	font-size: 1.7rem;
+}
+
 /*
  * 3. TYPE  
  */
