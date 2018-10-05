@@ -1,0 +1,59 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+<div class="page login-page">
+	<div class="container d-flex align-items-center">
+		<div class="form-holder has-shadow">
+			<div class="row">
+				<!-- Logo & Information Panel-->
+				<div class="col-lg-6">
+					<div class="info d-flex align-items-center">
+						<div class="content">
+							<div class="logo">
+								<h1>Matcha 42</h1>
+							</div>
+							<p>Dating web application allowing two potential lovers to meet, from the registration to the final encounter.</p>
+						</div>
+					</div>
+				</div>
+				<!-- Form Panel    -->
+				<div class="col-lg-6 bg-white">
+					<div class="form d-flex align-items-center">
+						<div class="content">
+							<form action="{{ path_for('auth.password.forgot') }}" method="post" class="form-validate">
+								{% if errors.email %}
+									<div class="alert alert-danger">
+										{{ errors.email | first }}
+									</div>
+								{% endif %}
+								{% if flash.getMessage('global') %}
+									<div class="alert alert-info">
+										{{ flash.getMessage('global') | first }}
+									</div>
+								{% endif %}
+								{% if flash.getMessage('error') %}
+									<div class="alert alert-warning">
+										{{ flash.getMessage('error') | first }}
+									</div>
+								{% endif %}
+								<div class="form-group">
+									<input id="login-email" type="emial" name="email" required data-msg="Please enter your email" class="input-material">
+									<label for="login-email" class="label-material">Email</label>
+								</div>
+								<button type="submit" id="login" href="index.html" class="btn btn-primary">Send new password</button>
+								{{ csrf.field | raw }}{# raw скроет строку #}
+							</form>
+							<a href="/auth/signin" class="forgot-pass">Back to Sign in</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyrights text-center">
+		<p>&copy; 2018 Unit Factory (42 school) project.</p>
+		<p>Developed with &#9825; by <a target="_blank" href="https://github.com/Navalag">Navalag</a> &amp; <a target="_blank" href="https://github.com/ozharko">ozharko</a>
+		</p>
+	</div>
+</div>
+{% endblock %}

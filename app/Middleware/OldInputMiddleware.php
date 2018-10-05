@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ozharko
- * Date: 8/20/18
- * Time: 5:16 PM
- */
 
 namespace Matcha\Middleware;
 

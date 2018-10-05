@@ -3,6 +3,9 @@
 namespace Matcha\Controllers\Check;
 
 use Matcha\Models\User;
+use Matcha\Models\About;
+use Matcha\Models\UserInterest;
+use Matcha\Models\InterestList;
 
 class CheckController
 {
@@ -17,8 +20,37 @@ class CheckController
     }
     public function user()
     {
-        if (isset($_SESSION['user']))
+        if (isset($_SESSION['user'])) {
             return User::find($_SESSION['user']);
+        }
+    }
+
+    public function allUserInterests()
+    {
+        if (isset($_SESSION['user']))
+            return UserInterest::all();
+    }
+
+    public function allAboutUser()
+    {
+        if (isset($_SESSION['user'])) {
+            return About::find($_SESSION['user']);
+            // return About::where('user_id', $_SESSION['user'])->first();
+        }
+    }
+
+    public function allValueOfInterests()
+    {
+        $interestsResult = [];
+        $userInterest = $this->allUserInterests();
+        foreach($userInterest as $row) {
+            if ($row->user_id == $_SESSION['user']) {
+                $interestRow = InterestList::where('id', $row->interest_id)->first();
+                $interestsResult[] = $interestRow->interest;
+            }
+        }
+        if ($interestsResult)
+            return $interestsResult;
     }
 
     public function check()
@@ -45,7 +77,7 @@ class CheckController
         $user = User::where('email', $email)->first();
 
         if (!$user) {
-            $this->flash->addMessage('error', 'Email not found');
+            // $this->flash->addMessage('error', 'Email not found');
             return false;
         }
 
@@ -53,8 +85,9 @@ class CheckController
             $_SESSION['user'] = $user->id;
             return true;
         }
-        else
+        else {
             $_SESSION['errors']['password']['0'] = "wrong password";
+        }
 
         return false;
     }
@@ -71,6 +104,20 @@ class CheckController
             // $_SESSION['errors']['password_new']['0'] = "Different password";
             return 1;
         }
+    }
+
+    /*
+    ** Generate a random string, using a cryptographically secure 
+    ** pseudorandom number generator (random_int)
+    */
+    function random_str($length) {
+        $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $str = '';
+        $keyspaceLength = strlen($keyspace) - 1; //put the length -1 in cache
+        for ($i = 0; $i < $length; ++$i) {
+            $str .= $keyspace[random_int(0, $keyspaceLength)];
+        }
+        return $str;
     }
 
     public function logout()

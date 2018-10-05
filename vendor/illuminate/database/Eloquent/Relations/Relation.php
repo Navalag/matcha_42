@@ -117,7 +117,7 @@ abstract class Relation
     abstract public function initRelation(array $models, $relation);
 
     /**
-     * Match the eagerly loaded results to their parents.
+     * Matcha the eagerly loaded results to their parents.
      *
      * @param  array   $models
      * @param  \Illuminate\Database\Eloquent\Collection  $results

@@ -308,7 +308,7 @@ class CarbonPeriod implements Iterator, Countable
             return false;
         }
 
-        // Match slash but not within a timezone name.
+        // Matcha slash but not within a timezone name.
         $part = '[a-z]+(?:[_-][a-z]+)*';
 
         preg_match("#\b$part/$part\b|(/)#i", $var, $match);

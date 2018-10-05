@@ -87,7 +87,7 @@ abstract class HasOneOrMany extends Relation
     }
 
     /**
-     * Match the eagerly loaded results to their single parents.
+     * Matcha the eagerly loaded results to their single parents.
      *
      * @param  array   $models
      * @param  \Illuminate\Database\Eloquent\Collection  $results
@@ -100,7 +100,7 @@ abstract class HasOneOrMany extends Relation
     }
 
     /**
-     * Match the eagerly loaded results to their many parents.
+     * Matcha the eagerly loaded results to their many parents.
      *
      * @param  array   $models
      * @param  \Illuminate\Database\Eloquent\Collection  $results
@@ -113,7 +113,7 @@ abstract class HasOneOrMany extends Relation
     }
 
     /**
-     * Match the eagerly loaded results to their many parents.
+     * Matcha the eagerly loaded results to their many parents.
      *
      * @param  array   $models
      * @param  \Illuminate\Database\Eloquent\Collection  $results

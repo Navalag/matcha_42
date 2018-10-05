@@ -30,6 +30,3 @@ class EmailAvailable extends AbstractRule
         // return true;
     }
 }
-
-
-        

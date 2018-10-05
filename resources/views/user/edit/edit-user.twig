@@ -1,0 +1,151 @@
+{% extends 'templates/app.twig' %}
+
+
+{% block content %}
+{% include 'templates/partials/side-nav.twig' %}
+<section class="forms"> 
+	<div class="container">
+		<div class="row">
+			<!-- Basic Form-->
+			<div class="col-lg-8 offset-lg-2">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="h4">Edit your information</h3>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="wrap-custom-file main-image">
+									<input type="file" name="photo" id="image1" accept=".gif, .jpg, .png" />
+									<label for="image1">
+										<span>Select Main Image</span>
+										<i class="fa fa-plus-circle"></i>
+										<a href="#" class="close"></a>
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="wrap-custom-file">
+										<input type="file" name="photo" id="image2" accept=".gif, .jpg, .png" />
+										<label for="image2">
+											<span>Select Image Two</span>
+											<i class="fa fa-plus-circle"></i>
+											<a href="#" class="close"></a>
+										</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="wrap-custom-file">
+										<input type="file" name="photo" id="image3" accept=".gif, .jpg, .png" />
+										<label for="image3">
+											<span>Select Image Three</span>
+											<i class="fa fa-plus-circle"></i>
+											<a href="#" class="close"></a>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="wrap-custom-file">
+										<input type="file" name="photo" id="image4" accept=".gif, .jpg, .png" />
+										<label for="image4">
+											<span>Select Image Four</span>
+											<i class="fa fa-plus-circle"></i>
+											<a href="#" class="close"></a>
+										</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="wrap-custom-file">
+										<input type="file" name="photo" id="image5" accept=".gif, .jpg, .png" />
+										<label for="image5">
+											<span>Select Image Five</span>
+											<i class="fa fa-plus-circle"></i>
+											<a href="#" class="close"></a>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<form action="{{ path_for('auth.edit.user') }}" method="post">
+							<div class="form-group">
+								<label class="form-control-label">About me:</label>
+								<textarea class="form-control" name="about_me" rows="4" maxlength="250">{{ edit.about_me }}</textarea>
+								<small><span id="remain">0</span>/250</small>
+							</div>
+							<div class="line"></div>
+							<div class="form-group row">
+								<div class="col-md-4">
+									<label class="form-control-label">User Name</label>
+									<input type="text" name="username" value="{{ edit.username }}" class="form-control" maxlength="100">
+								</div>
+								<div class="col-md-4">
+									<label class="form-control-label">First Name</label>
+									<input type="text" name="name" value="{{ edit.name }}" class="form-control" maxlength="100">
+								</div>
+								<div class="col-md-4">
+									<label class="form-control-label">Last Name</label>
+									<input type="text" name="surname" value="{{ edit.surname }}" class="form-control" maxlength="100">
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-6">
+									<label class="form-control-label">Gender</label>
+									<select name="gender" class="form-control mb-4">
+										<option value="man" {{edit.gender == 'man' ? 'selected':'' }}>man</option>
+										<option value="woman" {{edit.gender == 'woman' ? 'selected':'' }}>woman</option>
+										<option value="other" {{edit.gender == 'other' ? 'selected':'' }}>other</option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<label class="form-control-label">Age</label>
+									<input type="number" name="age" value="{{ edit.age }}" maxlength="2" min="18" max="99" class="form-control">
+								</div>
+							</div>
+							<div class="line"></div>
+							<p class="bright-heading">What are you passioned about?</p>
+							<div class="form-group">
+								<select multiple="" class="form-control" data-placeholder="Add interests">
+									{% for interest in allInterests %}
+										<option {% if interest in interests %} {{'selected'}} {% endif %}>{{ interest }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="line"></div>
+							<p class="bright-heading">Share your social media links</p>
+							<div class="form-group">
+								<label class="form-control-label">Instagram</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label class="form-control-label">Facebook</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label class="form-control-label">Twitter</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<label class="form-control-label">Google +</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="form-group">
+								<input type="submit" value="Update profile" class="btn btn-primary">
+							</div>
+							{{ csrf.field | raw }}{# raw скроет строку #}
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script>
+	var userPhoto = {{ edit.photo | json_encode | raw}};
+</script>
+{% include 'templates/partials/footer.twig' %}
+{% endblock %}

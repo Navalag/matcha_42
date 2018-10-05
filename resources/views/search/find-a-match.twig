@@ -1,0 +1,108 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+<div class="match-screen">
+  <img id="match-fancy-text-img" src="{{ base_url() }}/img/match_text.png">
+  <p>You and  have liked each other.</p>
+  <div class="match-images clearfix">
+    <img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/namika.png"  width="715" height="175">
+    <img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/currywurst.png"  width="175" height="175">
+  </div>
+  <button class="match-return-btn">
+    <i class="fa fa-user"></i> Keep Playing
+  </button>
+</div>
+{% include 'templates/partials/side-nav.twig' %}
+
+<!-- Client Section-->
+<section class="client">
+	<div class="container">
+		<div class="row">
+			<!-- Client Profile -->
+			<div class="col-lg-8 offset-lg-2">
+				<div class="client card">
+					<div class="card-body text-left">
+
+						<div class="tinder">
+							<div class="tinder--status">
+							<i class="fa fa-remove"></i>
+							<i class="fa fa-heart"></i>
+							</div>
+							
+							<div class="tinder--cards">
+								{% for user in allUserForSearchUser %}
+									<div class="tinder--card">
+										<img data-id="{{ user.attributes.id }}" src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/namika.png">
+										<h3>{{ user.attributes.username }}</h3>
+										{{ csrf.field | raw }}{# raw скроет строку #}
+									</div>
+								{% endfor %}
+								<!-- <div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/namika.png">
+									<h3>Namika</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/currywurst.png">
+									<h3>Currywurst</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/loveparade.png">
+									<h3>Loveparade</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/frankfurt.png">
+									<h3>Frankfurt am Main</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/Bundestagwahl.png">
+									<h3>Bundestagwahl</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/Nena.png">
+									<h3>Nena</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/neuschwanstein.png">
+									<h3>Neuschwanstein</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/berlin.png">
+									<h3>Berlin</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/bretzel.png">
+									<h3>Bretzel</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/fackjugohte.png">
+									<h3>Fack Ju Göthe</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/diewelle.png">
+									<h3>Die Welle</h3>
+								</div>
+								<div class="tinder--card">
+									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/radiotoren.png">
+									<h3>Fernsehturm Berlin</h3>
+								</div> -->
+							</div>
+							<div class="tinder--buttons">
+								<button id="nope"><i class="fa fa-remove"></i></button>
+								<button id="refresh" onclick=location=URL><i class="fa fa-refresh"></i></button>
+								<button id="love"><i class="fa fa-heart"></i></button>
+							</div>
+						</div>			
+					</div>
+				</div>
+			</div> <!-- end of client profile -->
+		</div>
+	</div>
+</section>
+
+<script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
+<script src="{{ base_url() }}/js/swipe.js"></script>
+<!-- <script>
+	var userId = {{ edit.photo | json_encode | raw}};
+</script> -->
+{% include 'templates/partials/footer.twig' %}
+{% endblock %}

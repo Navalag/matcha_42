@@ -10,7 +10,7 @@
  */
 
 /**
- * Represents a profile leave node.
+ * Represents a user leave node.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */

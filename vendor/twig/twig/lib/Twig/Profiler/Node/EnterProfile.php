@@ -10,7 +10,7 @@
  */
 
 /**
- * Represents a profile enter node.
+ * Represents a user enter node.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */

@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Model;  // передало в Model все м�
 
 class CheckEmail extends Model
 {
-    protected $table = "checkEmail";
+    protected $table = "check_email";
 
     protected $fillable = [
         'email',
-        'uniqid',
+        'uniq_id',
     ];
 }

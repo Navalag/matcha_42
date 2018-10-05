@@ -158,7 +158,7 @@ class MorphTo extends BelongsTo
     }
 
     /**
-     * Match the eagerly loaded results to their parents.
+     * Matcha the eagerly loaded results to their parents.
      *
      * @param  array   $models
      * @param  \Illuminate\Database\Eloquent\Collection  $results
@@ -171,7 +171,7 @@ class MorphTo extends BelongsTo
     }
 
     /**
-     * Match the results for a given type to their parents.
+     * Matcha the results for a given type to their parents.
      *
      * @param  string  $type
      * @param  \Illuminate\Database\Eloquent\Collection  $results

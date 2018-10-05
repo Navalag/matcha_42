@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ozharko
- * Date: 9/3/18
- * Time: 4:16 PM
- */
 
 namespace Matcha\Controllers\Auth;
-
 
 use Matcha\Controllers\Controller;
 use Respect\Validation\Validator as v;
@@ -16,36 +9,34 @@ use Matcha\Models\User;
 
 class ActivateController extends Controller
 {
-    protected $uniqid;
-    protected $email;
-    protected $user;
-    protected $validation;
+	protected $uniqid;
+	protected $email;
+	protected $user;
+	protected $validation;
 
-    public function activate($request, $response)
-    {
-        echo "HomeController confirm";
+	public function activate($request, $response)
+	{
+		$validation = $this->validator->validate($request, [
+			'email' => v::noWhitespace()->notEmpty()->email(),
+			'uniq_id' => v::noWhitespace()->notEmpty(),
+		]);
 
-        $validation = $this->validator->validate($request, [
-            'email' => v::noWhitespace()->notEmpty()->email(),
-            'uniqid' => v::noWhitespace()->notEmpty(),
-        ]);
+		if ($validation->failed()) {
+			return $response->withRedirect($this->router->pathFor('auth.signup'));
+		}
 
-        if ($validation->failed()) {
-            return $response->withRedirect($this->router->pathFor('auth.signup'));
-        }
+		$email = $request->getParam('email');
+		$uniqid = $request->getParam('uniq_id');
+		$user = CheckEmail::where('uniq_id', $uniqid)->first();
 
-        $email = $request->getParam('email');
-        $uniqid = $request->getParam('uniqid');
-        $user = CheckEmail::where('uniqid', $uniqid)->first();
+		User::setActiveAccount($user->email);
+		$email = $request->getParam('email');
+		$user = User::where('email', $email)->first();
 
-        User::setActiveAccount($user->email);
-        $email = $request->getParam('email');
-        $user = User::where('email', $email)->first();
-
-        if ($user->active == 1) {
-            $_SESSION['user'] = $user->id;
-            $this->flash->addMessage('info', 'Welcome my friend');
-            return $response->withRedirect($this->router->pathFor('home'));
-        }
-    }
+		if ($user->active == 1) {
+			$_SESSION['user'] = $user->id;
+			// $this->flash->addMessage('info', 'Welcome my friend');
+			return $response->withRedirect($this->router->pathFor('auth.edit.user'));
+		}
+	}
 }

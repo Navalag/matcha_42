@@ -30,14 +30,26 @@ class CsrfViewMiddleware extends Middleware
          * Возможно этого поля хватит в конечном итоге чтобы проверить
          * тот ли пользователь зашел и сделал запрос
          * */
+        $nameKey = $this->container->csrf->getTokenNameKey();
+        $valueKey = $this->container->csrf->getTokenValueKey();
+        $name = $this->container->csrf->getTokenName();
+        $value = $this->container->csrf->getTokenValue();
+
          $this->container->view->getEnvironment()->addGlobal('csrf', [
              'field' => '
-                <input type="hidden" name="'. $this->container->csrf->getTokenNameKey() . '" 
-                    value="'. $this->container->csrf->getTokenName() .'">
-                <input type="hidden" name="'. $this->container->csrf->getTokenValueKey() .'" 
-                    value="'. $this->container->csrf->getTokenValue() .'">
+                <input type="hidden" name="'. $nameKey . '" 
+                    value="'. $name .'">
+                <input type="hidden" name="'. $valueKey .'" 
+                    value="'. $value .'">
              ',
          ]);
+
+        $tokenArray = [
+        $nameKey => $name,
+        $valueKey => $value
+        ];
+
+        $request = $request->withAttribute('ajax_csrf', $tokenArray);
 
         $response = $next($request, $response);
         return $response;

@@ -229,7 +229,7 @@ class BelongsToMany extends Relation
     }
 
     /**
-     * Match the eagerly loaded results to their parents.
+     * Matcha the eagerly loaded results to their parents.
      *
      * @param  array   $models
      * @param  \Illuminate\Database\Eloquent\Collection  $results
