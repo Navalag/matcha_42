@@ -9,6 +9,9 @@
 		$sql = "USE " . $dbname;
 		$conn->exec($sql);
 
+		/* 
+		** CREATE user TABLE
+		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
 			. $dbUser
@@ -25,7 +28,9 @@
 
 		$conn->exec($sql);
 
-
+		/* 
+		** CREATE about TABLE
+		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
 			. $dbAbout
@@ -40,7 +45,9 @@
 
 		$conn->exec($sql);
 
-
+		/* 
+		** CREATE chat TABLE
+		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
 			. $dbChat
@@ -53,7 +60,9 @@
 
 		$conn->exec($sql);
 
-
+		/* 
+		** CREATE check_email TABLE
+		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
 			. $dbCheckEmail
@@ -65,7 +74,9 @@
 
 		$conn->exec($sql);
 
-
+		/* 
+		** CREATE interest_list TABLE
+		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
 			. $dbInterestList
@@ -75,8 +86,41 @@
 			updated_at TIMESTAMP NULL DEFAULT NULL)";
 
 		$conn->exec($sql);
+		/* 
+		** INSERT demo content into "interest_list"
+		**
+		** in order to initialize demo interests list
+		** uncomment lines below when first time execute application
+		*/
+		// $sql = " INSERT INTO ". $dbInterestList
+		// 	. "(interest) VALUES('yoga');";
 
+		// $sql .= " INSERT INTO ". $dbInterestList
+		// 	. "(interest) VALUES('vegan');";
 
+		// $sql .= " INSERT INTO ". $dbInterestList
+		// 	. "(interest) VALUES('geek');";
+
+		// $sql .= " INSERT INTO ". $dbInterestList
+		// 	. "(interest) VALUES('piercing');";
+
+		// $sql .= " INSERT INTO ". $dbInterestList
+		// 	. "(interest) VALUES('photo');";
+
+		// $sql .= " INSERT INTO ". $dbInterestList
+		// 	. "(interest) VALUES('architecture');";
+
+		// $sql .= " INSERT INTO ". $dbInterestList
+		// 	. "(interest) VALUES('rock');";
+
+		// $sql .= " INSERT INTO ". $dbInterestList
+		// 	. "(interest) VALUES('pop');";
+		
+		// $conn->exec($sql);
+
+		/* 
+		** CREATE likes TABLE
+		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
 			. $dbLike
@@ -88,7 +132,9 @@
 
 		$conn->exec($sql);
 
-
+		/* 
+		** CREATE matcha TABLE
+		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
 			. $dbMatcha
@@ -101,7 +147,9 @@
 
 		$conn->exec($sql);
 
-
+		/* 
+		** CREATE photo TABLE
+		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
 			. $dbPhoto
@@ -113,7 +161,9 @@
 
 		$conn->exec($sql);
 
-
+		/* 
+		** CREATE user_interest TABLE
+		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
 			. $dbUserInterest

@@ -44,18 +44,6 @@ class EditController extends Controller
 	public function postChangeProfile($request, $response)
 	{
 		$validation = $this->validator->validate($request, [
-			/*
-			 * password задесь возвращается как свойство
-			 * которое храниться в объекте User
-			 * все остальное как метод
-			 * $this->auth->user()->password
-			 * 
-			 * вызовиться метод user() что вернет все что имется в БД
-			 * из всего этого выбереться только свойство password
-			 * 
-			 * с чем он сравнивает? c объектом v:: ?
-			 * */
-			// 'email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
 			'username' => v::notEmpty()->usernameAvailable(),
 			'name' => v::notEmpty()->alpha(),
 			'surname' => v::notEmpty()->alpha(),
@@ -63,8 +51,6 @@ class EditController extends Controller
 			'gender' => v::notEmpty()
 		]);
 
-		// r($request);
-		// die();
 		if ($validation->failed()) {
 			return $this->view->render($response, 'user/edit/edit-user.twig');
 		}
