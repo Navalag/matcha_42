@@ -35,7 +35,6 @@ class EditController extends Controller
 		if ($allPhoto) {
 			$edit['photo'] = $allPhoto;
 		}
-		// $edit['interests'] = $this->checker->allValueOfInterests();
 
 		$this->container->view->getEnvironment()->addGlobal('edit', $edit);
 		return $this->view->render($response, 'user/edit/edit-user.twig');
@@ -47,8 +46,6 @@ class EditController extends Controller
 			'username' => v::notEmpty()->usernameAvailable(),
 			'name' => v::notEmpty()->alpha(),
 			'surname' => v::notEmpty()->alpha(),
-			'about_me' => v::notEmpty(),
-			'gender' => v::notEmpty()
 		]);
 
 		if ($validation->failed()) {
@@ -64,30 +61,15 @@ class EditController extends Controller
 		$this->container->view->getEnvironment()->addGlobal('edit', $edit);
 
 		$id = $_SESSION['user'];
-
-//        $edit['email'] = $request->getParam('email');
-		// $this->checker->user()->setEmail($id, $edit['email']);
-
-//        $edit['username'] = $request->getParam('username');
 		$this->checker->user()->setUsername($id, $edit['username']);
-
-//        $edit['name'] = $request->getParam('name');
 		$this->checker->user()->setName($id, $edit['name']);
-
-//        $edit['surname'] = $request->getParam('surname');
 		$this->checker->user()->setSurname($id, $edit['surname']);
 
 		About::where('user_id', $id)->update([
-			// 'user_id' => $id,
 			'gender' => $edit['gender'],
 			'about_me' => $edit['about_me'],
 			'age' => $edit['age']
-			// 'sexual_pref' => $request->getParam('sexual_pref')
-			// 'biography' => $request->getParam('biography'),
-//            'listOfInterests' => $request->getParam('listOfInterests'),
 		]);
-
-		// $this->flash->addMessage('info', 'Your user was updated');
 		return $response->withRedirect($this->router->pathFor('home'));
 	}
 }

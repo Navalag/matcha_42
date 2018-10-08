@@ -32,7 +32,6 @@ class PhotoController extends Controller
 		$ajax_csrf = $request->getAttribute('ajax_csrf');
 		$respond_json = [$ajax_csrf, 
 			'file_name' => $filename];
-		// var_dump($respond_json);
 		$response->write(json_encode($respond_json));
 	}
 
@@ -47,7 +46,6 @@ class PhotoController extends Controller
 		*/
 		// $src = str_replace('http://127.0.0.1:8800', '', $src);
 		$src = str_replace('http://localhost:8800', '', $src);
-		// echo $src;
 		Photo::delUserPhoto($src);
 		$src = $_SERVER["DOCUMENT_ROOT"].DIRECTORY_SEPARATOR.$src;
 		unlink($src);
