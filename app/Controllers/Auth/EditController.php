@@ -52,7 +52,7 @@ class EditController extends Controller
 		]);
 
 		if ($validation->failed()) {
-			return $this->view->render($response, 'user/edit/edit-user.twig');
+			return $response->withRedirect($this->router->pathFor('auth.edit.user'));
 		}
 
 		$edit['username'] = $request->getParam('username');

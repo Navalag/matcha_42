@@ -32,6 +32,7 @@ class Photo extends Model
 	public static function getUserPhoto()
 	{
 		$allPhoto = Photo::get();
+		$photoResult = array();
 		if ($allPhoto) {
 			if (!empty($allPhoto['0']) && isset($allPhoto['0']))
 			{
