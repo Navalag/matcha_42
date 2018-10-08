@@ -26,7 +26,7 @@ class EmailAvailable extends AbstractRule
             }
         }
 
-        return User::where('email', $input)->count() === 0;
-        // return true;
+        // return User::where('email', $input)->count() === 0;
+        return true;
     }
 }

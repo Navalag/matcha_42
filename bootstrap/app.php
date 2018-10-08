@@ -110,8 +110,11 @@ $container['AuthController'] = function ($container) {
 $container['PasswordController'] = function ($container) {
 	return new \Matcha\Controllers\Auth\PasswordController($container);
 };
+/*
+** Profile Controllers
+*/
 $container['EditController'] = function ($container) {
-	return new \Matcha\Controllers\Auth\EditController($container);
+	return new \Matcha\Controllers\Profile\EditController($container);
 };
 $container['AboutController'] = function ($container) {
 	return new \Matcha\Controllers\Profile\AboutController($container);
@@ -125,19 +128,26 @@ $container['UserInterest'] = function ($container) {
 $container['PhotoController'] = function ($container) {
 	return new \Matcha\Controllers\Profile\PhotoController($container);
 };
+$container['DiscoverySettings'] = function ($container) {
+	return new \Matcha\Controllers\Profile\DiscoverySettingsController($container);
+};
+/*
+** 
+*/
 $container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'] . 'img';
 $container['SearchController'] = function ($container) {
 	return new \Matcha\Controllers\Search\SearchController($container);
 };
 $container['LikedController'] = function ($container) {
-  return new \Matcha\Controllers\Search\LikedController($container);
+	return new \Matcha\Controllers\Search\LikedController($container);
 };
 $container['MatchaController'] = function ($container) {
-  return new \Matcha\Controllers\Search\MatchaController($container);
+	return new \Matcha\Controllers\Search\MatchaController($container);
 };
 
+
 $container['csrf'] = function ($container) {
-		return new \Slim\Csrf\Guard;
+	return new \Slim\Csrf\Guard;
 };
 $container['logger'] = function($container) {
 		$logger = new \Monolog\Logger('my_logger');

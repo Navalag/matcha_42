@@ -1,6 +1,6 @@
 <?php
 
-namespace Matcha\Controllers\Auth;
+namespace Matcha\Controllers\Profile;
 
 use Matcha\Models\User;
 use Matcha\Models\About;

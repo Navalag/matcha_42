@@ -20,6 +20,7 @@ class About extends Model
         'about_me',
         'age',
         'sexual_pref',
-        // 'biography',
+        'latitude',
+        'longitude'
     ];
 }

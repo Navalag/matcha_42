@@ -55,7 +55,11 @@ $app->group('', function () {
 	** account settings (reset password)
 	*/
 	$this->post('/auth/password/reset', 'PasswordController:postResetPassword');
-	
+	/*
+	** discovery settings
+	*/
+	$this->get('/user/edit/discovery_settings', 'DiscoverySettingsController:getEditDiscoverySettings')->setName('user.edit.discovery_settings');
+	$this->post('/user/edit/discovery_settings', 'DiscoverySettingsController:postEditDiscoverySettings');
 
 
 

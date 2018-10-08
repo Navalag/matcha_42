@@ -482,8 +482,8 @@ if (next && prev && slider) {
 
 
 
-
-
+// google maps api key
+// AIzaSyBfXFjp3bYD9ZVLAn61pokhELgCOwYKsEE
 
 
 
