@@ -2,7 +2,9 @@
 // Input range sliders for discovery settings page
 // ------------------------------------------------------ //
 
-// Initialize slider distance:
+/*
+** max distance
+*/
 $(document).ready(function() {
 	var rangeDistance = document.getElementById('slider-distance');
 	noUiSlider.create(rangeDistance, {
@@ -25,7 +27,9 @@ $(document).ready(function() {
 	});
 });
 
-// Initialize slider age gap:
+/*
+** age gap
+*/
 $(document).ready(function() {
 	var rangeAge = document.getElementById('slider-age-gap');
 	noUiSlider.create(rangeAge, {
@@ -52,7 +56,9 @@ $(document).ready(function() {
 	});
 });
 
-// Initialize slider fame rating gap:
+/*
+** fame rating gap
+*/
 $(document).ready(function() {
 	var rangeRating = document.getElementById('slider-rating-gap');
 	noUiSlider.create(rangeRating, {
