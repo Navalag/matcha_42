@@ -7,7 +7,7 @@
 
     $dbUser = "user";
 
-    $dbAbout = "about";
+    // $dbAbout = "about";
 
     $dbChat = "chat";
 
@@ -22,5 +22,9 @@
     $dbPhoto = "photo";
 
     $dbUserInterest = "user_interest";
+
+    $dbDiscoverySettings = "discovery_settings";
+
+    $dbUserDiscoveryInterests = "user_discovery_interests";
 
 

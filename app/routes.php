@@ -58,8 +58,8 @@ $app->group('', function () {
 	/*
 	** discovery settings
 	*/
-	$this->get('/user/edit/discovery_settings', 'DiscoverySettingsController:getEditDiscoverySettings')->setName('user.edit.discovery_settings');
-	$this->post('/user/edit/discovery_settings', 'DiscoverySettingsController:postEditDiscoverySettings');
+	$this->get('/user/search/discovery_settings', 'DiscoverySettingsController:getEditDiscoverySettings')->setName('user.search.discovery_settings');
+	$this->post('/user/search/discovery_settings', 'DiscoverySettingsController:postEditDiscoverySettings');
 
 
 

@@ -128,8 +128,8 @@ $container['UserInterest'] = function ($container) {
 $container['PhotoController'] = function ($container) {
 	return new \Matcha\Controllers\Profile\PhotoController($container);
 };
-$container['DiscoverySettings'] = function ($container) {
-	return new \Matcha\Controllers\Profile\DiscoverySettingsController($container);
+$container['DiscoverySettingsController'] = function ($container) {
+	return new \Matcha\Controllers\Search\DiscoverySettingsController($container);
 };
 /*
 ** 

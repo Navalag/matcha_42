@@ -821,7 +821,19 @@ form .bright-heading {
   color: #000;
 }
 
+/*
+* ==========================================================
+*     input range sliders
+* ==========================================================
+*/
 
+.noUi-base, .noUi-handle {
+  cursor: pointer;
+}
+
+.noUi-connect {
+  background: #ff7676;
+}
 
 
 

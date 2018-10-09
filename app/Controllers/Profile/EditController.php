@@ -3,7 +3,6 @@
 namespace Matcha\Controllers\Profile;
 
 use Matcha\Models\User;
-use Matcha\Models\About;
 use Matcha\Models\InterestList;
 use Matcha\Models\UserInterest;
 use Matcha\Models\Photo;
@@ -16,22 +15,19 @@ class EditController extends Controller
 	public function getChangeProfile($request, $response)
 	{
 		$allPhoto = Photo::getUserPhoto();
-
 		$userInfo = $this->checker->user();
-		$aboutTable = $this->checker->allAboutUser();
-
 		$interestsResult = $this->checker->allValueOfInterests();
-		$this->container->view->getEnvironment()->addGlobal('interests', $interestsResult);
-
 		$allInterests = InterestList::showAllInterests();
+
+		$this->container->view->getEnvironment()->addGlobal('interests', $interestsResult);
 		$this->container->view->getEnvironment()->addGlobal('allInterests', $allInterests);
 
-		$edit['about_me'] = $aboutTable->about_me;
-		$edit['gender'] = $aboutTable->gender;
-		$edit['age'] = $aboutTable->age;
+		$edit['about_me'] = $userInfo->about_me;
+		$edit['gender'] = $userInfo->gender;
+		$edit['age'] = $userInfo->age;
 		$edit['username'] = $userInfo->username;
-		$edit['name'] = $userInfo->name;
-		$edit['surname'] = $userInfo->surname;
+		$edit['name'] = $userInfo->first_name;
+		$edit['surname'] = $userInfo->last_name;
 		if ($allPhoto) {
 			$edit['photo'] = $allPhoto;
 		}
@@ -65,10 +61,13 @@ class EditController extends Controller
 		$this->checker->user()->setName($id, $edit['name']);
 		$this->checker->user()->setSurname($id, $edit['surname']);
 
-		About::where('user_id', $id)->update([
+		User::where('id', $id)->update([
+			'username' => $edit['username'],
+			'first_name' => $edit['name'],
+			'last_name' => $edit['surname'],
 			'gender' => $edit['gender'],
 			'about_me' => $edit['about_me'],
-			'age' => $edit['age']
+			'age' => $edit['age'],
 		]);
 		return $response->withRedirect($this->router->pathFor('home'));
 	}

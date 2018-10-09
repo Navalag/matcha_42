@@ -464,21 +464,7 @@ if (next && prev && slider) {
 	});
 }
 
-// ------------------------------------------------------ //
-// Handel modal form to reset password
-// ------------------------------------------------------ //
 
-// $(document).ready(function () {
-// 	$('form #reset-passw').submit(function(evt) {
-// 		evt.preventDefault();
-// 		var url = $(this).attr("action");
-// 		var data = $(this).serialize();
-// 		 console.log(data);
-// 		$.post(url,data,function(response) {
-// 			$('.modal-body').html(response);
-// 		});
-// 	});
-// });
 
 
 

@@ -15,37 +15,44 @@
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
 			. $dbUser
-			. " (id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-			email VARCHAR(255) NOT NULL, 
+			. " (
+			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,  
 			username VARCHAR(255) NOT NULL, 
-			name VARCHAR(255) NOT NULL, 
-			surname VARCHAR(255) NOT NULL, 
+			first_name VARCHAR(255) NOT NULL, 
+			last_name VARCHAR(255) NOT NULL, 
+			email VARCHAR(255) NOT NULL,
 			password VARCHAR(255) NOT NULL,
-			rating INT(11) NULL DEFAULT 0,
-			active INT(1) NULL DEFAULT 0,
+			email_confirmed INT(1) NULL DEFAULT 0 COMMENT 'after registration user must confirm account via email', 
+			fake_account INT(1) NULL DEFAULT 0 COMMENT 'if 5 users comlains that account is fake, active status become false', 
+			active INT(1) NULL DEFAULT 0 COMMENT 'set true when user has at least one photo and account is confirmed and not fake account', 
+			about_me VARCHAR(255) NULL DEFAULT NULL,
+			gender VARCHAR(255) NULL DEFAULT NULL,
+			age INT(11) NOT NULL DEFAULT 18,
+			fame_rating INT(11) NULL DEFAULT 0,
+			facebook_link VARCHAR(80) NULL DEFAULT NULL,
+			instagram_link VARCHAR(80) NULL DEFAULT NULL,
+			twittwer_link VARCHAR(80) NULL DEFAULT NULL,
+			google_plus_link VARCHAR(80) NULL DEFAULT NULL,
 			created_at TIMESTAMP NULL DEFAULT NULL,
-			updated_at TIMESTAMP NULL DEFAULT NULL)";
+			updated_at TIMESTAMP NULL DEFAULT NULL
+		)";
 
 		$conn->exec($sql);
 
 		/* 
 		** CREATE about TABLE
 		*/
-		$sql = "CREATE "
-			. " TABLE IF NOT EXISTS "
-			. $dbAbout
-			. " (id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-			user_id INT(11) NOT NULL, 
-			gender VARCHAR(255) NULL DEFAULT NULL,
-			about_me VARCHAR(255) NULL DEFAULT NULL,
-			age INT(11) NOT NULL DEFAULT 18,
-			sexual_pref VARCHAR(255) NULL DEFAULT NULL,
-			latitude VARCHAR(255) NULL DEFAULT NULL,
-			longitude VARCHAR(255) NULL DEFAULT NULL,
-			created_at TIMESTAMP NULL DEFAULT NULL,
-			updated_at TIMESTAMP NULL DEFAULT NULL)";
+		// $sql = "CREATE "
+		// 	. " TABLE IF NOT EXISTS "
+		// 	. $dbAbout
+		// 	. " (id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+		// 	user_id INT(11) NOT NULL, 
+			
+			
+		// 	created_at TIMESTAMP NULL DEFAULT NULL,
+		// 	updated_at TIMESTAMP NULL DEFAULT NULL)";
 
-		$conn->exec($sql);
+		// $conn->exec($sql);
 
 		/* 
 		** CREATE chat TABLE
@@ -174,6 +181,45 @@
 			interest_id INT(11) NOT NULL,
 			created_at TIMESTAMP NULL DEFAULT NULL,
 			updated_at TIMESTAMP NULL DEFAULT NULL)";
+
+		$conn->exec($sql);
+
+		/* 
+		** CREATE discovery_settings TABLE
+		*/
+		$sql = "CREATE "
+			. " TABLE IF NOT EXISTS "
+			. $dbDiscoverySettings
+			. " (
+			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+			user_id INT(11) NOT NULL, 
+			max_distanse INT(11) NOT NULL DEFAULT 20, 
+			min_age INT(11) NULL DEFAULT NULL, 
+			max_age INT(11) NULL DEFAULT NULL, 
+			min_rating INT(11) NULL DEFAULT NULL, 
+			max_rating INT(11) NULL DEFAULT NULL, 
+			looking_for VARCHAR(255) NULL DEFAULT NULL, 
+			lat FLOAT( 10, 6 ) NOT NULL, 
+  			lng FLOAT( 10, 6 ) NOT NULL, 
+			created_at TIMESTAMP NULL DEFAULT NULL,
+			updated_at TIMESTAMP NULL DEFAULT NULL
+		)";
+
+		$conn->exec($sql);
+
+		/* 
+		** CREATE user_discovery_interests TABLE
+		*/
+		$sql = "CREATE "
+			. " TABLE IF NOT EXISTS "
+			. $dbUserDiscoveryInterests
+			. " (
+			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+			user_id INT(11) NOT NULL, 
+			interest_id INT(11) NOT NULL, 
+			created_at TIMESTAMP NULL DEFAULT NULL,
+			updated_at TIMESTAMP NULL DEFAULT NULL
+		)";
 
 		$conn->exec($sql);
 	}

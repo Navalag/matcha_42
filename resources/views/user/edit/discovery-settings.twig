@@ -1,0 +1,149 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+{% include 'templates/partials/side-nav.twig' %}
+<section class="forms">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 offset-lg-3">
+				<div class="card">
+					
+					<div class="card-header">
+						<h3 class="h4">Discovery Settings</h3>
+					</div>
+
+					<div class="card-body">
+						<form class="form-horizontal mt-4">
+
+							<div class="form-group row">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-12">
+											<label class="mb-4">Maximum distance</label>
+										  <div id="slider-distance"></div>
+										</div>
+								  </div>
+								  <div class="row slider-labels">
+										<div class="col-sm-6 mt-2">
+										  <span id="value-distanse"></span> km
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<input type="hidden" name="max-distanse" value="">
+										</div>
+								  </div>
+								</div>
+							</div>
+
+							<!-- <div class="line"></div> -->
+
+							<div class="form-group row">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-12">
+											<label class="mb-4">Age Range</label>
+										  <div id="slider-age-gap"></div>
+										</div>
+								  </div>
+								  <div class="row slider-labels">
+										<div class="col-sm-6 mt-3">
+										  <span id="value-age-min"></span>
+										</div>
+										<div class="col-sm-6 text-right mt-3">
+										  <span id="value-age-max"></span>
+										</div>
+								  </div>
+								  <div class="row">
+										<div class="col-sm-12">
+											<input type="hidden" name="min-age" value="">
+											<input type="hidden" name="max-age" value="">
+										</div>
+								  </div>
+								</div>
+							</div>
+
+							<!-- <div class="line"></div> -->
+
+							<div class="form-group row">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-12">
+											<label class="mb-4">Fame Rating Range</label>
+										  <div id="slider-rating-gap"></div>
+										</div>
+								  </div>
+								  <div class="row slider-labels">
+										<div class="col-sm-6 mt-3">
+										  <span id="value-rating-min"></span>
+										</div>
+										<div class="col-sm-6 text-right mt-3">
+										  <span id="value-rating-max"></span>
+										</div>
+								  </div>
+								  <div class="row">
+										<div class="col-sm-12">
+											<input type="hidden" name="min-rating" value="">
+											<input type="hidden" name="max-rating" value="">
+										</div>
+								  </div>
+								</div>
+							</div>
+
+							<div class="line"></div>
+
+							<div class="form-group row">
+								<div class="container">
+									<label class="mb-4">Looking for:</label>
+								<select name="account" class="form-control mb-3">
+								  <option>man</option>
+								  <option>woman</option>
+								  <option>man and woman</option>
+								</select>
+								</div>
+							</div>
+							<!-- <div class="line"></div> -->
+
+							<div class="form-group">
+								<label class="mb-4">Filter By Interests:</label>
+								<select multiple="" class="form-control" data-placeholder="Add interests">
+									<option selected>photo</option>
+									<option selected>yoga</option>
+									<option selected>films</option>
+									<option>rock</option>
+									<option>pop</option>
+									<option>veg</option>
+									<option>steaks</option>
+									<option>music</option>
+									<option>gum</option>
+									<option>workout</option>
+									<option>make up</option>
+									<option>fun</option>
+								</select>
+							</div>
+
+							<div class="line"></div>
+
+							<div class="form-group row">
+								<div class="col-md-12 text-center">
+									<button type="submit" class="btn btn-primary">Save settings</button>
+								</div>
+							</div>
+
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script src="{{ base_url() }}/vendor/jquery/jquery.min.js"></script>
+
+<script src="{{ base_url() }}/vendor/wnumb-1.1.0/wNumb.js"></script>
+<script src="{{ base_url() }}/vendor/noUiSlider-12.0.0/distribute/nouislider.min.js"></script>
+<script src="{{ base_url() }}/js/sliders.js"></script>
+
+{% include 'templates/partials/footer.twig' %}
+{% endblock %}

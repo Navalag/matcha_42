@@ -17,10 +17,10 @@ class PasswordController extends Controller
 		return $this->view->render($response, 'user/edit/account-settings.twig');
 	}
 
-	/**
-	*	Below we have multy step validation and error handling to update
-	*	user information.
-	*	Please read comments to understand every step
+	/*
+	** Below we have multy step validation and error handling to update
+	** user information.
+	** Please read comments to understand every step.
 	*/
 	public function postChangePassword($request, $response)
 	{
