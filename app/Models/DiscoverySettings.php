@@ -20,5 +20,25 @@ class DiscoverySettings extends Model
 		'lng',
 	];
 
-	
+	public static function getAllSettings() {
+		return DiscoverySettings::where('user_id', $_SESSION['user'])->first();
+	}
+
+	public static function createAndSetDefault() {
+		DiscoverySettings::create([
+			'user_id' => $_SESSION['user'],
+			'max_distanse' => 20,
+			'min_age' => 18,
+			'max_age' => 99,
+			'min_rating' => 0,
+			'max_rating' => 100,
+			'looking_for' => 'both',
+			'lat' => 0,
+			'lng' => 0,
+		]);
+	}
+
+	public static function setGpsLocation($lat, $lng) {
+		
+	}
 }

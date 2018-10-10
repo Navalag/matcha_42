@@ -30,6 +30,7 @@ class ActivateController extends Controller
 		$user = CheckEmail::where('uniq_id', $uniqid)->first();
 
 		User::setActiveAccount($user->email);
+		DiscoverySettings::createAndSetDefault();
 		$email = $request->getParam('email');
 		$user = User::where('email', $email)->first();
 

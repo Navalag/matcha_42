@@ -2,13 +2,15 @@
 // Input range sliders for discovery settings page
 // ------------------------------------------------------ //
 
+// console.log(JSON.stringify(userSettings));
+
 /*
 ** max distance
 */
 $(document).ready(function() {
 	var rangeDistance = document.getElementById('slider-distance');
 	noUiSlider.create(rangeDistance, {
-		start: [50],
+		start: [userSettings.max_distanse],
 		step: 5,
 		connect: [true, false],
 		range: {
@@ -33,7 +35,7 @@ $(document).ready(function() {
 $(document).ready(function() {
 	var rangeAge = document.getElementById('slider-age-gap');
 	noUiSlider.create(rangeAge, {
-		start: [18, 33],
+		start: [userSettings.min_age, userSettings.max_age],
 		// step: 1,
 		padding: [1, 1],
 		margin: 5,
@@ -50,7 +52,11 @@ $(document).ready(function() {
 	// Set visual min and max values and also update value hidden form inputs
 	rangeAge.noUiSlider.on('update', function(values, handle) {
 		document.getElementById('value-age-min').innerHTML = values[0];
-		document.getElementById('value-age-max').innerHTML = values[1];
+		if (values[1] == 55) {
+			document.getElementById('value-age-max').innerHTML = values[1] + '+';
+		} else {
+			document.getElementById('value-age-max').innerHTML = values[1];
+		}
 		document.getElementsByName('min-age').value = values[0];
 		document.getElementsByName('max-age').value = values[1];
 	});
@@ -62,7 +68,7 @@ $(document).ready(function() {
 $(document).ready(function() {
 	var rangeRating = document.getElementById('slider-rating-gap');
 	noUiSlider.create(rangeRating, {
-		start: [40, 70],
+		start: [userSettings.min_rating, userSettings.max_rating],
 		// step: 1,
 		padding: [1, 1],
 		margin: 20,

@@ -96,9 +96,9 @@
 								<div class="container">
 									<label class="mb-4">Looking for:</label>
 								<select name="account" class="form-control mb-3">
-								  <option>man</option>
-								  <option>woman</option>
-								  <option>man and woman</option>
+								  <option value="man" {{settings.looking_for == 'man' ? 'selected':'' }}>man</option>
+								  <option value="woman" {{settings.looking_for == 'woman' ? 'selected':'' }}>woman</option>
+								  <option value="both" {{settings.looking_for == 'both' ? 'selected':'' }}>man and woman</option>
 								</select>
 								</div>
 							</div>
@@ -138,6 +138,10 @@
 		</div>
 	</div>
 </section>
+
+<script>
+	var userSettings = {{ settings | json_encode | raw}};
+</script>
 
 <script src="{{ base_url() }}/vendor/jquery/jquery.min.js"></script>
 
