@@ -5,6 +5,7 @@ namespace Matcha\Controllers\Check;
 use Matcha\Models\User;
 use Matcha\Models\UserInterest;
 use Matcha\Models\InterestList;
+use Matcha\Models\UserDiscoveryInterests;
 
 class CheckController
 {
@@ -26,8 +27,16 @@ class CheckController
 
 	public function allUserInterests()
 	{
-		if (isset($_SESSION['user']))
+		if (isset($_SESSION['user'])) {
 			return UserInterest::all();
+		}
+	}
+
+	public function allDiscoveryInterests()
+	{
+		if (isset($_SESSION['user'])) {
+			return UserDiscoveryInterests::all();
+		}
 	}
 
 	// public function allAboutUser()
@@ -48,8 +57,20 @@ class CheckController
 				$interestsResult[] = $interestRow->interest;
 			}
 		}
-		if ($interestsResult)
-			return $interestsResult;
+		return $interestsResult;
+	}
+
+	public function allValueOfInterestsToSearch()
+	{
+		$interestsResult = [];
+		$userInterest = $this->allDiscoveryInterests();
+		foreach($userInterest as $row) {
+			if ($row->user_id == $_SESSION['user']) {
+				$interestRow = InterestList::where('id', $row->interest_id)->first();
+				$interestsResult[] = $interestRow->interest;
+			}
+		}
+		return $interestsResult;
 	}
 
 	public function check()

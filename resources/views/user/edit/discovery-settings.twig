@@ -13,7 +13,7 @@
 					</div>
 
 					<div class="card-body">
-						<form class="form-horizontal mt-4">
+						<form class="form-horizontal mt-4" action="{{ path_for('user.search.discovery_settings') }}" method="post">
 
 							<div class="form-group row">
 								<div class="container">
@@ -30,7 +30,7 @@
 									</div>
 									<div class="row">
 										<div class="col-sm-12">
-											<input type="hidden" name="max-distanse" value="">
+											<input type="hidden" name="max-distanse">
 										</div>
 								  </div>
 								</div>
@@ -56,8 +56,8 @@
 								  </div>
 								  <div class="row">
 										<div class="col-sm-12">
-											<input type="hidden" name="min-age" value="">
-											<input type="hidden" name="max-age" value="">
+											<input type="hidden" name="min-age">
+											<input type="hidden" name="max-age">
 										</div>
 								  </div>
 								</div>
@@ -83,8 +83,8 @@
 								  </div>
 								  <div class="row">
 										<div class="col-sm-12">
-											<input type="hidden" name="min-rating" value="">
-											<input type="hidden" name="max-rating" value="">
+											<input type="hidden" value="12" name="min-rating">
+											<input type="hidden" value="123" name="max-rating">
 										</div>
 								  </div>
 								</div>
@@ -95,7 +95,7 @@
 							<div class="form-group row">
 								<div class="container">
 									<label class="mb-4">Looking for:</label>
-								<select name="account" class="form-control mb-3">
+								<select name="looking_for" class="form-control mb-3">
 								  <option value="man" {{settings.looking_for == 'man' ? 'selected':'' }}>man</option>
 								  <option value="woman" {{settings.looking_for == 'woman' ? 'selected':'' }}>woman</option>
 								  <option value="both" {{settings.looking_for == 'both' ? 'selected':'' }}>man and woman</option>
@@ -106,19 +106,10 @@
 
 							<div class="form-group">
 								<label class="mb-4">Filter By Interests:</label>
-								<select multiple="" class="form-control" data-placeholder="Add interests">
-									<option selected>photo</option>
-									<option selected>yoga</option>
-									<option selected>films</option>
-									<option>rock</option>
-									<option>pop</option>
-									<option>veg</option>
-									<option>steaks</option>
-									<option>music</option>
-									<option>gum</option>
-									<option>workout</option>
-									<option>make up</option>
-									<option>fun</option>
+								<select multiple="" name="interests" class="form-control" data-placeholder="Add interests">
+									{% for interest in allInterests %}
+										<option {% if interest in interests %} {{'selected'}} {% endif %} value="{{ interest }}">{{ interest }}</option>
+									{% endfor %}
 								</select>
 							</div>
 
@@ -129,6 +120,7 @@
 									<button type="submit" class="btn btn-primary">Save settings</button>
 								</div>
 							</div>
+							{{ csrf.field | raw }}{# raw скроет строку #}
 
 						</form>
 					</div>
@@ -142,8 +134,6 @@
 <script>
 	var userSettings = {{ settings | json_encode | raw}};
 </script>
-
-<script src="{{ base_url() }}/vendor/jquery/jquery.min.js"></script>
 
 <script src="{{ base_url() }}/vendor/wnumb-1.1.0/wNumb.js"></script>
 <script src="{{ base_url() }}/vendor/noUiSlider-12.0.0/distribute/nouislider.min.js"></script>

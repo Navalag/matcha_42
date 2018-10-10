@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ozharko
- * Date: 9/5/18
- * Time: 11:57 AM
- */
 
 namespace Matcha\Models;
-
 
 use Illuminate\Database\Eloquent\Model;
 
