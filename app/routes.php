@@ -62,6 +62,7 @@ $app->group('', function () {
 	$this->post('/user/search/discovery_settings', 'DiscoverySettingsController:postEditDiscoverySettings');
 	$this->post('/user/search/discovery_settings_add_interest', 'DiscoverySettingsController:postAddDiscoveryInterests');
 	$this->post('/user/search/discovery_settings_remove_interest', 'DiscoverySettingsController:postDeleteDiscoveryInterests');
+	$this->post('/user/search/set_geolocation', 'DiscoverySettingsController:postSetGeolocation');
 
 
 

@@ -117,6 +117,15 @@
 
 							<div class="form-group row">
 								<div class="col-md-12 text-center">
+									<a class="link-button" href="#" onclick="getLocation()">Manage my location</a>
+									<div id="mapholder" style="height: 400px; display: none;"></div>
+								</div>
+							</div>
+
+							<div class="line"></div>
+
+							<div class="form-group row">
+								<div class="col-md-12 text-center">
 									<button type="submit" class="btn btn-primary">Save settings</button>
 								</div>
 							</div>
@@ -139,5 +148,6 @@
 <script src="{{ base_url() }}/vendor/noUiSlider-12.0.0/distribute/nouislider.min.js"></script>
 <script src="{{ base_url() }}/js/sliders.js"></script>
 
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTSjAlFbeIMeUWSOLtbaEooLPfAo8GW2s&libraries=places&callback=initMap" async defer></script> -->
 {% include 'templates/partials/footer.twig' %}
 {% endblock %}

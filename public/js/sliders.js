@@ -18,8 +18,8 @@ $(document).ready(function() {
 			'max': [100]
 		},
 		format: wNumb({
-        decimals: 0
-    })
+				decimals: 0
+		})
 	});
 	
 	// Set visual min and max values and also update value hidden form inputs
@@ -44,8 +44,8 @@ $(document).ready(function() {
 			'max': [56]
 		},
 		format: wNumb({
-        decimals: 0
-    }),
+				decimals: 0
+		}),
 		connect: true
 	});
 	
@@ -77,8 +77,8 @@ $(document).ready(function() {
 			'max': [101]
 		},
 		format: wNumb({
-        decimals: 0
-    }),
+				decimals: 0
+		}),
 		connect: true
 	});
 	
@@ -235,8 +235,156 @@ $(document).ready(function() {
 
 });
 
+// ------------------------------------------------------ //
+// Check user geolocation
+// ------------------------------------------------------ //
 
+var tokenName =  $('input[name="csrf_name"]');
+var tokenValue =  $('input[name="csrf_value"]');
 
+function getLocation() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(showPosition, showError);
+	} else {
+		console.log("Geolocation is not supported by this browser.");
+	}
+}
+
+function showPosition(position) {
+	console.log(position.coords.latitude);
+	console.log(position.coords.longitude);
+
+	$.ajax({
+		url: '/user/search/set_geolocation',
+		data: {
+			'latitude': position.coords.latitude, 
+			'longitude': position.coords.longitude, 
+			'csrf_name' : tokenName.attr('value'), 
+			'csrf_value' : tokenValue.attr('value')
+		},
+		type: 'POST',
+		success: function(response)
+		{
+			console.log(response);
+			var obj = JSON.parse(response);
+			tokenName.val(obj.csrf_name);
+			tokenValue.val(obj.csrf_value);
+		},
+		error: function(error)
+		{
+			console.log(error);
+		}
+	});
+}
+
+function showError(error) {
+	$.getJSON('https://json.geoiplookup.io', function(data) {
+		console.log(data.latitude);
+		console.log(data.longitude);
+
+		$.ajax({
+			url: '/user/search/set_geolocation',
+			data: {
+				'latitude': data.latitude, 
+				'longitude': data.longitude,
+				'csrf_name' : tokenName.attr('value'), 
+				'csrf_value' : tokenValue.attr('value')
+			},
+			type: 'POST',
+			success: function(response)
+			{
+				console.log(response);
+				var obj = JSON.parse(response);
+				tokenName.val(obj.csrf_name);
+				tokenValue.val(obj.csrf_value);
+			},
+			error: function(error)
+			{
+				console.log(error);
+			}
+		});
+	});
+}
+
+window.onload = getLocation();
+
+// ------------------------------------------------------ //
+// Geolocation
+// ------------------------------------------------------ //
+
+// var mapholder = document.getElementById("mapholder");
+// var latitude, longitude;
+
+// function getLocation() {
+// 	mapholder.setAttribute("style", "display: block;");
+// 	if (navigator.geolocation) {
+// 		navigator.geolocation.getCurrentPosition(showPosition, showError);
+// 	} else {
+// 		mapholder.innerHTML = "Geolocation is not supported by this browser.";
+// 	}
+// }
+
+// function showPosition(position) {
+// 	latitude = position.coords.latitude;
+// 	longitude = position.coords.longitude;
+// 	console.log(latitude, longitude);
+// }
+
+// function showError(error) {
+// 	switch(error.code) {
+// 		case error.PERMISSION_DENIED:
+// 			mapholder.innerHTML = "User denied the request for Geolocation."
+// 			break;
+// 		case error.POSITION_UNAVAILABLE:
+// 			mapholder.innerHTML = "Location information is unavailable."
+// 			break;
+// 		case error.TIMEOUT:
+// 			mapholder.innerHTML = "The request to get user location timed out."
+// 			break;
+// 		case error.UNKNOWN_ERROR:
+// 			mapholder.innerHTML = "An unknown error occurred."
+// 			break;
+// 	}
+// }
+
+// function initMap() {
+// 	// getLocation();
+//   var userPlace = {lat: latitude, lng: longitude};
+
+//   map = new google.maps.Map(document.getElementById('mapholder'), {
+//     center: userPlace,
+//     zoom: 15
+//   });
+
+//   infowindow = new google.maps.InfoWindow();
+//   var service = new google.maps.places.PlacesService(map);
+//   service.nearbySearch({
+//     location: userPlace,
+//     radius: 1000,
+//     type: ['store']
+//   }, callback);
+// }
+
+// function callback(results, status) {
+//   if (status === google.maps.places.PlacesServiceStatus.OK) {
+//     for (var i = 0; i < results.length; i++) {
+//       createMarker(results[i]);
+//     }
+//   }
+// }
+
+// function createMarker(place) {
+//   var placeLoc = place.geometry.location;
+//   var marker = new google.maps.Marker({
+//     map: map,
+//     position: place.geometry.location
+//   });
+
+//   google.maps.event.addListener(marker, 'click', function() {
+//     infowindow.setContent(place.name);
+//     infowindow.open(map, this);
+//   });
+// }
 
 
 

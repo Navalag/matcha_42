@@ -39,7 +39,10 @@ class DiscoverySettings extends Model
 	}
 
 	public static function setGpsLocation($lat, $lng) {
-		
+		DiscoverySettings::where('user_id', $_SESSION['user'])->update([
+			'lat' => $lat,
+			'lng' => $lng,
+		]);
 	}
 
 	public static function setAll($settings) {
