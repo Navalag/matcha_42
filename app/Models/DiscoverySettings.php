@@ -41,4 +41,15 @@ class DiscoverySettings extends Model
 	public static function setGpsLocation($lat, $lng) {
 		
 	}
+
+	public static function setAll($settings) {
+		DiscoverySettings::where('user_id', $_SESSION['user'])->update([
+			'max_distanse' => $settings['max_distanse'],
+			'min_age' => $settings['min_age'],
+			'max_age' => $settings['max_age'],
+			'min_rating' => $settings['min_rating'],
+			'max_rating' => $settings['max_rating'],
+			'looking_for' => $settings['looking_for'],
+		]);
+	}
 }

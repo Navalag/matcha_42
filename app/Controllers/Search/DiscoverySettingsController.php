@@ -10,6 +10,7 @@ use Matcha\Models\User;
 use Matcha\Models\InterestList;
 use Matcha\Models\DiscoverySettings;
 use Matcha\Models\UserDiscoveryInterests;
+use Respect\Validation\Validator as v;
 
 class DiscoverySettingsController extends Controller
 {
@@ -54,51 +55,59 @@ class DiscoverySettingsController extends Controller
 
 	public function postEditDiscoverySettings($request, $response) 
 	{
-		$settings['max_distanse'] = $request->getParam('max_distanse');
-		$settings['min-rating'] = $request->getParam('min-rating');
-		$settings['max-rating'] = $request->getParam('max-rating');
-		$settings['min-age'] = $request->getParam('min-age');
-		$settings['max-age'] = $request->getParam('max-age');
-		$settings['interests'] = $request->getParam('interests');
-		$settings['looking_for'] = $request->getParam('looking_for');
+		$validation = $this->validator->validate($request, [
+			'max-distanse' => v::notEmpty()->numeric(),
+			'min-rating' => v::notEmpty()->numeric(),
+			'max-rating' => v::notEmpty()->numeric(),
+			'min-age' => v::notEmpty()->numeric(),
+			'max-age' => v::notEmpty()->numeric(),
+			'looking_for' => v::notEmpty()->alpha(),
+		]);
 
-		var_dump($request->getParsedBody()); die();
+		if ($validation->failed()) {
+			return $response->withRedirect($this->router->pathFor('user.search.discovery_settings'));
+		}
+
+		$settings['max_distanse'] = $request->getParam('max-distanse');
+		$settings['min_rating'] = $request->getParam('min-rating');
+		$settings['max_rating'] = $request->getParam('max-rating');
+		$settings['min_age'] = $request->getParam('min-age');
+		$settings['max_age'] = $request->getParam('max-age');
+		$settings['looking_for'] = $request->getParam('looking_for');
+		$this->container->view->getEnvironment()->addGlobal('settings', $settings);
+		// var_dump($settings); die();
+
+		DiscoverySettings::setAll($settings);
+		return $response->withRedirect($this->router->pathFor('user.search.discovery_settings'));
 	}
 
-	// public function postDeleteDiscoveryInterests($request, $response)
-	// {
-	// 	$interest = $request->getParam('interest');
+	public function postDeleteDiscoveryInterests($request, $response)
+	{
+		$interest = $request->getParam('interest');
 
-	// 	$interestRow = InterestList::where('interest', $interest)->first();
-	// 	if ($interestRow)
-	// 	{
-	// 		UserInterest::where('user_id', $_SESSION['user'])
-	// 					->where('interest_id', $interestRow->id)
-	// 					->delete();
-	// 	}
-	// 	/*
-	// 	** send csrf values for ajax request
-	// 	*/
-	// 	$ajax_csrf = $request->getAttribute('ajax_csrf');
-	// 	return $response->write(json_encode($ajax_csrf));
-	// }
+		$interestRow = InterestList::where('interest', $interest)->first();
+		if ($interestRow) {
+			UserDiscoveryInterests::deleteInterest($interestRow->id);
+		}
+		/*
+		** send csrf values for ajax request
+		*/
+		$ajax_csrf = $request->getAttribute('ajax_csrf');
+		return $response->write(json_encode($ajax_csrf));
+	}
 
-	// public function postAddDiscoveryInterests($request, $response)
-	// {
-	// 	$interest = $request->getParam('interest');
+	public function postAddDiscoveryInterests($request, $response)
+	{
+		$interest = $request->getParam('interest');
 
-	// 	$interestRow = InterestList::where('interest', $interest)->first();
-	// 	if ($interestRow)
-	// 	{
-	// 		UserInterest::create([
-	// 			'user_id' => $_SESSION['user'],
-	// 			'interest_id' => $interestRow->id,
-	// 		]);
-	// 	}
-	// 	/*
-	// 	** send csrf values for ajax request
-	// 	*/
-	// 	$ajax_csrf = $request->getAttribute('ajax_csrf');
-	// 	return $response->write(json_encode($ajax_csrf));
-	// }
+		$interestRow = InterestList::where('interest', $interest)->first();
+		if ($interestRow) {
+			UserDiscoveryInterests::setInterest($interestRow->id);
+		}
+		/*
+		** send csrf values for ajax request
+		*/
+		$ajax_csrf = $request->getAttribute('ajax_csrf');
+		return $response->write(json_encode($ajax_csrf));
+	}
 }

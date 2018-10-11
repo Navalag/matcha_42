@@ -106,7 +106,7 @@
 
 							<div class="form-group">
 								<label class="mb-4">Filter By Interests:</label>
-								<select multiple="" name="interests" class="form-control" data-placeholder="Add interests">
+								<select multiple="" class="form-control" data-placeholder="Add interests">
 									{% for interest in allInterests %}
 										<option {% if interest in interests %} {{'selected'}} {% endif %} value="{{ interest }}">{{ interest }}</option>
 									{% endfor %}

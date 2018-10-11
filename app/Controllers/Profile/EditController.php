@@ -57,9 +57,9 @@ class EditController extends Controller
 		$this->container->view->getEnvironment()->addGlobal('edit', $edit);
 
 		$id = $_SESSION['user'];
-		$this->checker->user()->setUsername($id, $edit['username']);
-		$this->checker->user()->setName($id, $edit['name']);
-		$this->checker->user()->setSurname($id, $edit['surname']);
+		// $this->checker->user()->setUsername($id, $edit['username']);
+		// $this->checker->user()->setName($id, $edit['name']);
+		// $this->checker->user()->setSurname($id, $edit['surname']);
 
 		User::where('id', $id)->update([
 			'username' => $edit['username'],

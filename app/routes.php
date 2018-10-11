@@ -60,8 +60,8 @@ $app->group('', function () {
 	*/
 	$this->get('/user/search/discovery_settings', 'DiscoverySettingsController:getEditDiscoverySettings')->setName('user.search.discovery_settings');
 	$this->post('/user/search/discovery_settings', 'DiscoverySettingsController:postEditDiscoverySettings');
-	// $this->post('/user/search/discovery_settings_add_interest', 'DiscoverySettingsController:postDeleteDiscoveryInterests');
-	// $this->post('/user/search/discovery_settings_remove_interest', 'DiscoverySettingsController:postAddDiscoveryInterests');
+	$this->post('/user/search/discovery_settings_add_interest', 'DiscoverySettingsController:postAddDiscoveryInterests');
+	$this->post('/user/search/discovery_settings_remove_interest', 'DiscoverySettingsController:postDeleteDiscoveryInterests');
 
 
 
