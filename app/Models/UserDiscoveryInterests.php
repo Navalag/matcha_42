@@ -25,4 +25,8 @@ class UserDiscoveryInterests extends Model
 						->where('interest_id', $interest_id)
 						->delete();
 	}
+
+	public static function getAll() {
+		return UserDiscoveryInterests::where('user_id', $_SESSION['user'])->first();
+	}
 }
