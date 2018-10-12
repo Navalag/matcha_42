@@ -142,7 +142,78 @@ $(document).ready(function() {
 
 });
 
+// ------------------------------------------------------ //
+// Check user geolocation
+// ------------------------------------------------------ //
 
+var tokenName =  $('input[name="csrf_name"]');
+var tokenValue =  $('input[name="csrf_value"]');
+
+function getLocation() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(showPosition, showError);
+	} else {
+		console.log("Geolocation is not supported by this browser.");
+	}
+}
+
+function showPosition(position) {
+	console.log(position.coords.latitude);
+	console.log(position.coords.longitude);
+
+	$.ajax({
+		url: '/user/edit/set_geolocation',
+		data: {
+			'latitude': position.coords.latitude, 
+			'longitude': position.coords.longitude, 
+			'csrf_name' : tokenName.attr('value'), 
+			'csrf_value' : tokenValue.attr('value')
+		},
+		type: 'POST',
+		success: function(response)
+		{
+			console.log(response);
+			var obj = JSON.parse(response);
+			tokenName.val(obj.csrf_name);
+			tokenValue.val(obj.csrf_value);
+		},
+		error: function(error)
+		{
+			console.log(error);
+		}
+	});
+}
+
+function showError(error) {
+	$.getJSON('https://json.geoiplookup.io', function(data) {
+		console.log(data.latitude);
+		console.log(data.longitude);
+
+		$.ajax({
+			url: '/user/edit/set_geolocation',
+			data: {
+				'latitude': data.latitude, 
+				'longitude': data.longitude,
+				'csrf_name' : tokenName.attr('value'), 
+				'csrf_value' : tokenValue.attr('value')
+			},
+			type: 'POST',
+			success: function(response)
+			{
+				console.log(response);
+				var obj = JSON.parse(response);
+				tokenName.val(obj.csrf_name);
+				tokenValue.val(obj.csrf_value);
+			},
+			error: function(error)
+			{
+				console.log(error);
+			}
+		});
+	});
+}
+
+window.onload = getLocation();
 
 
 

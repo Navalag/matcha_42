@@ -110,17 +110,4 @@ class DiscoverySettingsController extends Controller
 		$ajax_csrf = $request->getAttribute('ajax_csrf');
 		return $response->write(json_encode($ajax_csrf));
 	}
-
-	public function postSetGeolocation($request, $response)
-	{
-		$lat = $request->getParam('latitude');
-		$lng = $request->getParam('longitude');
-
-		DiscoverySettings::setGpsLocation($lat, $lng);
-		/*
-		** send csrf values for ajax request
-		*/
-		$ajax_csrf = $request->getAttribute('ajax_csrf');
-		return $response->write(json_encode($ajax_csrf));
-	}
 }

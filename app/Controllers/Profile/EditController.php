@@ -6,6 +6,7 @@ use Matcha\Models\User;
 use Matcha\Models\InterestList;
 use Matcha\Models\UserInterest;
 use Matcha\Models\Photo;
+use Matcha\Models\DiscoverySettings;
 use Matcha\Controllers\Controller;
 use Matcha\Controllers\Check\CheckController;
 use Respect\Validation\Validator as v;
@@ -69,6 +70,22 @@ class EditController extends Controller
 			'about_me' => $edit['about_me'],
 			'age' => $edit['age'],
 		]);
+		DiscoverySettings::updateAgeGap($edit['age']);
+		// $this->checker->setGeolocation($request, $response);
+
 		return $response->withRedirect($this->router->pathFor('home'));
+	}
+
+	public function postSetGeolocation($request, $response)
+	{
+		$lat = $request->getParam('latitude');
+		$lng = $request->getParam('longitude');
+
+		User::setGpsLocation($lat, $lng);
+		/*
+		** send csrf values for ajax request
+		*/
+		$ajax_csrf = $request->getAttribute('ajax_csrf');
+		return $response->write(json_encode($ajax_csrf));
 	}
 }

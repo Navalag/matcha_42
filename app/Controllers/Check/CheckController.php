@@ -39,6 +39,19 @@ class CheckController
 		}
 	}
 
+	// public function postSetGeolocation($request, $response)
+	// {
+	// 	$lat = $request->getParam('latitude');
+	// 	$lng = $request->getParam('longitude');
+
+	// 	User::setGpsLocation($lat, $lng);
+	// 	/*
+	// 	** send csrf values for ajax request
+	// 	*/
+	// 	$ajax_csrf = $request->getAttribute('ajax_csrf');
+	// 	return $response->write(json_encode($ajax_csrf));
+	// }
+
 	// public function allAboutUser()
 	// {
 	// 	if (isset($_SESSION['user'])) {

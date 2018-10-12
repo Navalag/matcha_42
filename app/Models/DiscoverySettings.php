@@ -16,8 +16,6 @@ class DiscoverySettings extends Model
 		'min_rating',
 		'max_rating',
 		'looking_for',
-		'lat',
-		'lng',
 	];
 
 	public static function getAllSettings() {
@@ -29,19 +27,10 @@ class DiscoverySettings extends Model
 			'user_id' => $_SESSION['user'],
 			'max_distanse' => 20,
 			'min_age' => 18,
-			'max_age' => 99,
+			'max_age' => 55,
 			'min_rating' => 0,
 			'max_rating' => 100,
 			'looking_for' => 'both',
-			'lat' => 0,
-			'lng' => 0,
-		]);
-	}
-
-	public static function setGpsLocation($lat, $lng) {
-		DiscoverySettings::where('user_id', $_SESSION['user'])->update([
-			'lat' => $lat,
-			'lng' => $lng,
 		]);
 	}
 
@@ -53,6 +42,13 @@ class DiscoverySettings extends Model
 			'min_rating' => $settings['min_rating'],
 			'max_rating' => $settings['max_rating'],
 			'looking_for' => $settings['looking_for'],
+		]);
+	}
+
+	public static function updateAgeGap($age) {
+		DiscoverySettings::where('user_id', $_SESSION['user'])->update([
+			'min_age' => ($age - 5) <= 18 ? 18 : $age - 5,
+			'max_age' => ($age + 5) >= 55 ? 55 : $age + 5,
 		]);
 	}
 }

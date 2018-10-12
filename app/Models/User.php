@@ -21,11 +21,32 @@ class User extends Model
 		'gender',
 		'age',
 		'fame_rating',
+		'lat',
+		'lng',
 		'facebook_link',
 		'instagram_link',
 		'twittwer_link',
 		'google_plus_link',
 	];
+
+	public static function getAllUserInfo()
+	{
+		return User::where('id', $_SESSION['user'])->first();
+	}
+
+	public static function selectForFindAMatch()
+	{
+		// SELECT id, ( 6371 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance FROM markers HAVING distance < 25 ORDER BY distance LIMIT 0 , 20;
+
+		return User::where('id', $_SESSION['user'])->first();
+	}
+
+	public static function setGpsLocation($lat, $lng) {
+		User::where('id', $_SESSION['user'])->update([
+			'lat' => $lat,
+			'lng' => $lng,
+		]);
+	}
 
 	public function setPassword($password)
 	{
@@ -33,6 +54,7 @@ class User extends Model
 			'password' => password_hash($password, PASSWORD_DEFAULT)
 		]);
 	}
+
 	public function setEmail($id, $email)
 	{
 		User::where('id', $id)->update([

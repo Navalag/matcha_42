@@ -29,6 +29,8 @@
 			gender VARCHAR(255) NULL DEFAULT NULL,
 			age INT(11) NOT NULL DEFAULT 18,
 			fame_rating INT(11) NULL DEFAULT 0,
+			lat FLOAT( 10, 6 ) NOT NULL DEFAULT 0, 
+  			lng FLOAT( 10, 6 ) NOT NULL DEFAULT 0, 
 			facebook_link VARCHAR(80) NULL DEFAULT NULL,
 			instagram_link VARCHAR(80) NULL DEFAULT NULL,
 			twittwer_link VARCHAR(80) NULL DEFAULT NULL,
@@ -199,8 +201,6 @@
 			min_rating INT(11) NULL DEFAULT NULL, 
 			max_rating INT(11) NULL DEFAULT NULL, 
 			looking_for VARCHAR(255) NULL DEFAULT NULL, 
-			lat FLOAT( 10, 6 ) NOT NULL, 
-  			lng FLOAT( 10, 6 ) NOT NULL, 
 			created_at TIMESTAMP NULL DEFAULT NULL,
 			updated_at TIMESTAMP NULL DEFAULT NULL
 		)";

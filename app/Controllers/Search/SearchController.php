@@ -7,7 +7,6 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Matcha\Models\User;
 use Matcha\Models\Likes;
-use Matcha\Models\About;
 use Respect\Validation\Validator as v;
 use Matcha\Controllers\Search\MatchaController;
 
@@ -15,11 +14,12 @@ class SearchController extends Controller
 {
 	public function getAllProfile($request, $response)
 	{
-		// узнать кто нравится
-		$user = User::where('id', $_SESSION['user'])->first();
-		$about = About::where('user_id', $user->id)->first();
+		$user = User::getAllUserInfo();
+		var_dump($user); die();
+		$userDiscoverySettings = DiscoverySettings::getAllSettings();
 
-		// желанный результат
+		// $about = About::where('user_id', $user->id)->first();
+
 		$prefer = $about->sexual_pref;
 
 		$allPrefer = About::where('sexual_pref', $prefer)->get();

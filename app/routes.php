@@ -43,6 +43,10 @@ $app->group('', function () {
 	$this->post('/user/edit/photo_delete', 'PhotoController:postDeletePhoto')->setName('user.edit.photo_delete');
 	$this->post('/user/edit/photo_upload', 'PhotoController:postUploadPhoto')->setName('user.edit.photo_post');
 	/*
+	** edit profile (set geolocation)
+	*/
+	$this->post('/user/edit/set_geolocation', 'EditController:postSetGeolocation');
+	/*
 	** sign out
 	*/
 	$this->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signout');
@@ -60,9 +64,20 @@ $app->group('', function () {
 	*/
 	$this->get('/user/search/discovery_settings', 'DiscoverySettingsController:getEditDiscoverySettings')->setName('user.search.discovery_settings');
 	$this->post('/user/search/discovery_settings', 'DiscoverySettingsController:postEditDiscoverySettings');
+	/*
+	** discovery settings (manage interests)
+	*/
 	$this->post('/user/search/discovery_settings_add_interest', 'DiscoverySettingsController:postAddDiscoveryInterests');
 	$this->post('/user/search/discovery_settings_remove_interest', 'DiscoverySettingsController:postDeleteDiscoveryInterests');
-	$this->post('/user/search/set_geolocation', 'DiscoverySettingsController:postSetGeolocation');
+	/*
+	** find a match
+	*/
+	$this->get('/search/all', 'SearchController:getAllProfile')->setName('search.all');
+	/*
+	** find a match (manage likes)
+	*/
+	$this->post('/search/like', 'LikedController:getLike')->setName('search.like');
+	$this->post('/search/unlike', 'LikedController:getUnlike')->setName('search.unlike');
 
 
 
@@ -76,8 +91,4 @@ $app->group('', function () {
 	
 	// $this->get('/user/edit/photo', 'PhotoController:getPhotoProfile')->setName('user.edit.photo');
 	
-
-	$this->get('/search/all', 'SearchController:getAllProfile')->setName('search.all');
-	$this->post('/search/like', 'LikedController:getLike')->setName('search.like');
-	$this->post('/search/unlike', 'LikedController:getUnlike')->setName('search.unlike');
 })->add(new AuthMiddleware($container));
