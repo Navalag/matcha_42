@@ -7,16 +7,26 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Matcha\Models\User;
 use Matcha\Models\Likes;
+use Matcha\Models\DiscoverySettings;
 use Respect\Validation\Validator as v;
 use Matcha\Controllers\Search\MatchaController;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class SearchController extends Controller
 {
 	public function getAllProfile($request, $response)
 	{
 		$user = User::getAllUserInfo();
-		var_dump($user); die();
 		$userDiscoverySettings = DiscoverySettings::getAllSettings();
+
+		$selectedUsers = DB::select("SELECT * , ( 6371 
+			* acos( cos( radians( $user->lat ) ) 
+				* cos( radians( lat ) ) 
+				* cos( radians( lng ) - radians( $user->lng ) )
+				+ sin( radians( $user->lat ) ) 
+				* sin( radians( lat ) ) 
+			) ) AS distance FROM user HAVING distance < ?;", [$userDiscoverySettings->max_distanse]);
+		var_dump($selectedUsers); die();
 
 		// $about = About::where('user_id', $user->id)->first();
 

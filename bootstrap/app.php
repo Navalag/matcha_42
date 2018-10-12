@@ -3,6 +3,7 @@
  * call Validator class as v
  */
 use \Respect\Validation\Validator as v;
+use Illuminate\Database\Capsule\Manager as DB;
 // session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../connect/create_table.php'; // DB
@@ -21,7 +22,7 @@ $container = $app->getContainer();
  * дает возможность сортировки, выборки и т.д.
 **/
 
-$capsule = new \Illuminate\Database\Capsule\Manager;
+$capsule = new DB;
 $capsule->addConnection($container['settings']['db']);
 //Make this Capsule instance available globally.
 $capsule->setAsGlobal();

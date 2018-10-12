@@ -34,11 +34,17 @@ class User extends Model
 		return User::where('id', $_SESSION['user'])->first();
 	}
 
-	public static function selectForFindAMatch()
+	public static function selectForSearching($settings)
 	{
-		// SELECT id, ( 6371 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance FROM markers HAVING distance < 25 ORDER BY distance LIMIT 0 , 20;
+		// $result = User::select(Matcha::raw("( 6371 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance"))
+		// 	->where("distance < $settings->max_distanse")
+		// 	->groupBy('distance')
+		// 	->get();
+		// $result = matcha::table('user')
+				// ->selectRaw("( 6371 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance")->get();
 
-		return User::where('id', $_SESSION['user'])->first();
+		// $result = DB::statement("SELECT * , ( 6371 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance FROM user HAVING distance < $settings->max_distanse ORDER BY distance LIMIT 0 , 20");
+		// return $result;
 	}
 
 	public static function setGpsLocation($lat, $lng) {
