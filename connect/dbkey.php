@@ -5,26 +5,26 @@
 
 	$dbname = "matcha";
 
-    $dbUser = "user";
+	$dbUser = "user";
 
-    // $dbAbout = "about";
+	// $dbAbout = "about";
 
-    $dbChat = "chat";
+	$dbChat = "chat";
 
-    $dbCheckEmail = "check_email";
+	$dbCheckEmail = "check_email";
 
-    $dbInterestList = "interest_list";
+	$dbInterestList = "interest_list";
 
-    $dbLike = "likes";
+	$dbLike = "likes";
 
 	$dbMatcha = "matcha";
 
-    $dbPhoto = "photo";
+	$dbPhoto = "photo";
 
-    $dbUserInterest = "user_interest";
+	$dbUserInterest = "user_interest";
 
-    $dbDiscoverySettings = "discovery_settings";
+	$dbDiscoverySettings = "discovery_settings";
 
-    $dbUserDiscoveryInterests = "user_discovery_interests";
+	$dbUserDiscoveryInterests = "user_discovery_interests";
 
-
+	$dbBlockUsersList = "block_users_list";

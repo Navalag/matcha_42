@@ -27,6 +27,6 @@ class UserDiscoveryInterests extends Model
 	}
 
 	public static function getAll() {
-		return UserDiscoveryInterests::where('user_id', $_SESSION['user'])->first();
+		return UserDiscoveryInterests::where('user_id', $_SESSION['user'])->get();
 	}
 }

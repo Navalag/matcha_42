@@ -29,23 +29,6 @@ class DiscoverySettingsController extends Controller
 		$settings['lat'] = $userInfo->lat;
 		$settings['lng'] = $userInfo->lng;
 
-		// $ip = $_SERVER['REMOTE_ADDR'];
-		// $query = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip));
-		// if($query && $query['status'] == 'success') {
-		//   echo 'Hello visitor from '.$query['country'].', '.$query['city'].'!';
-		// } else {
-		//   echo 'Unable to get location';
-		// }
-
-		// if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-		//    echo $ip = $_SERVER['HTTP_CLIENT_IP'];
-		// } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-		//   echo  $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		// } else {
-		//    echo $ip = $_SERVER['REMOTE_ADDR'];
-		// }
-		// die();
-
 		$this->container->view->getEnvironment()->addGlobal('interests', $interestsResult);
 		$this->container->view->getEnvironment()->addGlobal('allInterests', $allInterests);
 		$this->container->view->getEnvironment()->addGlobal('settings', $settings);

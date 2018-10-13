@@ -222,6 +222,22 @@
 		)";
 
 		$conn->exec($sql);
+
+		/* 
+		** CREATE block_users_list TABLE
+		*/
+		$sql = "CREATE "
+			. " TABLE IF NOT EXISTS "
+			. $dbBlockUsersList
+			. " (
+			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+			user_id INT(11) NOT NULL, 
+			blocked_user_id INT(11) NOT NULL, 
+			created_at TIMESTAMP NULL DEFAULT NULL,
+			updated_at TIMESTAMP NULL DEFAULT NULL
+		)";
+
+		$conn->exec($sql);
 	}
 	catch(PDOException $e) {
 		echo $sql . "<br>" . $e->getMessage();
