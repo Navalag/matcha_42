@@ -6,13 +6,15 @@ use Matcha\Controllers\Controller;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Matcha\Models\User;
-use Matcha\Models\Likes;
+// use Matcha\Models\Likes;
 use Matcha\Models\DiscoverySettings;
 use Matcha\Models\UserDiscoveryInterests;
 use Matcha\Models\UserInterest;
 use Matcha\Models\BlockUsersList;
+use Matcha\Models\Photo;
+use Matcha\Controllers\Check\CheckController;
 use Respect\Validation\Validator as v;
-use Matcha\Controllers\Search\MatchaController;
+// use Matcha\Controllers\Search\MatchaController;
 use Illuminate\Database\Capsule\Manager as DB;
 
 class SearchController extends Controller
@@ -20,6 +22,10 @@ class SearchController extends Controller
 	public function checkInterests($usersToFilter)
 	{
 		$interestsActiveUser = UserDiscoveryInterests::getAll();
+		//check if no interests to search - does not use this filter
+		if (!$interestsActiveUser[0]) {
+			return $usersToFilter;
+		}
 		$result = [];
 		foreach ($usersToFilter as $row) {
 			$interestsUserToCheck = UserInterest::where('user_id', $row->id)->get();
@@ -101,8 +107,17 @@ class SearchController extends Controller
 		if (!empty($finalArray)) {
 			$finalArray = $this->checkInterests($finalArray);
 		}
-		print_r($finalArray); die();
-		// var_dump($finalArray); die();
+
+		$viewArray = [];
+		foreach ($finalArray as $row) {
+			$userPhoro = Photo::getPhotoSrcByUserId($row->id);
+			$userInterests = UserInterest::getInterestsValueByUserId($row->id);
+			$viewArray[] = array('basic_info' => $row, 
+								 'photo' => $userPhoro,
+								 'interests' => $userInterests);
+		}
+		$this->container->view->getEnvironment()->addGlobal('array', json_encode($viewArray));
+		// print_r($viewArray); die();
 
 		// $about = About::where('user_id', $user->id)->first();
 

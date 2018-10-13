@@ -101,8 +101,10 @@
 
 <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
 <script src="{{ base_url() }}/js/swipe.js"></script>
-<!-- <script>
-	var userId = {{ edit.photo | json_encode | raw}};
-</script> -->
+<script>
+	var usersJSON = {{ array | json_encode | raw}};
+	// var obj = JSON.parse(usersJSON);
+	console.log(usersJSON);
+</script>
 {% include 'templates/partials/footer.twig' %}
 {% endblock %}

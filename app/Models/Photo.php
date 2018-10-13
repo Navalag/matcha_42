@@ -41,4 +41,15 @@ class Photo extends Model
 			}
 		}
 	}
+
+	public static function getPhotoSrcByUserId($user_id)
+	{
+		$rawUserPhoto = Photo::where('user_id', $user_id)->get();
+		$result = [];
+		foreach ($rawUserPhoto as $row) {
+			$result[] = $row->photo_src;
+		}
+		// print_r($result); die();
+		return $result;
+	}
 }
