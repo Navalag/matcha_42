@@ -18,6 +18,7 @@ class ChatController extends Controller
     {
         // добавить сюда массив сообщений с переписки и в глобальное окружение на вывод
 
+        $arrMes = [];
         $allMessage = Chat::all();
 
         foreach ($allMessage as $rowMessage)
@@ -48,14 +49,17 @@ class ChatController extends Controller
 //            return $response->withRedirect($this->router->pathFor('auth.password.change'));
 //        }
 
-        $id = $request->getParam('chat-user');
-        $message = $request->getParam('chat-message');
+        $id = $request->getParam('chat_user');
+        $message = $request->getParam('chat_message');
 
         // CHAT ID
-        $chat_id = 1;
-        Chat::addMessage($message, $chat_id);
-
-        return $response->withRedirect($this->router->pathFor('chat'));
+//        $chat_id = 1;
+//        Chat::addMessage($message, $chat_id);
+        /*
+		** send csrf values for ajax request
+		*/
+        $ajax_csrf = $request->getAttribute('ajax_csrf');
+        return $response->write(json_encode($ajax_csrf));
 
     }
 }

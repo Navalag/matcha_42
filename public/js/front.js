@@ -176,8 +176,22 @@ $(document).ready(function () {
             chat_message: $('#chat-message').val()
         };
         websocket.send(JSON.stringify(messageJSON));
-    });
 
+        var url = '/chat/addMessage';
+        var tokenName =  $('input[name="csrf_name"]').attr('value');
+        var tokenValue =  $('input[name="csrf_value"]').attr('value');
+        var data = {"chat_user" : $('#chat-user').val(),
+            		"chat_message": $('#chat-message').val(),
+					"csrf_name" : tokenName,
+					"csrf_value" : tokenValue
+				};
+        $.post(url, data, function(response) {
+            console.log(response);
+            // var obj = JSON.parse(response);
+            tokenName.val(response.csrf_name);
+            tokenValue.val(response.csrf_value);
+        });
+    });
     // ------------------------------------------------------- //
     // Chat end
     // ------------------------------------------------------ //

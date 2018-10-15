@@ -1,6 +1,6 @@
 <?php
 define('HOST_NAME',"localhost"); 
-define('PORT',"8091");
+define('PORT',"8090");
 $null = NULL;
 
 require_once("class.chathandler.php");
