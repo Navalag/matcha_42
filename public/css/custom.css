@@ -552,7 +552,7 @@ form .bright-heading {
 
 .tinder {
 	/*width: 100vw;*/
-	height: 100vh;
+	height: 551px;
 	max-height: 680px;
 	/*overflow: hidden;*/
 	display: flex;
@@ -601,7 +601,7 @@ form .bright-heading {
 
 .tinder--cards {
 	flex-grow: 16;
-	padding-top: 15vh;
+	/*padding-top: 15vh;*/
 	text-align: center;
 	display: flex;
 	justify-content: center;
@@ -613,9 +613,9 @@ form .bright-heading {
 	display: inline-block;
 	width: 90vw;
 	max-width: 400px;
-	background: #0285CD;
+	background: #796AEE;
 	color: #FFFFFF;
-	padding-bottom: 16px;
+	padding-bottom: 10px;
 	border-radius: 8px;
 	overflow: hidden;
 	position: absolute;
@@ -638,7 +638,7 @@ form .bright-heading {
 
 .tinder--card h3 {
 	margin-top: 12px;
-	font-size: 32px;
+	font-size: 1.7em;
 	padding: 0 16px;
 	pointer-events: none;
 }
@@ -664,7 +664,24 @@ form .bright-heading {
 	border: 0;
 	background: #FFFFFF;
 	display: inline-block;
-	margin: 0 8px;
+	margin: 0 25px;
+}
+
+.tinder--buttons .link-button {
+	padding: 6px 42px;
+  border-radius: 40px;
+  background: #85b4f2;
+  color: #fff;
+  margin-top: 5px;
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+.tinder--buttons .link-button:hover, 
+.tinder--buttons .link-button:focus {
+  background: #ff7676;
+  text-decoration: none;
+  color: #fff;
 }
 
 .tinder--buttons button:focus {
@@ -677,7 +694,7 @@ form .bright-heading {
 }
 
 .fa-heart {
-	color: #FFACE4;
+	color: #ff7676;
 }
 
 .fa-remove {
@@ -772,6 +789,11 @@ form .bright-heading {
 
 .button:hover {
 		background-color: #009df1;
+}
+
+.btn--arrow-back {
+	padding: 0 2em;
+	font-size: 1.7rem;
 }
 
 /*

@@ -116,7 +116,7 @@ class SearchController extends Controller
 								 'photo' => $userPhoro,
 								 'interests' => $userInterests);
 		}
-		$this->container->view->getEnvironment()->addGlobal('array', json_encode($viewArray));
+		$this->container->view->getEnvironment()->addGlobal('array', $viewArray);
 		// print_r($viewArray); die();
 
 		// $about = About::where('user_id', $user->id)->first();

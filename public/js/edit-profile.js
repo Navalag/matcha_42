@@ -215,6 +215,180 @@ function showError(error) {
 
 window.onload = getLocation();
 
+// ------------------------------------------------------ //
+// CUSTOM FILE INPUTS FOR IMAGES
+// Custom file inputs with image preview and 
+// image file name on selection.
+// ------------------------------------------------------ //
+
+$(document).ready(function() {
+	var i = 0;
+	$('input[type="file"]').each(function(){
+		var $file = $(this),
+			$label = $file.next('label'),
+			$labelCloseLink = $label.find('a'),
+			$labelText = $label.find('span'),
+			labelDefault = $labelText.text();
+		if (userPhoto && userPhoto[i]) {
+			$label
+				.addClass('file-ok')
+				.css('background-image', 'url(' + userPhoto[i] + ')');
+			$labelCloseLink.css('display', 'block');
+			$file.prop('disabled', true);
+			i++;
+		}
+		// When a new file is selected
+		$file.on('change', function(event){
+			var	tmppath = event.target.files[0];
+			var bg_img = URL.createObjectURL(tmppath);
+			var data = new FormData();
+			var tokenName =  $('input[name="csrf_name"]');
+			var tokenValue =  $('input[name="csrf_value"]');
+			data.append("photo", tmppath);
+			data.append("csrf_name", tokenName.attr('value'));
+			data.append("csrf_value", tokenValue.attr('value'));
+			// console.log(data);
+			$.ajax({
+				url: '/user/edit/photo_upload',
+				type: 'POST',
+				method: 'POST',
+				data: data,
+				cache: false,
+				// dataType: 'json',
+				processData: false, // Don't process the files
+				contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+				success: function(data, textStatus, jqXHR)
+				{
+					console.log('success');
+					var obj = JSON.parse(data);
+					tokenName.val(obj[0].csrf_name);
+					tokenValue.val(obj[0].csrf_value);
+					// STOP LOADING SPINNER
+					$label
+						.addClass('file-ok')
+						.css('background-image', 'url(' + obj.file_name + ')');
+					$labelCloseLink.css('display', 'block');
+					$file.prop('disabled', true);
+				},
+				error: function(jqXHR, textStatus, errorThrown)
+				{
+					// Handle errors here
+					console.log('ERRORS: ' + textStatus);
+					// STOP LOADING SPINNER
+				}
+			});
+
+			//   $label
+			// 	.addClass('file-ok')
+			// 	.css('background-image', 'url(' + bg_img + ')');
+			// 		$labelText.text(fileName);
+			// } else {
+			// 	$label.removeClass('file-ok');
+			// 	$labelText.text(labelDefault);
+			// }
+		});
+
+		// When close link is clicked
+		$labelCloseLink.on('click', function(event) {
+			var imgSrc = $(this).parent().css('background-image');
+			imgSrc = imgSrc.replace('url(','').replace(')','').replace(/\"/gi, "");
+			var data = new FormData();
+			var tokenName =  $('input[name="csrf_name"]');
+			var tokenValue =  $('input[name="csrf_value"]');
+			data.append(imgSrc, "delphoto");
+			data.append("csrf_name", tokenName.attr('value'));
+			data.append("csrf_value", tokenValue.attr('value'));
+			// console.log(data);
+			$.ajax({
+				url: '/user/edit/photo_delete',
+				type: 'POST',
+				method: 'POST',
+				data: data,
+				cache: false,
+				// dataType: 'json',
+				processData: false, // Don't process the files
+				contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+				success: function(data, textStatus, jqXHR)
+				{
+					console.log(data);
+					var obj = JSON.parse(data);
+					tokenName.val(obj.csrf_name);
+					tokenValue.val(obj.csrf_value);
+					$label.removeClass('file-ok')
+					.css('background-image', '');
+					$labelText.text(labelDefault);
+					$labelCloseLink.css('display', 'none');
+					$file.prop('disabled', false);
+					// STOP LOADING SPINNER
+				},
+				error: function(jqXHR, textStatus, errorThrown)
+				{
+					// Handle errors here
+					console.log('ERRORS: ' + textStatus);
+					// STOP LOADING SPINNER
+				}
+			});
+		});
+		
+	// End loop of file input elements  
+	});
+	// End ready function
+});
+
+// ------------------------------------------------------ //
+// Control char amount in textarea
+// ------------------------------------------------------ //
+var textlimit = 250;
+
+$('textarea.form-control').keyup(function() {
+	var tlength = $(this).val().length;
+	$(this).val($(this).val().substring(0,textlimit));
+	var tlength = $(this).val().length;
+	remain = parseInt(tlength);
+	$('#remain').text(remain);
+});
+
+// ------------------------------------------------------ //
+// Custom carousel on homepage
+// ------------------------------------------------------ //
+
+const next = document.querySelector('.next');
+const prev = document.querySelector('.prev');
+const slider = document.querySelector('.slider');
+
+if (next && prev && slider) {
+	let elementsCount = userPhoto.length;
+	let current = 1;
+	let slideWidth = 533;
+	let shift = 0;
+
+	next.addEventListener('click', () => {
+		if (current < elementsCount) {
+			slider.classList.toggle('move');
+			shift += slideWidth;
+			slider.style.transform = `translateX(-${shift}px)`;
+			current++;
+		} else {
+			shift = 0;
+			current = 1;
+			slider.style.transform = `translateX(${shift}px)`;
+		};
+	});
+
+	prev.addEventListener('click', () => {
+		if (current > 1) {
+			slider.classList.toggle('move');
+			shift -= slideWidth;
+			current--;
+			slider.style.transform = `translateX(-${shift}px)`;
+		} else if (current === 1) {
+			shift = elementsCount * slideWidth - slideWidth;
+			slider.classList.toggle('move');
+			slider.style.transform = `translateX(-${shift}px)`;
+			current = elementsCount;
+		};
+	});
+}
 
 
 

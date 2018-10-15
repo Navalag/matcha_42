@@ -19,10 +19,11 @@
 	<div class="container">
 		<div class="row">
 			<!-- Client Profile -->
-			<div class="col-lg-8 offset-lg-2">
+			<div class="col-lg-6 offset-lg-3">
 				<div class="client card">
 					<div class="card-body text-left">
 
+						<!-- Swiping users to find a match -->
 						<div class="tinder">
 							<div class="tinder--status">
 							<i class="fa fa-remove"></i>
@@ -30,81 +31,83 @@
 							</div>
 							
 							<div class="tinder--cards">
-								{% for user in allUserForSearchUser %}
+								{% for user in array %}
 									<div class="tinder--card">
-										<img data-id="{{ user.attributes.id }}" src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/namika.png">
-										<h3>{{ user.attributes.username }}</h3>
+										<img data-id="{{ user.basic_info.id }}" src="{{ user.photo[0] }}">
+										<h3>{{ user.basic_info.username }}</h3>
 										{{ csrf.field | raw }}{# raw скроет строку #}
 									</div>
 								{% endfor %}
-								<!-- <div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/namika.png">
-									<h3>Namika</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/currywurst.png">
-									<h3>Currywurst</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/loveparade.png">
-									<h3>Loveparade</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/frankfurt.png">
-									<h3>Frankfurt am Main</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/Bundestagwahl.png">
-									<h3>Bundestagwahl</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/Nena.png">
-									<h3>Nena</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/neuschwanstein.png">
-									<h3>Neuschwanstein</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/berlin.png">
-									<h3>Berlin</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/bretzel.png">
-									<h3>Bretzel</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/fackjugohte.png">
-									<h3>Fack Ju Göthe</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/diewelle.png">
-									<h3>Die Welle</h3>
-								</div>
-								<div class="tinder--card">
-									<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/radiotoren.png">
-									<h3>Fernsehturm Berlin</h3>
-								</div> -->
 							</div>
 							<div class="tinder--buttons">
 								<button id="nope"><i class="fa fa-remove"></i></button>
-								<button id="refresh" onclick=location=URL><i class="fa fa-refresh"></i></button>
+								<a class="link-button" href="#" onclick="openUserProfile({{ user.basic_info.id }})">Open Profile</a>
 								<button id="love"><i class="fa fa-heart"></i></button>
 							</div>
-						</div>			
-					</div>
+						</div>
+
+						<!-- Other users profile -->
+						<div class="other-user-profile">
+								<div class="text-left">
+									<a class="btn btn-light btn--arrow-back mb-2" href="#" onclick="hideUserProfile()"><i class="fas fa-long-arrow-alt-left"></i></a>
+								</div>
+
+								<div class="carousel-container">
+							    <a class="prev">
+							    	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							    	<span class="sr-only">Previous</span>
+							    </a>
+							    <a class="next">
+							    	<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							    	<span class="sr-only">Next</span>
+							    </a>
+							    <div class="slider-container">
+							      <div class="slider">
+							      	{% for photo in array[0].photo %}
+												<div class="slide" style="background-image: url('{{ photo }}')"></div>
+											{% endfor %}
+							      </div>
+							    </div>
+							  </div>
+
+								<div class="client-title text-center">
+									<h3>Jason Doe,</h3><span>25</span>
+								</div>
+								<h5 class="card-title">About me:</h5>
+								<p class="card-text">Hi! I'm junior software developer curently styding at Unit Factory. Looking for new friends to chat here in Matcha and maybe than meet in the city.</p>
+								<h5 class="card-title">My interests:</h5>
+								<div id="user-tags">
+									<span class="badge badge-info">Veg</span>
+									<span class="badge badge-info">Coffee</span>
+									<span class="badge badge-info">Yoga</span>
+									<span class="badge badge-info">Movies</span>
+									<span class="badge badge-info">Adventure</span>
+								</div>
+								<h5 class="card-title mt-3">Popularity:</h5>
+								<div class="progress" style="height: 4px">
+								  <div class="progress-bar bg-red" role="progressbar" style="width: 20%; height: 4px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<h6 class="card-subtitle mt-3 mb-4 text-muted">low (try to write more information in your profile)</h6>
+								<div class="text-right">
+										<a href="#" class="btn btn-light">Block user</a><br>
+										<a href="#" class="btn">Report fake account</a>
+									</div>
+								<div class="client-social d-flex justify-content-between"><a href="#" target="_blank"><i class="fa fa-facebook"></i></a><a href="#" target="_blank"><i class="fa fa-twitter"></i></a><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></div>
+						</div>
+
+					</div><!-- end of main section -->
 				</div>
-			</div> <!-- end of client profile -->
+			</div> 
 		</div>
 	</div>
 </section>
 
-<script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
-<script src="{{ base_url() }}/js/swipe.js"></script>
 <script>
 	var usersJSON = {{ array | json_encode | raw}};
 	// var obj = JSON.parse(usersJSON);
-	console.log(usersJSON);
+	
 </script>
+<script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
+<script src="{{ base_url() }}/js/swipe.js"></script>
 {% include 'templates/partials/footer.twig' %}
 {% endblock %}
