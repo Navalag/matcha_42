@@ -147,7 +147,9 @@ $(document).ready(function () {
     // ------------------------------------------------------- //
     // Chat start
     // ------------------------------------------------------ //
-
+	function showMessage(messageHTML) {
+		$('#chat-box').append(messageHTML);
+	}
 
     var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
     websocket.onopen = function(event) {
