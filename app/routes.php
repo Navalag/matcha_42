@@ -88,6 +88,9 @@ $app->group('', function () {
 	$this->post('/user/edit/interests', 'InterestsController:postInterestsProfile');
 	$this->post('/user/edit/interests_delete', 'InterestsController:postDeleteInterestsProfile')->setName('user.edit.interests_delete');
 	$this->post('/user/edit/interests_add', 'InterestsController:postAddInterestsProfile')->setName('user.edit.interests_add');
+
+	$this->get('/chat', 'ChatController:index')->setName('chat');;
+    $this->post('/chat/addMessage', 'ChatController:addMessage')->setName('chat.addMessage');
 	
 	// $this->get('/user/edit/photo', 'PhotoController:getPhotoProfile')->setName('user.edit.photo');
 	

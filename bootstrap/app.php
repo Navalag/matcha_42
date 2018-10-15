@@ -132,6 +132,9 @@ $container['PhotoController'] = function ($container) {
 $container['DiscoverySettingsController'] = function ($container) {
 	return new \Matcha\Controllers\Search\DiscoverySettingsController($container);
 };
+$container['ChatController'] = function ($container) {
+    return new \Matcha\Controllers\Chat\ChatController($container);
+};
 /*
 ** 
 */
