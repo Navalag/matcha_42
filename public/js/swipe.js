@@ -9,6 +9,8 @@ var allCards = document.querySelectorAll('.tinder--card');
 var nope = document.getElementById('nope');
 var love = document.getElementById('love');
 var machScreen = document.querySelector('.match-screen');
+var dataJSON = document.querySelector('.link-button');
+var i = 1;
 
 function initCards(card, index) {
 	var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
@@ -49,7 +51,7 @@ allCards.forEach(function (el) {
 		el.classList.remove('moving');
 		var moveOutWidth = document.body.clientWidth;
 		var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
-		var userId = event.target.children[0].getAttribute("data-id");
+		var userId = event.target.children[0].c;
 
 		event.target.classList.toggle('removed', !keep);
 
@@ -68,8 +70,12 @@ allCards.forEach(function (el) {
 			initCards();
 			if (tinderContainer.classList.contains('tinder_love')) {
 				sendLoveSkipToServer(true, userId);
+				dataJSON.setAttribute('data-json-id', i);
+				i++;
 			} else if (tinderContainer.classList.contains('tinder_nope')) {
 				sendLoveSkipToServer(false, userId);
+				dataJSON.setAttribute('data-json-id', i);
+				i++;
 			}
 		}
 		tinderContainer.classList.remove('tinder_love');
@@ -146,7 +152,7 @@ $(document).ready(function () {
 	$('.other-user-profile').hide();
 });
 
-function openUserProfile(userId) {
+function openUserProfile(ev) {
 	console.log('check open');
 	$( ".tinder" ).hide();
 	$('.other-user-profile').show();
@@ -158,10 +164,11 @@ function openUserProfile(userId) {
 	const prev = document.querySelector('.prev');
 	const slider = document.querySelector('.slider');
 	// const obj = JSON.parse(usersJSON);
-	console.log(usersJSON.photo);
+	console.log(usersJSON[0].photo);
 
 	if (next && prev && slider) {
-		let elementsCount = usersJSON.userId.photo.length;
+		let jsonId = document.querySelector('.link-button').getAttribute("data-json-id");
+		let elementsCount = usersJSON[jsonId].photo.length;
 		let current = 1;
 		let slideWidth = 533;
 		let shift = 0;
