@@ -6,7 +6,7 @@ use Matcha\Controllers\Controller;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Matcha\Models\User;
-use Matcha\Models\Likes;
+// use Matcha\Models\Likes;
 use Matcha\Models\Matcha;
 use Matcha\Models\About;
 use Respect\Validation\Validator as v;

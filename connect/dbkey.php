@@ -15,7 +15,7 @@
 
 	$dbInterestList = "interest_list";
 
-	$dbLike = "likes";
+	$dbLikeNope = "like_nope";
 
 	$dbMatcha = "matcha";
 

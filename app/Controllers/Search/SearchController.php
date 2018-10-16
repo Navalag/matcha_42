@@ -6,11 +6,11 @@ use Matcha\Controllers\Controller;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Matcha\Models\User;
-// use Matcha\Models\Likes;
 use Matcha\Models\DiscoverySettings;
 use Matcha\Models\UserDiscoveryInterests;
 use Matcha\Models\UserInterest;
 use Matcha\Models\BlockUsersList;
+use Matcha\Models\LikeNope;
 use Matcha\Models\Photo;
 use Matcha\Controllers\Check\CheckController;
 use Respect\Validation\Validator as v;
@@ -64,6 +64,28 @@ class SearchController extends Controller
 		return $result;
 	}
 
+	public function checkAlreadyLikeNope($usersToFilter)
+	{
+		$likeTable = LikeNope::getAll();
+		$result = [];
+		$i = 0;
+
+		foreach ($usersToFilter as $row) {
+			foreach ($likeTable as $likeNope) {
+				if ($likeNope->action_user_id === $row->id) {
+					$i = 1;
+					break ;
+				}
+			}
+			if ($i == 0) {
+				$result[] = $row;
+			}
+			$i = 0;
+		}
+		// print_r($result); die();
+		return $result;
+	}
+
 	public function getAllProfile($request, $response)
 	{
 		$user = User::getAllUserInfo();
@@ -103,6 +125,9 @@ class SearchController extends Controller
 
 		if (!empty($finalArray)) {
 			$finalArray = $this->checkBlockList($finalArray);
+		}
+		if (!empty($finalArray)) {
+			$finalArray = $this->checkAlreadyLikeNope($finalArray);
 		}
 		if (!empty($finalArray)) {
 			$finalArray = $this->checkInterests($finalArray);
