@@ -34,19 +34,6 @@ class User extends Model
 		return User::where('id', $_SESSION['user'])->first();
 	}
 
-	public static function selectForSearching($settings)
-	{
-		// $result = User::select(Matcha::raw("( 6371 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance"))
-		// 	->where("distance < $settings->max_distanse")
-		// 	->groupBy('distance')
-		// 	->get();
-		// $result = matcha::table('user')
-				// ->selectRaw("( 6371 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance")->get();
-
-		// $result = DB::statement("SELECT * , ( 6371 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance FROM user HAVING distance < $settings->max_distanse ORDER BY distance LIMIT 0 , 20");
-		// return $result;
-	}
-
 	public static function setGpsLocation($lat, $lng) {
 		User::where('id', $_SESSION['user'])->update([
 			'lat' => $lat,
@@ -72,6 +59,20 @@ class User extends Model
 	{
 		User::where('email', $email)->update([
 			'email_confirmed' => "1",
+		]);
+	}
+
+	public static function setActiveStatus()
+	{
+		User::where('id', $_SESSION['user'])->update([
+			'active' => "1",
+		]);
+	}
+
+	public static function setNotActiveStatus()
+	{
+		User::where('id', $_SESSION['user'])->update([
+			'active' => "0",
 		]);
 	}
 

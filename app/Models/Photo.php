@@ -24,6 +24,11 @@ class Photo extends Model
 		Photo::where('photo_src', $src)->delete();
 	}
 
+	public static function checkIfUserHasPhoto()
+	{
+		Photo::where('user_id', $_SESSION['user'])->get();
+	}
+
 	public static function getUserPhoto()
 	{
 		$allPhoto = Photo::get();

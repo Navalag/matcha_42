@@ -6,6 +6,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Http\UploadedFile;
 use Matcha\Models\Photo;
+use Matcha\Models\User;
 use Matcha\Controllers\Controller;
 
 class PhotoController extends Controller
@@ -24,6 +25,7 @@ class PhotoController extends Controller
 			$uploadedFile = $uploadedFiles['photo'];
 			if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
 				$filename = $this->moveUploadedFile($directory, $uploadedFile, $userdir);
+				User::setActiveStatus();
 			}
 		}
 		/*
@@ -47,6 +49,9 @@ class PhotoController extends Controller
 		// $src = str_replace('http://127.0.0.1:8800', '', $src);
 		$src = str_replace('http://localhost:8800', '', $src);
 		Photo::delUserPhoto($src);
+		if (Photo::checkIfUserHasPhoto() == null) {
+			User::setNotActiveStatus();
+		}
 		$src = $_SERVER["DOCUMENT_ROOT"].DIRECTORY_SEPARATOR.$src;
 		unlink($src);
 		/*

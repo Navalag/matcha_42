@@ -1,10 +1,7 @@
 <?php
 use Matcha\Middleware\AuthMiddleware;
 use Matcha\Middleware\GuestMiddleware;
-/*
- * так как мы добавили контроллер HomeController в container (app.php)
- * мы можем ипользовать его методы чере одинарное двоиточие
- */
+
 $app->group('', function () {
 	/*
 	** sign up routes
