@@ -122,9 +122,13 @@ function createButtonListener(love) {
 			sendLoveSkipToServer(true, userId);
 			// machScreen.style.zIndex = 999;
 			// machScreen.style.opacity = 1;
+			dataJSON.setAttribute('data-json-id', i);
+			i++;
 		} else {
 			sendLoveSkipToServer(false, userId);
 			card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
+			dataJSON.setAttribute('data-json-id', i);
+			i++;
 		}
 
 		initCards();
@@ -232,8 +236,8 @@ function openUserProfile(ev) {
 	// 2)
 	if (usersJSON[jsonId].basic_info.about_me) {
 		$("#name-age").after(
-			"<h5 class=\"card-title\">About:</h5>" +
-			"<p class=\"card-text\">"+
+			"<h5 class=\"card-title\" id=\"about_title\">About:</h5>" +
+			"<p class=\"card-text\" id=\"about_body\">"+
 				usersJSON[jsonId].basic_info.about_me
 			+"</p>"
 		);
@@ -261,6 +265,12 @@ function hideUserProfile() {
 	$('.other-user-profile').hide();
 	$('.card-header').hide();
 	$( ".tinder" ).show();
+	$(".slider").children().remove();
+	$("#name-age").children().remove();
+	$("#about_title").remove();
+	$("#about_body").remove();
+	$("#user-tags").children().remove();
+	$("#progress").children().remove();
 }
 
 
