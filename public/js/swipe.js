@@ -150,28 +150,38 @@ machScreen.querySelector('.match-return-btn').addEventListener('click', function
 
 $(document).ready(function () {
 	$('.other-user-profile').hide();
+	$('.card-header').hide();
 });
 
 function openUserProfile(ev) {
-	console.log('check open');
+	// console.log('check open');
 	$( ".tinder" ).hide();
+	$('.card-header').show();
 	$('.other-user-profile').show();
+	var jsonId = document.querySelector('.link-button').getAttribute("data-json-id");
 
 	/*
-	** custom carousel on other user profile
+	** display user photo
 	*/
 	const next = document.querySelector('.next');
 	const prev = document.querySelector('.prev');
 	const slider = document.querySelector('.slider');
-	// const obj = JSON.parse(usersJSON);
-	console.log(usersJSON[0].photo);
+	console.log(usersJSON[jsonId].photo);
 
 	if (next && prev && slider) {
-		let jsonId = document.querySelector('.link-button').getAttribute("data-json-id");
 		let elementsCount = usersJSON[jsonId].photo.length;
 		let current = 1;
 		let slideWidth = 533;
 		let shift = 0;
+
+		/*
+		** insert user photo into slider
+		*/
+		usersJSON[jsonId].photo.forEach(function(photo) {
+			$(".slider").append("<div class=\"slide\" style=\"background-image: url('"+
+				photo
+				+"')\"></div>");
+		});
 
 		next.addEventListener('click', () => {
 			if (current < elementsCount) {
@@ -200,11 +210,56 @@ function openUserProfile(ev) {
 			};
 		});
 	}
+
+	/*
+	** display other info
+	**
+	** 1. Firs name, Last name, age
+	** 2. About me
+	** 3. Interests
+	** 4. Popularity
+	*/
+	// 1)
+	$("#name-age").append(
+		"<h3>"+
+		usersJSON[jsonId].basic_info.first_name
+		+" "+
+		usersJSON[jsonId].basic_info.last_name
+		+",</h3><span>"+" "+
+		usersJSON[jsonId].basic_info.age
+		+"</span>"
+	);
+	// 2)
+	if (usersJSON[jsonId].basic_info.about_me) {
+		$("#name-age").after(
+			"<h5 class=\"card-title\">About:</h5>" +
+			"<p class=\"card-text\">"+
+				usersJSON[jsonId].basic_info.about_me
+			+"</p>"
+		);
+	}
+	// 3)
+	if (usersJSON[jsonId].interests) {
+		usersJSON[jsonId].interests.forEach(function(interest) {
+			$("#user-tags").append("<span class=\"badge badge-info\" style=\"margin: 0px 3px;\">"+
+				interest
+			+"</span>");
+		});
+	}
+	// 4)
+	$("#progress").append(
+		"<div class=\"progress-bar bg-red\" role=\"progressbar\" style=\"width: "+
+		usersJSON[jsonId].basic_info.fame_rating
+		+"%; height: 7px;\" aria-valuenow=\""+
+		usersJSON[jsonId].basic_info.fame_rating
+		+"\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>"
+	);
 }
 
 function hideUserProfile() {
-	console.log('check close');
+	// console.log('check close');
 	$('.other-user-profile').hide();
+	$('.card-header').hide();
 	$( ".tinder" ).show();
 }
 
