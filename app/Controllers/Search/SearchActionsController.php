@@ -6,13 +6,12 @@ use Matcha\Controllers\Controller;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Matcha\Models\User;
-// use Matcha\Models\Likes;
 use Matcha\Models\Matcha;
 use Matcha\Models\About;
 use Respect\Validation\Validator as v;
 use Matcha\Controllers\Search\MatchaController;
 
-class LikedController extends Controller
+class SearchActionsController extends Controller
 {
 	public function isMatcha($first, $second)
 	{
@@ -79,7 +78,7 @@ class LikedController extends Controller
 		// return $response->withRedirect($this->router->pathFor('search.all'));
 	}
 
-	public function getUnlike($request, $response)
+	public function getNope($request, $response)
 	{
 		$validation = $this->validator->validate($request, [
 			// 'unlike' => v::notEmpty(),

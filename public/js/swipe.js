@@ -69,11 +69,11 @@ allCards.forEach(function (el) {
 			event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
 			initCards();
 			if (tinderContainer.classList.contains('tinder_love')) {
-				sendLoveSkipToServer(true, userId);
+				sendActionToServer('love', userId);
 				dataJSON.setAttribute('data-json-id', i);
 				i++;
 			} else if (tinderContainer.classList.contains('tinder_nope')) {
-				sendLoveSkipToServer(false, userId);
+				sendActionToServer('skip', userId);
 				dataJSON.setAttribute('data-json-id', i);
 				i++;
 			}
@@ -83,13 +83,15 @@ allCards.forEach(function (el) {
 	});
 });
 
-function sendLoveSkipToServer(love, userId) {
+function sendActionToServer(action, userId) {
 	var urlLove = '/search/like';
-	var urlSkip = '/search/unlike';
+	var urlSkip = '/search/nope';
+	var urlBlock = '/search/block';
+	var urlReportFake = '/search/report_fake';
 	var tokenName =  $('input[name="csrf_name"]').attr('value');
 	var tokenValue =  $('input[name="csrf_value"]').attr('value');
-	var data = {"liked_id" : userId,"csrf_name" : tokenName,"csrf_value" : tokenValue};
-	if (love) {
+	var data = {"action_user_id" : userId,"csrf_name" : tokenName,"csrf_value" : tokenValue};
+	if (action == 'love') {
 		$.post(urlLove, data, function(response) {
 			console.log(response);
 			// if (match) {
@@ -97,9 +99,19 @@ function sendLoveSkipToServer(love, userId) {
 				// machScreen.style.opacity = 1;
 			// }
 		});
-	} else {
+	} else if (action == 'skip') {
 		$.post(urlSkip, data, function(response) {
 			console.log(response);
+		});
+	} else if (action == 'block') {
+		$.post(urlBlock, data, function(response) {
+			console.log(response);
+			return true;
+		});
+	} else if (action == 'report_fake') {
+		$.post(urlReportFake, data, function(response) {
+			console.log(response);
+			return true;
 		});
 	}
 }
@@ -119,13 +131,13 @@ function createButtonListener(love) {
 
 		if (love) {
 			card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
-			sendLoveSkipToServer(true, userId);
+			sendActionToServer('love', userId);
 			// machScreen.style.zIndex = 999;
 			// machScreen.style.opacity = 1;
 			dataJSON.setAttribute('data-json-id', i);
 			i++;
 		} else {
-			sendLoveSkipToServer(false, userId);
+			sendActionToServer('skip', userId);
 			card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
 			dataJSON.setAttribute('data-json-id', i);
 			i++;
@@ -149,7 +161,7 @@ machScreen.querySelector('.match-return-btn').addEventListener('click', function
 });
 
 // ------------------------------------------------------ //
-// Open user prifile on find a match page
+// Open user profile on find a match page
 // ------------------------------------------------------ //
 
 $(document).ready(function () {
@@ -157,12 +169,32 @@ $(document).ready(function () {
 	$('.card-header').hide();
 });
 
-function openUserProfile(ev) {
+function blockUser() {
+	var user_id = $('#block').attr('data-id');
+	console.log(user_id);
+	if (sendActionToServer('block', user_id)) {
+		console.log('success');
+	} else {
+		console.log('fail');
+	}
+}
+
+function reportFakeAccount() {
+	var user_id = $('#report').attr('data-id');
+	console.log(user_id);
+	if (sendActionToServer('report_fake', user_id)) {
+		console.log('success');
+	} else {
+		console.log('fail');
+	}
+}
+
+function openUserProfile() {
+	var jsonId = document.querySelector('.link-button').getAttribute("data-json-id");
 	// console.log('check open');
 	$( ".tinder" ).hide();
 	$('.card-header').show();
 	$('.other-user-profile').show();
-	var jsonId = document.querySelector('.link-button').getAttribute("data-json-id");
 
 	/*
 	** display user photo
@@ -258,6 +290,12 @@ function openUserProfile(ev) {
 		usersJSON[jsonId].basic_info.fame_rating
 		+"\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>"
 	);
+
+	/*
+	** insert data-id for block and report buttons
+	*/
+	$('#block').attr('data-id', usersJSON[jsonId].basic_info.id);
+	$('#report').attr('data-id', usersJSON[jsonId].basic_info.id);
 }
 
 function hideUserProfile() {

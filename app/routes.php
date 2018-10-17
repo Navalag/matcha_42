@@ -71,10 +71,12 @@ $app->group('', function () {
 	*/
 	$this->get('/search/all', 'SearchController:getAllProfile')->setName('search.all');
 	/*
-	** find a match (manage likes)
+	** find a match (manage actions)
 	*/
-	$this->post('/search/like', 'LikedController:getLike')->setName('search.like');
-	$this->post('/search/unlike', 'LikedController:getUnlike')->setName('search.unlike');
+	$this->post('/search/like', 'SearchActionsController:getLike')->setName('search.like');
+	$this->post('/search/nope', 'SearchActionsController:getNope')->setName('search.nope');
+	$this->post('/search/block', 'SearchActionsController:getUnlike')->setName('search.block');
+	$this->post('/search/report_fake', 'SearchActionsController:getUnlike')->setName('search.report_fake');
 
 
 

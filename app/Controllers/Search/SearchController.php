@@ -14,7 +14,6 @@ use Matcha\Models\LikeNope;
 use Matcha\Models\Photo;
 use Matcha\Controllers\Check\CheckController;
 use Respect\Validation\Validator as v;
-// use Matcha\Controllers\Search\MatchaController;
 use Illuminate\Database\Capsule\Manager as DB;
 
 class SearchController extends Controller

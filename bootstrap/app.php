@@ -112,44 +112,46 @@ $container['PasswordController'] = function ($container) {
 	return new \Matcha\Controllers\Auth\PasswordController($container);
 };
 /*
-** Profile Controllers
+** Profile controllers
 */
 $container['EditController'] = function ($container) {
 	return new \Matcha\Controllers\Profile\EditController($container);
 };
-$container['AboutController'] = function ($container) {
-	return new \Matcha\Controllers\Profile\AboutController($container);
-};
+// $container['AboutController'] = function ($container) {
+// 	return new \Matcha\Controllers\Profile\AboutController($container);
+// };
 $container['InterestsController'] = function ($container) {
 	return new \Matcha\Controllers\Profile\InterestsController($container);
 };
-$container['UserInterest'] = function ($container) {
-	return new \Matcha\Controllers\Profile\UserInterest($container);
-};
+// $container['UserInterest'] = function ($container) {
+// 	return new \Matcha\Controllers\Profile\UserInterest($container);
+// };
+$container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'] . 'img';
 $container['PhotoController'] = function ($container) {
 	return new \Matcha\Controllers\Profile\PhotoController($container);
 };
-$container['DiscoverySettingsController'] = function ($container) {
-	return new \Matcha\Controllers\Search\DiscoverySettingsController($container);
-};
+/*
+** Chat controllers
+*/
 $container['ChatController'] = function ($container) {
     return new \Matcha\Controllers\Chat\ChatController($container);
 };
 /*
-** 
+** Find a Match controllers
 */
-$container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'] . 'img';
+$container['DiscoverySettingsController'] = function ($container) {
+	return new \Matcha\Controllers\Search\DiscoverySettingsController($container);
+};
 $container['SearchController'] = function ($container) {
 	return new \Matcha\Controllers\Search\SearchController($container);
 };
-$container['LikedController'] = function ($container) {
-	return new \Matcha\Controllers\Search\LikedController($container);
-};
-$container['MatchaController'] = function ($container) {
-	return new \Matcha\Controllers\Search\MatchaController($container);
+$container['SearchActionsController'] = function ($container) {
+	return new \Matcha\Controllers\Search\SearchActionsController($container);
 };
 
-
+/*
+** CSRF middleware
+*/
 $container['csrf'] = function ($container) {
 	return new \Slim\Csrf\Guard;
 };

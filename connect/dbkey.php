@@ -28,3 +28,7 @@
 	$dbUserDiscoveryInterests = "user_discovery_interests";
 
 	$dbBlockUsersList = "block_users_list";
+
+	$dbFakeAccountReport = "fake_account_report";
+	
+	$dbCheckProfileLog = "check_profile_log";

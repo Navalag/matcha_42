@@ -239,6 +239,38 @@
 		)";
 
 		$conn->exec($sql);
+
+		/* 
+		** CREATE fake_account_report TABLE
+		*/
+		$sql = "CREATE "
+			. " TABLE IF NOT EXISTS "
+			. $dbFakeAccountReport
+			. " (
+			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+			user_id INT(11) NOT NULL, 
+			fake_user_id INT(11) NOT NULL, 
+			created_at TIMESTAMP NULL DEFAULT NULL,
+			updated_at TIMESTAMP NULL DEFAULT NULL
+		)";
+
+		$conn->exec($sql);
+
+		/* 
+		** CREATE check_profile_log TABLE
+		*/
+		$sql = "CREATE "
+			. " TABLE IF NOT EXISTS "
+			. $dbCheckProfileLog
+			. " (
+			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+			user_id INT(11) NOT NULL, 
+			check_profile_user_id INT(11) NOT NULL, 
+			created_at TIMESTAMP NULL DEFAULT NULL,
+			updated_at TIMESTAMP NULL DEFAULT NULL
+		)";
+
+		$conn->exec($sql);
 	}
 	catch(PDOException $e) {
 		echo $sql . "<br>" . $e->getMessage();

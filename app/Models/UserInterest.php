@@ -7,14 +7,14 @@ use Matcha\Models\InterestList;
 
 class UserInterest extends Model
 {
-    protected $table = 'user_interest';
+	protected $table = 'user_interest';
 
-    protected $fillable = [
-        'user_id',
-        'interest_id',
-    ];
+	protected $fillable = [
+		'user_id',
+		'interest_id',
+	];
 
-    public static function getInterestsValueByUserId($user_id)
+	public static function getInterestsValueByUserId($user_id)
 	{
 		$rawUserInterests = UserInterest::where('user_id', $user_id)->get();
 		$rawAllInterests = InterestList::all();
