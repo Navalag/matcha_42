@@ -87,6 +87,7 @@ function sendActionToServer(action, userId) {
 	var urlSkip = '/search/nope';
 	var urlBlock = '/search/block';
 	var urlReportFake = '/search/report_fake';
+	var urlCheckProfile = '/search/check_profile';
 	var tokenName =  $('input[name="csrf_name"]').attr('value');
 	var tokenValue =  $('input[name="csrf_value"]').attr('value');
 	var data = {"action_user_id" : userId,"csrf_name" : tokenName,"csrf_value" : tokenValue};
@@ -108,6 +109,10 @@ function sendActionToServer(action, userId) {
 		});
 	} else if (action == 'report_fake') {
 		$.post(urlReportFake, data, function(response) {
+			console.log(response);
+		});
+	} else if (action == 'check_profile') {
+		$.post(urlCheckProfile, data, function(response) {
 			console.log(response);
 		});
 	}
@@ -195,6 +200,7 @@ function openUserProfile() {
 	$('.card-header').show();
 	$('.other-user-profile').show();
 
+	sendActionToServer('check_profile', usersJSON[jsonId].basic_info.id);
 	/*
 	** display user photo
 	*/

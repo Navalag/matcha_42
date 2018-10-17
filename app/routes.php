@@ -77,6 +77,7 @@ $app->group('', function () {
 	$this->post('/search/nope', 'SearchActionsController:getNope')->setName('search.nope');
 	$this->post('/search/block', 'SearchActionsController:getBlockUser')->setName('search.block');
 	$this->post('/search/report_fake', 'SearchActionsController:getRepotFakeAccount')->setName('search.report_fake');
+	$this->post('/search/check_profile', 'SearchActionsController:getCheckProfile')->setName('search.check_profile');
 
 
 

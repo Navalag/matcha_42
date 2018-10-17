@@ -2,7 +2,6 @@
 
 namespace Matcha\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class LikeNope extends Model

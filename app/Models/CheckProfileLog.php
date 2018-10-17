@@ -2,7 +2,6 @@
 
 namespace Matcha\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class CheckProfileLog extends Model
@@ -14,7 +13,17 @@ class CheckProfileLog extends Model
 		'check_profile_user_id',
 	];
 
-	public static function getAll() {
-		return CheckProfileLog::where('user_id', $_SESSION['user'])->get();
+	public static function setRecord($user_id) {
+		CheckProfileLog::create([
+				'user_id' => $_SESSION['user'],
+				'check_profile_user_id' => $user_id,
+			]);
+	}
+
+	public static function checkIfFirstTimeOpenProfile($user_id) {
+		return CheckProfileLog::where([
+					'user_id' => $_SESSION['user'],
+					'check_profile_user_id' => $user_id
+				])->first();
 	}
 }

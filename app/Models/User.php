@@ -34,6 +34,18 @@ class User extends Model
 		return User::where('id', $_SESSION['user'])->first();
 	}
 
+	public static function getUserInfoById($user_id)
+	{
+		return User::where('id', $user_id)->first();
+	}
+
+	public static function updateRating($user_id, $rating)
+	{
+		User::where('id', $user_id)->update([
+			'fame_rating' => $rating
+		]);
+	}
+
 	public static function setGpsLocation($lat, $lng) {
 		User::where('id', $_SESSION['user'])->update([
 			'lat' => $lat,

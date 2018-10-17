@@ -26,17 +26,17 @@ class MatchedPeople extends Model
 		]);
 	}
 
-	public static function unsetMatcha($first_id, $second_id)
-	{
-		$allMatcha = Matcha::all();
+	// public static function unsetMatcha($first_id, $second_id)
+	// {
+	// 	$allMatcha = Matcha::all();
 
-		foreach ($allMatcha as $row)
-		{
-			if ($row->first_id == $first_id && $row->second_id == $second_id ||
-				$row->first_id == $second_id && $row->second_id == $first_id) {
-				Matcha::where('id', $row->id)->delete();
-				return ;
-			}
-		}
-	}
+	// 	foreach ($allMatcha as $row)
+	// 	{
+	// 		if ($row->first_id == $first_id && $row->second_id == $second_id ||
+	// 			$row->first_id == $second_id && $row->second_id == $first_id) {
+	// 			Matcha::where('id', $row->id)->delete();
+	// 			return ;
+	// 		}
+	// 	}
+	// }
 }
