@@ -11,6 +11,7 @@ use Matcha\Models\CheckProfileLog;
 use Matcha\Models\LikeNope;
 use Matcha\Models\FakeAccountReport;
 use Matcha\Models\BlockUsersList;
+use Matcha\Models\MatchedPeople;
 
 use Respect\Validation\Validator as v;
 
@@ -22,7 +23,7 @@ class SearchActionsController extends Controller
 			'action_user_id' => v::notEmpty(),
 		]);
 		if ($validation->failed()) {
-			return 'fail request';
+			return 'failed request';
 		}
 
 		$action_user_id = $request->getParam('action_user_id');
@@ -36,7 +37,7 @@ class SearchActionsController extends Controller
 			'action_user_id' => v::notEmpty(),
 		]);
 		if ($validation->failed()) {
-			return 'fail request';
+			return 'failed request';
 		}
 
 		$action_user_id = $request->getParam('action_user_id');
@@ -45,108 +46,55 @@ class SearchActionsController extends Controller
 		return 'Report Fake Account Success';
 	}
 
-
-	public function isMatcha($first, $second)
-	{
-		$allLikes = Likes::all();
-
-		foreach ($allLikes as $row) {
-			if ($row->user_id == $second && $row->liked_id == $first) {
-				Matcha::setMatcha($first, $second);
-				return ;
-			}
-		}
-	}
-
-	public function isUnmatcha($first, $second)
-	{
-		$allLikes = Likes::all();
-
-		foreach ($allLikes as $row) {
-			if ($row->user_id == $second && $row->liked_id == $first) {
-				Matcha::unsetMatcha($first, $second);
-				return ;
-			}
-		}
-	}
-
-
 	public function getLike($request, $response)
 	{
+		// print_r($request->getParam('action_user_id')); die();
 		$validation = $this->validator->validate($request, [
-			// 'like' => v::notEmpty(),
-			'liked_id' => v::notEmpty(),
+			'action_user_id' => v::notEmpty(),
 		]);
-
 		if ($validation->failed()) {
-			$this->flash->addMessage('info', 'Fail');
-			return 'validation failed';
-			// return $response->withRedirect($this->router->pathFor('search.all'));
+			return 'failed request';
 		}
 
-		$user_id = $_SESSION['user'];
-		$liked_id = $request->getParam('liked_id');
+		$liked_user_id = $request->getParam('action_user_id');
 
-		if (!Likes::where(['user_id' => $user_id, 'liked_id' => $liked_id,])->first()) {
-			Likes::create([
-				'user_id' => $user_id,
-				'liked_id' => $liked_id,
-			]);
-			$this->isMatcha($user_id, $liked_id);
-			// подбор для рейтинга
-			$user_id = $request->getParam('liked_id');
+		if (!LikeNope::checkRecord($liked_user_id))
+		{
+			LikeNope::createNewRecord($liked_user_id, 1);
+			if (LikeNope::checkIfMatch($liked_user_id)) {
+				MatchedPeople::setAMatch($liked_user_id);
+				echo "new match";
+			}
+			/*
+			** update rating
+			*/
 
-			$likedUser = User::where('id', $user_id)->first();
-
-			$newRating = $likedUser->rating + 1;
-
-			// нужна новая графа в базе для рейтинка
-			User::where('id', $user_id)->update([
-				'rating' => $newRating,
-			]);
+			return 'success';
 		}
-		return 'success request';
-		// return $response->withRedirect($this->router->pathFor('search.all'));
+		return ';-( some error occurred ;-(';
 	}
 
 	public function getNope($request, $response)
 	{
 		$validation = $this->validator->validate($request, [
-			// 'unlike' => v::notEmpty(),
-			'liked_id' => v::notEmpty(),
+			'action_user_id' => v::notEmpty(),
 		]);
-
 		if ($validation->failed()) {
-			$this->flash->addMessage('info', 'Fail');
-			return 'unlike fail validation';
-			// return $response->withRedirect($this->router->pathFor('search.all'));
+			return 'failed request';
 		}
 
-		$user_id = $_SESSION['user'];
-		$liked_id = $request->getParam('liked_id');
+		$nope_user_id = $request->getParam('action_user_id');
 
-		$this->isUnmatcha($user_id, $liked_id);
-		if (Likes::where(['user_id' => $user_id, 'liked_id' => $liked_id,])->first()) {
-			Likes::where([
-				'user_id' => $user_id,
-				'liked_id' => $liked_id,
-			])->delete();
+		if (!LikeNope::checkRecord($nope_user_id))
+		{
+			LikeNope::createNewRecord($nope_user_id, 0);
+			
+			/*
+			** update rating
+			*/
 
-			$user_id = $request->getParam('liked_id');
-
-			$likedUser = User::where('id', $user_id)->first();
-
-			$newRating = $likedUser->rating - 1;
-
-			// нужна новая графа в базе для рейтинка
-			if ($newRating >= 0)
-			{
-				User::where('id', $user_id)->update([
-					'rating' => $newRating,
-				]);
-			}
+			return 'success';
 		}
-		return 'unlike success';
-		// return $response->withRedirect($this->router->pathFor('search.all'));
+		return ';-( some error occurred ;-(';
 	}
 }

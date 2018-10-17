@@ -51,13 +51,12 @@ allCards.forEach(function (el) {
 		el.classList.remove('moving');
 		var moveOutWidth = document.body.clientWidth;
 		var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
-		var userId = event.target.children[0].c;
+		var userId = event.target.children[0].getAttribute("data-id");
 
 		event.target.classList.toggle('removed', !keep);
 
 		if (keep) {
 			event.target.style.transform = '';
-			
 		} else {
 			var endX = Math.max(Math.abs(event.velocityX) * moveOutWidth, moveOutWidth);
 			var toX = event.deltaX > 0 ? endX : -endX;

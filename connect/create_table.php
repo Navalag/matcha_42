@@ -145,11 +145,11 @@
 		$conn->exec($sql);
 
 		/* 
-		** CREATE matcha TABLE
+		** CREATE matched_people TABLE
 		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
-			. $dbMatcha
+			. $dbMatchedPeople
 			. " (id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 			first_id INT(11) NOT NULL, 
 			second_id INT(11) NOT NULL, 

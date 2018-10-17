@@ -17,7 +17,7 @@
 
 	$dbLikeNope = "like_nope";
 
-	$dbMatcha = "matcha";
+	$dbMatchedPeople = "matched_people";
 
 	$dbPhoto = "photo";
 
