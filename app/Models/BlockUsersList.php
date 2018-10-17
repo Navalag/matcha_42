@@ -16,4 +16,11 @@ class BlockUsersList extends Model
 	public static function getAll() {
 		return BlockUsersList::where('user_id', $_SESSION['user'])->get();
 	}
+
+	public static function setBlockUser($block_user_id) {
+		BlockUsersList::create([
+			'user_id' => $_SESSION['user'],
+			'blocked_user_id' => $block_user_id,
+		]);
+	}
 }

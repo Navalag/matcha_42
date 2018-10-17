@@ -5,14 +5,47 @@ namespace Matcha\Controllers\Search;
 use Matcha\Controllers\Controller;
 use Slim\Http\Request;
 use Slim\Http\Response;
+
 use Matcha\Models\User;
-use Matcha\Models\Matcha;
-use Matcha\Models\About;
+use Matcha\Models\CheckProfileLog;
+use Matcha\Models\LikeNope;
+use Matcha\Models\FakeAccountReport;
+use Matcha\Models\BlockUsersList;
+
 use Respect\Validation\Validator as v;
-use Matcha\Controllers\Search\MatchaController;
 
 class SearchActionsController extends Controller
 {
+	public function getBlockUser($request, $response)
+	{
+		$validation = $this->validator->validate($request, [
+			'action_user_id' => v::notEmpty(),
+		]);
+		if ($validation->failed()) {
+			return 'fail request';
+		}
+
+		$action_user_id = $request->getParam('action_user_id');
+		BlockUsersList::setBlockUser($action_user_id);
+		return 'User is blocked';
+	}
+
+	public function getRepotFakeAccount($request, $response)
+	{
+		$validation = $this->validator->validate($request, [
+			'action_user_id' => v::notEmpty(),
+		]);
+		if ($validation->failed()) {
+			return 'fail request';
+		}
+
+		$action_user_id = $request->getParam('action_user_id');
+		// print_r($action_user_id); die();
+		FakeAccountReport::setFakeReport($action_user_id);
+		return 'Report Fake Account Success';
+	}
+
+
 	public function isMatcha($first, $second)
 	{
 		$allLikes = Likes::all();
@@ -24,8 +57,6 @@ class SearchActionsController extends Controller
 			}
 		}
 	}
-
-	// если юзер удалил но в зеркальную такой юзересть
 
 	public function isUnmatcha($first, $second)
 	{

@@ -106,12 +106,10 @@ function sendActionToServer(action, userId) {
 	} else if (action == 'block') {
 		$.post(urlBlock, data, function(response) {
 			console.log(response);
-			return true;
 		});
 	} else if (action == 'report_fake') {
 		$.post(urlReportFake, data, function(response) {
 			console.log(response);
-			return true;
 		});
 	}
 }
@@ -172,21 +170,23 @@ $(document).ready(function () {
 function blockUser() {
 	var user_id = $('#block').attr('data-id');
 	console.log(user_id);
-	if (sendActionToServer('block', user_id)) {
-		console.log('success');
-	} else {
-		console.log('fail');
-	}
+	// if (sendActionToServer('block', user_id)) {
+	// 	console.log('success');
+	// } else {
+	// 	console.log('fail');
+	// }
+	sendActionToServer('block', user_id);
 }
 
 function reportFakeAccount() {
 	var user_id = $('#report').attr('data-id');
 	console.log(user_id);
-	if (sendActionToServer('report_fake', user_id)) {
-		console.log('success');
-	} else {
-		console.log('fail');
-	}
+	// if (sendActionToServer('report_fake', user_id)) {
+	// 	console.log('success');
+	// } else {
+	// 	console.log('fail');
+	// }
+	sendActionToServer('report_fake', user_id);
 }
 
 function openUserProfile() {

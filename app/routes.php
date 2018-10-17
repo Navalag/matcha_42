@@ -75,8 +75,8 @@ $app->group('', function () {
 	*/
 	$this->post('/search/like', 'SearchActionsController:getLike')->setName('search.like');
 	$this->post('/search/nope', 'SearchActionsController:getNope')->setName('search.nope');
-	$this->post('/search/block', 'SearchActionsController:getUnlike')->setName('search.block');
-	$this->post('/search/report_fake', 'SearchActionsController:getUnlike')->setName('search.report_fake');
+	$this->post('/search/block', 'SearchActionsController:getBlockUser')->setName('search.block');
+	$this->post('/search/report_fake', 'SearchActionsController:getRepotFakeAccount')->setName('search.report_fake');
 
 
 
