@@ -68,11 +68,11 @@ allCards.forEach(function (el) {
 			event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
 			initCards();
 			if (tinderContainer.classList.contains('tinder_love')) {
-				sendActionToServer('love', userId);
+				sendActionToServer('love', userId, usersJSON[0].active);
 				dataJSON.setAttribute('data-json-id', i);
 				i++;
 			} else if (tinderContainer.classList.contains('tinder_nope')) {
-				sendActionToServer('skip', userId);
+				sendActionToServer('skip', userId, usersJSON[0].active);
 				dataJSON.setAttribute('data-json-id', i);
 				i++;
 			}
@@ -82,7 +82,7 @@ allCards.forEach(function (el) {
 	});
 });
 
-function sendActionToServer(action, userId) {
+function sendActionToServer(action, userId, active = 1) {
 	var urlLove = '/search/like';
 	var urlSkip = '/search/nope';
 	var urlBlock = '/search/block';
@@ -91,7 +91,7 @@ function sendActionToServer(action, userId) {
 	var tokenName =  $('input[name="csrf_name"]').attr('value');
 	var tokenValue =  $('input[name="csrf_value"]').attr('value');
 	var data = {"action_user_id" : userId,"csrf_name" : tokenName,"csrf_value" : tokenValue};
-	if (action == 'love') {
+	if (action == 'love' && active == 1) {
 		$.post(urlLove, data, function(response) {
 			console.log(response);
 			// if (match) {
@@ -99,22 +99,26 @@ function sendActionToServer(action, userId) {
 				// machScreen.style.opacity = 1;
 			// }
 		});
-	} else if (action == 'skip') {
+	} else if (action == 'skip' && active == 1) {
 		$.post(urlSkip, data, function(response) {
 			console.log(response);
 		});
 	} else if (action == 'block') {
 		$.post(urlBlock, data, function(response) {
 			console.log(response);
+			$('#ModalSuccess').modal();
 		});
 	} else if (action == 'report_fake') {
 		$.post(urlReportFake, data, function(response) {
 			console.log(response);
+			$('#ModalSuccess').modal();
 		});
 	} else if (action == 'check_profile') {
 		$.post(urlCheckProfile, data, function(response) {
 			console.log(response);
 		});
+	} else if (active == 0) {
+		$('#ModalAddPhoto').modal();
 	}
 }
 
@@ -133,13 +137,13 @@ function createButtonListener(love) {
 
 		if (love) {
 			card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
-			sendActionToServer('love', userId);
+			sendActionToServer('love', userId, usersJSON[0].active);
 			// machScreen.style.zIndex = 999;
 			// machScreen.style.opacity = 1;
 			dataJSON.setAttribute('data-json-id', i);
 			i++;
 		} else {
-			sendActionToServer('skip', userId);
+			sendActionToServer('skip', userId, usersJSON[0].active);
 			card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
 			dataJSON.setAttribute('data-json-id', i);
 			i++;
@@ -207,7 +211,7 @@ function openUserProfile() {
 	const next = document.querySelector('.next');
 	const prev = document.querySelector('.prev');
 	const slider = document.querySelector('.slider');
-	console.log(usersJSON[jsonId].photo);
+	// console.log(usersJSON[jsonId].active);
 
 	if (next && prev && slider) {
 		let elementsCount = usersJSON[jsonId].photo.length;

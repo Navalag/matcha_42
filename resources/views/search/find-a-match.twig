@@ -2,17 +2,51 @@
 
 {% block content %}
 <div class="match-screen">
-  <img id="match-fancy-text-img" src="{{ base_url() }}/img/match_text.png">
-  <p>You and  have liked each other.</p>
-  <div class="match-images clearfix">
-    <img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/namika.png"  width="715" height="175">
-    <img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/currywurst.png"  width="175" height="175">
-  </div>
-  <button class="match-return-btn">
-    <i class="fa fa-user"></i> Keep Playing
-  </button>
+	<img id="match-fancy-text-img" src="{{ base_url() }}/img/match_text.png">
+	<p>You and  have liked each other.</p>
+	<div class="match-images clearfix">
+		<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/namika.png"  width="715" height="175">
+		<img src="https://www.noordhoffuitgevers.nl/documents/2449749/10773815/currywurst.png"  width="175" height="175">
+	</div>
+	<button class="match-return-btn">
+		<i class="fa fa-user"></i> Keep Playing
+	</button>
 </div>
 {% include 'templates/partials/side-nav.twig' %}
+
+<!-- Modal Success-->
+<div class="modal fade" id="ModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				
+				<div class="check_mark">
+					<div class="sa-icon sa-success animate">
+						<span class="sa-line sa-tip animateSuccessTip"></span>
+						<span class="sa-line sa-long animateSuccessLong"></span>
+						<div class="sa-placeholder"></div>
+						<div class="sa-fix"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Please add photo-->
+<div class="modal fade" id="ModalAddPhoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h5>You must add at least one photo for this action</h5>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- Client Section-->
 <section class="client">
@@ -52,19 +86,19 @@
 						<!-- Other users profile -->
 						<div class="other-user-profile">
 							<div class="carousel-container">
-						    <a class="prev">
-						    	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						    	<span class="sr-only">Previous</span>
-						    </a>
-						    <a class="next">
-						    	<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						    	<span class="sr-only">Next</span>
-						    </a>
-						    <div class="slider-container">
-						      <div class="slider">
-						      </div>
-						    </div>
-						  </div>
+								<a class="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="sr-only">Next</span>
+								</a>
+								<div class="slider-container">
+									<div class="slider">
+									</div>
+								</div>
+							</div>
 
 							<div class="client-title text-center" id="name-age"></div>
 							
