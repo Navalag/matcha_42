@@ -613,6 +613,8 @@ form .bright-heading {
 	display: inline-block;
 	width: 90vw;
 	max-width: 400px;
+	min-height: 438px;
+	max-height: 438px;
 	background: #796AEE;
 	color: #FFFFFF;
 	padding-bottom: 10px;
