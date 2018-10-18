@@ -88,9 +88,13 @@ function sendActionToServer(action, userId, active = 1) {
 	var urlBlock = '/search/block';
 	var urlReportFake = '/search/report_fake';
 	var urlCheckProfile = '/search/check_profile';
-	var tokenName =  $('input[name="csrf_name"]').attr('value');
-	var tokenValue =  $('input[name="csrf_value"]').attr('value');
-	var data = {"action_user_id" : userId,"csrf_name" : tokenName,"csrf_value" : tokenValue};
+	var tokenName =  $('input[name="csrf_name"]');
+	var tokenValue =  $('input[name="csrf_value"]');
+	var data = {
+			"action_user_id" : userId,
+			"csrf_name" : tokenName.attr('value'),
+			"csrf_value" : tokenValue.attr('value')
+		};
 	if (action == 'love' && active == 1) {
 		$.post(urlLove, data, function(response) {
 			console.log(response);
@@ -98,27 +102,38 @@ function sendActionToServer(action, userId, active = 1) {
 				// machScreen.style.zIndex = 999;
 				// machScreen.style.opacity = 1;
 			// }
+			updateCSRF(response);
 		});
 	} else if (action == 'skip' && active == 1) {
 		$.post(urlSkip, data, function(response) {
 			console.log(response);
+			updateCSRF(response);
 		});
 	} else if (action == 'block') {
 		$.post(urlBlock, data, function(response) {
 			console.log(response);
+			updateCSRF(response);
 			$('#ModalSuccess').modal();
 		});
 	} else if (action == 'report_fake') {
 		$.post(urlReportFake, data, function(response) {
 			console.log(response);
+			updateCSRF(response);
 			$('#ModalSuccess').modal();
 		});
 	} else if (action == 'check_profile') {
 		$.post(urlCheckProfile, data, function(response) {
 			console.log(response);
+			updateCSRF(response);
 		});
 	} else if (active == 0) {
 		$('#ModalAddPhoto').modal();
+	}
+
+	function updateCSRF(response) {
+		var obj = JSON.parse(response);
+		tokenName.val(obj.csrf_name);
+		tokenValue.val(obj.csrf_value);
 	}
 }
 
@@ -199,6 +214,8 @@ function reportFakeAccount() {
 
 function openUserProfile() {
 	var jsonId = document.querySelector('.link-button').getAttribute("data-json-id");
+
+	if (!usersJSON[jsonId]) return false;
 	// console.log('check open');
 	$( ".tinder" ).hide();
 	$('.card-header').show();

@@ -28,7 +28,12 @@ class SearchActionsController extends Controller
 
 		$action_user_id = $request->getParam('action_user_id');
 		BlockUsersList::setBlockUser($action_user_id);
-		return 'User is blocked';
+		// return 'User is blocked';
+		/*
+		** send csrf values for ajax request
+		*/
+		$ajax_csrf = $request->getAttribute('ajax_csrf');
+		return $response->write(json_encode($ajax_csrf));
 	}
 
 	public function getRepotFakeAccount($request, $response)
@@ -43,7 +48,12 @@ class SearchActionsController extends Controller
 		$action_user_id = $request->getParam('action_user_id');
 		// print_r($action_user_id); die();
 		FakeAccountReport::setFakeReport($action_user_id);
-		return 'Report Fake Account Success';
+		// return 'Report Fake Account Success';
+		/*
+		** send csrf values for ajax request
+		*/
+		$ajax_csrf = $request->getAttribute('ajax_csrf');
+		return $response->write(json_encode($ajax_csrf));
 	}
 
 	public function getCheckProfile($request, $response)
@@ -63,9 +73,14 @@ class SearchActionsController extends Controller
 			if (($old_rating->fame_rating + 2) <= 100) {
 				User::updateRating($action_user_id, $old_rating->fame_rating + 2);
 			}
-			return 'check profile record success';
+			// return 'check profile record success';
 		}
-		return 'not first check';
+		// return 'not first check';
+		/*
+		** send csrf values for ajax request
+		*/
+		$ajax_csrf = $request->getAttribute('ajax_csrf');
+		return $response->write(json_encode($ajax_csrf));
 	}
 
 	public function getLike($request, $response)
@@ -101,7 +116,12 @@ class SearchActionsController extends Controller
 				$rating = $old_rating->fame_rating + $rating + 5;
 				User::updateRating($liked_user_id, $rating);
 			}
-			return 'success';
+			// return 'success';
+			/*
+			** send csrf values for ajax request
+			*/
+			$ajax_csrf = $request->getAttribute('ajax_csrf');
+			return $response->write(json_encode($ajax_csrf));
 		}
 		return ';-( some error occurred ;-(';
 	}
@@ -120,7 +140,12 @@ class SearchActionsController extends Controller
 		if (!LikeNope::checkRecord($nope_user_id))
 		{
 			LikeNope::createNewRecord($nope_user_id, 0);
-			return 'success';
+			// return 'success';
+			/*
+			** send csrf values for ajax request
+			*/
+			$ajax_csrf = $request->getAttribute('ajax_csrf');
+			return $response->write(json_encode($ajax_csrf));
 		}
 		return ';-( some error occurred ;-(';
 	}
