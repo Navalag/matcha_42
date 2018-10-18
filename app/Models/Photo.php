@@ -26,7 +26,7 @@ class Photo extends Model
 
 	public static function checkIfUserHasPhoto()
 	{
-		Photo::where('user_id', $_SESSION['user'])->get();
+		return Photo::where('user_id', $_SESSION['user'])->first();
 	}
 
 	public static function getUserPhoto()

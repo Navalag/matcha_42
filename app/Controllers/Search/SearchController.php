@@ -21,7 +21,9 @@ class SearchController extends Controller
 	public function checkInterests($usersToFilter)
 	{
 		$interestsActiveUser = UserDiscoveryInterests::getAll();
-		//check if no interests to search - does not use this filter
+		/*
+		** check if no interests to search - does not use this filter
+		*/
 		if (!$interestsActiveUser[0]) {
 			return $usersToFilter;
 		}
