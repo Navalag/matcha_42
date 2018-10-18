@@ -24,7 +24,7 @@ class SearchController extends Controller
 		/*
 		** check if no interests to search - does not use this filter
 		*/
-		if (!$interestsActiveUser[0]) {
+		if (!isset($interestsActiveUser[0])) {
 			return $usersToFilter;
 		}
 		$result = [];
