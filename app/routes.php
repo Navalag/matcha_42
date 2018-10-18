@@ -30,6 +30,10 @@ $app->group('', function () {
 	*/
 	$this->get('/', 'HomeController:index')->setName('home');
 	/*
+	** sign out
+	*/
+	$this->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signout');
+	/*
 	** edit profile
 	*/
 	$this->get('/auth/edit/user', 'EditController:getChangeProfile')->setName('auth.edit.user');
@@ -40,13 +44,14 @@ $app->group('', function () {
 	$this->post('/user/edit/photo_delete', 'PhotoController:postDeletePhoto')->setName('user.edit.photo_delete');
 	$this->post('/user/edit/photo_upload', 'PhotoController:postUploadPhoto')->setName('user.edit.photo_post');
 	/*
+	** edit profile (handle interests)
+	*/
+	$this->post('/user/edit/interests_delete', 'InterestsController:postDeleteInterestsProfile')->setName('user.edit.interests_delete');
+	$this->post('/user/edit/interests_add', 'InterestsController:postAddInterestsProfile')->setName('user.edit.interests_add');
+	/*
 	** edit profile (set geolocation)
 	*/
 	$this->post('/user/edit/set_geolocation', 'EditController:postSetGeolocation');
-	/*
-	** sign out
-	*/
-	$this->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signout');
 	/*
 	** account settings (change email and password)
 	*/
@@ -81,14 +86,16 @@ $app->group('', function () {
 
 
 
-	$this->get('/user/edit/info', 'AboutController:getEditProfile')->setName('user.edit.info');
-	$this->post('/user/edit/info', 'AboutController:postEditProfile');
+	// $this->get('/user/edit/info', 'AboutController:getEditProfile')->setName('user.edit.info');
+	// $this->post('/user/edit/info', 'AboutController:postEditProfile');
 
-	$this->get('/user/edit/interests', 'InterestsController:getInterestsProfile')->setName('user.edit.interests');
-	$this->post('/user/edit/interests', 'InterestsController:postInterestsProfile');
-	$this->post('/user/edit/interests_delete', 'InterestsController:postDeleteInterestsProfile')->setName('user.edit.interests_delete');
-	$this->post('/user/edit/interests_add', 'InterestsController:postAddInterestsProfile')->setName('user.edit.interests_add');
+	// $this->get('/user/edit/interests', 'InterestsController:getInterestsProfile')->setName('user.edit.interests');
+	// $this->post('/user/edit/interests', 'InterestsController:postInterestsProfile');
+	
 
+	/*
+	** chat
+	*/
 	$this->get('/chat', 'ChatController:index')->setName('chat');;
     $this->post('/chat/addMessage', 'ChatController:addMessage')->setName('chat.addMessage');
 	

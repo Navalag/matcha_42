@@ -55,6 +55,7 @@ class ChatController extends Controller
         // CHAT ID
 //        $chat_id = 1;
 //        Chat::addMessage($message, $chat_id);
+        
         /*
 		** send csrf values for ajax request
 		*/

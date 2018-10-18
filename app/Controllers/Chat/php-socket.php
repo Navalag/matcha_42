@@ -32,7 +32,7 @@ while (true) {
 		unset($newSocketArray[$newSocketIndex]);
 	}
 	
-	foreach ($newSocketArray as $newSocketArrayResource) {	
+	foreach ($newSocketArray as $newSocketArrayResource) {
 		while(socket_recv($newSocketArrayResource, $socketData, 1024, 0) >= 1){
 			$socketMessage = $chatHandler->unseal($socketData);
 			$messageObj = json_decode($socketMessage);
@@ -48,7 +48,7 @@ while (true) {
 			$connectionACK = $chatHandler->connectionDisconnectACK($client_ip_address);
 			$chatHandler->send($connectionACK);
 			$newSocketIndex = array_search($newSocketArrayResource, $clientSocketArray);
-			unset($clientSocketArray[$newSocketIndex]);			
+			unset($clientSocketArray[$newSocketIndex]);
 		}
 	}
 }
