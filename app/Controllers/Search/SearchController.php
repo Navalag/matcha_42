@@ -133,7 +133,13 @@ class SearchController extends Controller
 		if (!empty($finalArray)) {
 			$finalArray = $this->checkInterests($finalArray);
 		}
-
+		/*
+		** sort by fame_rating
+		*/
+		usort($finalArray, function($a, $b) {
+		    return $a->fame_rating < $b->fame_rating;
+		});
+		// print_r($finalArray); die();
 		$viewArray = [];
 		foreach ($finalArray as $row) {
 			$userPhoro = Photo::getPhotoSrcByUserId($row->id);
