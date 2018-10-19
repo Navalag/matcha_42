@@ -83,6 +83,14 @@ $app->group('', function () {
 	$this->post('/search/block', 'SearchActionsController:getBlockUser')->setName('search.block');
 	$this->post('/search/report_fake', 'SearchActionsController:getRepotFakeAccount')->setName('search.report_fake');
 	$this->post('/search/check_profile', 'SearchActionsController:getCheckProfile')->setName('search.check_profile');
+	/*
+	** my matches
+	*/
+	$this->get('/my-matches', 'MyMatchesController:getMyMatches')->setName('my-matches');
+	/*
+	** my activity log
+	*/
+	$this->get('/activity-log', 'MyLogController:getActivityLog')->setName('activity-log');
 
 
 

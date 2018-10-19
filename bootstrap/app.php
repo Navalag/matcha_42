@@ -149,6 +149,18 @@ $container['SearchController'] = function ($container) {
 $container['SearchActionsController'] = function ($container) {
 	return new \Matcha\Controllers\Search\SearchActionsController($container);
 };
+/*
+** My Matches controllers
+*/
+$container['MyMatchesController'] = function ($container) {
+	return new \Matcha\Controllers\Search\MyMatchesController($container);
+};
+/*
+** Activity Log controllers
+*/
+$container['MyLogController'] = function ($container) {
+	return new \Matcha\Controllers\Log\MyLogController($container);
+};
 
 /*
 ** CSRF middleware
