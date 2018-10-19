@@ -42,9 +42,10 @@
 							</div>
 							<h5 class="card-title mt-3">Popularity:</h5>
 							<div class="progress" style="height: 7px">
-								<div class="progress-bar bg-red" role="progressbar" style="width: 20%; height: 7px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="progress-bar bg-red" role="progressbar" style="width: {{ about.rating }}%; height: 7px;" aria-valuenow="{{ about.rating }}" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
-							<h6 class="card-subtitle mt-3 mb-4 text-muted">low (try to write more information in your profile)</h6>
+							<div class="line"></div>
+							<!-- <h6 class="card-subtitle mt-3 mb-4 text-muted">low (try to write more information in your profile)</h6> -->
 							<div class="text-center">
 								<a href="/auth/edit/user" class="btn btn-primary">Edit profile</a>
 							</div>
