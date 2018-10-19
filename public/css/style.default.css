@@ -430,6 +430,9 @@ nav.side-navbar .sidebar-header {
 nav.side-navbar .avatar {
 	width: 55px;
 	height: 55px;
+    background-size: cover;
+    background-position: top center;
+    border-radius: 50%;
 }
 
 nav.side-navbar .title {

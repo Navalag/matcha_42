@@ -8,13 +8,13 @@
 			</a>
 			<!-- Sidebar Header-->
 			<div class="sidebar-header d-flex align-items-center">
-				<div class="avatar"><img src="{{ base_url() }}/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+				<div class="avatar" style="background-image: url('{{ auth.avatar }}')"></div>
 				<div class="title">
-					<h1 class="h4">Mark Stephen</h1>
-					<p>Web Designer</p>
+					<h1 class="h4">{{ auth.user.first_name }} {{ auth.user.last_name }}</h1>
+					<p>{{ auth.user.username }}</p>
 				</div>
 			</div>
-			<!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+			<!-- Sidebar Navidation Menus--><span class="heading" style="letter-spacing: 1px;">Main Navigation</span>
 			<ul class="list-unstyled">
 				<li class="active"><a href="/"> <i class="icon-user"></i>My Profile </a></li>
 				<li><a href="/user/search/discovery_settings"> <i class="icon-search"></i>Discovery Settings </a></li>

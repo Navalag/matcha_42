@@ -84,6 +84,7 @@ $container['view'] = function ($container) {
 	$view->getEnvironment()->addGlobal('auth', [
 		'check' => $container->checker->check(),
 		'user' => $container->checker->user(),
+		'avatar' => $container->checker->avatarImg(),
 	]);
 	/* добавить в объект view набор возможностей flash чтобы использовать его на шаблонах twig */
 	$view->getEnvironment()->addGlobal('flash', $container->flash);

@@ -3,6 +3,7 @@
 namespace Matcha\Controllers\Check;
 
 use Matcha\Models\User;
+use Matcha\Models\Photo;
 use Matcha\Models\UserInterest;
 use Matcha\Models\InterestList;
 use Matcha\Models\UserDiscoveryInterests;
@@ -23,6 +24,16 @@ class CheckController
 		if (isset($_SESSION['user'])) {
 			return User::find($_SESSION['user']);
 		}
+	}
+
+	public function avatarImg()
+	{
+		$avatarSrc = Photo::getAvatarImg();
+
+		if ($avatarSrc) {
+			return $avatarSrc->photo_src;
+		}
+		return '/img/default-avatar-2.png';
 	}
 
 	public function allUserInterests()
