@@ -18,13 +18,16 @@ class ChatController extends Controller
     {
         // добавить сюда массив сообщений с переписки и в глобальное окружение на вывод
 
+
+        $route = $request->getAttribute('route');
+        $chat_id = $route->getArgument('chat_id');
+        // print_r($courseId); die();
         $arrMes = [];
         $allMessage = Chat::all();
 
         foreach ($allMessage as $rowMessage)
         {
-            //        $chat_id = $request->getParam('chat_id');;
-            $chat_id = 1;
+            // $chat_id = $request->getParam('chat_id');
             if ($rowMessage->chat_id == $chat_id)
             {
                 $arrMes[] = $rowMessage;
