@@ -1331,11 +1331,26 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 }
 
 /*====== Trending Articles Box ======*/
+
 .articles a {
 	text-decoration: none !important;
-	display: block;
+	/*display: block;
 	margin-bottom: 0;
-	color: #555;
+	color: #555;*/
+}
+
+.articles .CTAs {
+	margin-top: 5px;
+}
+
+.articles .CTAs a {
+	font-size: 0.7em;
+	padding: 3px 8px;
+	margin-right: 5px;
+}
+
+.articles .CTAs a i {
+	margin-right: 5px;
 }
 
 .articles .badge {
@@ -1354,10 +1369,15 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 }
 
 .articles .item .image {
-	min-width: 50px;
-	max-width: 50px;
-	height: 50px;
+	min-width: 60px;
+    max-width: 60px;
+    height: 60px;
 	margin-right: 15px;
+	background-size: cover;
+    background-position: top center;
+    border-radius: 50%;
+    /*padding: 3px;*/
+	border: 2px solid #28a745;
 }
 
 .articles .item img {

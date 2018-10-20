@@ -15,31 +15,22 @@
 					<!-- <div class="badge badge-rounded bg-green">4 New</div> -->
 				</div>
 				<div class="card-body no-padding">
+					{% if array is defined %}
+					{% for user in array %}
 					<div class="item d-flex align-items-center">
-						<div class="image"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
-						<div class="text"><a href="#">
-								<h3 class="h5">Lorem Ipsum Dolor</h3></a><small>Posted on 5th June 2017 by Aria Smith.   </small></div>
+						<div class="image" style="background-image: url('{{ user.photo[0] }}')"></div>
+						<div class="text">
+							<a href="#">
+								<h3 class="h5">{{ user.basic_info.username }}</h3>
+							</a>
+							<div class="CTAs">
+								<a href="#" class="btn btn-xs btn-secondary">Open Chat</a>
+								<a href="#" class="btn btn-xs btn-secondary">Unmatch</a>
+							</div>
+						</div>
 					</div>
-					<div class="item d-flex align-items-center">
-						<div class="image"><img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
-						<div class="text"><a href="#">
-								<h3 class="h5">Lorem Ipsum Dolor</h3></a><small>Posted on 5th June 2017 by Frank Williams.   </small></div>
-					</div>
-					<div class="item d-flex align-items-center">
-						<div class="image"><img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
-						<div class="text"><a href="#">
-								<h3 class="h5">Lorem Ipsum Dolor</h3></a><small>Posted on 5th June 2017 by Ashley Wood.   </small></div>
-					</div>
-					<div class="item d-flex align-items-center">
-						<div class="image"><img src="img/avatar-4.jpg" alt="..." class="img-fluid rounded-circle"></div>
-						<div class="text"><a href="#">
-								<h3 class="h5">Lorem Ipsum Dolor</h3></a><small>Posted on 5th June 2017 by Jason Doe.   </small></div>
-					</div>
-					<div class="item d-flex align-items-center">
-						<div class="image"><img src="img/avatar-5.jpg" alt="..." class="img-fluid rounded-circle"></div>
-						<div class="text"><a href="#">
-								<h3 class="h5">Lorem Ipsum Dolor</h3></a><small>Posted on 5th June 2017 by Sam Martinez.   </small></div>
-					</div>
+					{% endfor %}
+					{% endif %}
 				</div>
 			</div>
 		</div><!-- end My Matches-->
@@ -48,9 +39,10 @@
 </div>
 </section>
 
-<!-- <script src="{{ base_url() }}/js/edit-profile.js"></script>
+<script src="{{ base_url() }}/js/my-matches.js"></script>
 <script>
-	var userPhoto = {{ edit.photo | json_encode | raw}};
-</script> -->
+	var info = {{ array | json_encode | raw}};
+	console.log(info);
+</script>
 {% include 'templates/partials/footer.twig' %}
 {% endblock %}

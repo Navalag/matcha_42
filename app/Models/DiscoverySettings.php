@@ -35,6 +35,7 @@ class DiscoverySettings extends Model
 	}
 
 	public static function setAll($settings) {
+		// var_dump($settings); die();
 		DiscoverySettings::where('user_id', $_SESSION['user'])->update([
 			'max_distanse' => $settings['max_distanse'],
 			'min_age' => $settings['min_age'],

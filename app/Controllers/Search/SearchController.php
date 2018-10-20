@@ -3,8 +3,8 @@
 namespace  Matcha\Controllers\Search;
 
 use Matcha\Controllers\Controller;
-use Slim\Http\Request;
-use Slim\Http\Response;
+// use Slim\Http\Request;
+// use Slim\Http\Response;
 use Matcha\Models\User;
 use Matcha\Models\DiscoverySettings;
 use Matcha\Models\UserDiscoveryInterests;
@@ -12,7 +12,6 @@ use Matcha\Models\UserInterest;
 use Matcha\Models\BlockUsersList;
 use Matcha\Models\LikeNope;
 use Matcha\Models\Photo;
-use Matcha\Controllers\Check\CheckController;
 use Respect\Validation\Validator as v;
 use Illuminate\Database\Capsule\Manager as DB;
 

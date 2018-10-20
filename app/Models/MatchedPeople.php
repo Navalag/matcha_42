@@ -26,6 +26,15 @@ class MatchedPeople extends Model
 		]);
 	}
 
+	public static function getMyMatches()
+	{
+		return MatchedPeople::
+						where('first_id', $_SESSION['user'])
+					  ->orWhere('second_id', $_SESSION['user'])
+					  ->get();
+		// print_r($myMatches); die();
+	}
+
 	// public static function unsetMatcha($first_id, $second_id)
 	// {
 	// 	$allMatcha = Matcha::all();

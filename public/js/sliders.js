@@ -240,6 +240,12 @@ $(document).ready(function() {
 // Geolocation
 // ------------------------------------------------------ //
 
+$('.geolocation').toggle('#showGeolocation');
+
+
+
+
+
 // var mapholder = document.getElementById("mapholder");
 // var latitude, longitude;
 

@@ -40,7 +40,7 @@ class DiscoverySettingsController extends Controller
 	{
 		$validation = $this->validator->validate($request, [
 			'max-distanse' => v::notEmpty()->numeric(),
-			'min-rating' => v::notEmpty()->numeric(),
+			'min-rating' => v::numeric(),
 			'max-rating' => v::notEmpty()->numeric(),
 			'min-age' => v::notEmpty()->numeric(),
 			'max-age' => v::notEmpty()->numeric(),
@@ -48,6 +48,7 @@ class DiscoverySettingsController extends Controller
 		]);
 
 		if ($validation->failed()) {
+			var_dump($validation); die();
 			return $response->withRedirect($this->router->pathFor('user.search.discovery_settings'));
 		}
 
