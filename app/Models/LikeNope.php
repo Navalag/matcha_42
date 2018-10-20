@@ -3,6 +3,7 @@
 namespace Matcha\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Matcha\Models\Notifications;
 
 class LikeNope extends Model
 {
@@ -31,6 +32,12 @@ class LikeNope extends Model
 				'action_user_id' => $user_id,
 				'like_nope' => $action,
 			]);
+
+
+        Notifications::addNew($user_id, "like");
+
+
+
 	}
 
 	public static function checkIfMatch($user_id) {

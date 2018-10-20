@@ -23,6 +23,7 @@ class ChatController extends Controller
 
         foreach ($allMessage as $rowMessage)
         {
+            //        $chat_id = $request->getParam('chat_id');;
             $chat_id = 1;
             if ($rowMessage->chat_id == $chat_id)
             {
@@ -53,8 +54,11 @@ class ChatController extends Controller
         $message = $request->getParam('chat_message');
 
         // CHAT ID
-//        $chat_id = 1;
-//        Chat::addMessage($message, $chat_id);
+//        $chat_id = $request->getParam('chat_id');;
+        $chat_id = 1;
+        Chat::addMessage($message, $chat_id);
+
+
         
         /*
 		** send csrf values for ajax request

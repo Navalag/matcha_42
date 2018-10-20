@@ -162,6 +162,10 @@ $container['MyLogController'] = function ($container) {
 	return new \Matcha\Controllers\Log\MyLogController($container);
 };
 
+$container['Notifications'] = function ($container) {
+    return new \Matcha\Models\Notifications($container);
+};
+
 /*
 ** CSRF middleware
 */

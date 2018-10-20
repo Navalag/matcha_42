@@ -151,6 +151,7 @@ class CheckController
 		return $str;
 	}
 
+
 	// public function logout()
 	// {
 	// 	unset($_SESSION['user']);

@@ -38,6 +38,7 @@ Thumbs.db
 
 # App Specific +
 ######################
+/matcha.conf
 /ozharko.conf
 /public/img
 
