@@ -36,12 +36,12 @@ $('#frmChat').on("submit",function(event){
 	var tokenName =  $('input[name="csrf_name"]');
 	var tokenValue =  $('input[name="csrf_value"]');
 	var data = {
-        	"chat_id" : $('#chat-id').val(),
-			"chat_user" : $('#chat-user').val(),
-			"chat_message": $('#chat-message').val(),
-			"csrf_name" : tokenName.attr('value'),
-			"csrf_value" : tokenValue.attr('value')
-		};
+	        		"chat_id" : $('#chat-id').val(),
+							"chat_user" : $('#chat-user').val(),
+							"chat_message": $('#chat-message').val(),
+							"csrf_name" : tokenName.attr('value'),
+							"csrf_value" : tokenValue.attr('value')
+						};
 	$.post(url, data, function(response) {
 		console.log(response);
 		var obj = JSON.parse(response);

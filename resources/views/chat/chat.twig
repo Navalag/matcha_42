@@ -13,13 +13,16 @@
 						<form name="frmChat" action="{{ path_for('chat.addMessage') }}" method="post"  id="frmChat" >
 						{#<form name="frmChat"  id="frmChat" >#}
 							<div id="chat-box">
-								 {% for message in arrMessage %}
-									 <div class="chat-box-html">
-										 <div class="chat-box-message">
-											 {{  message_id.username  }} {{  message.message }}
-										 </div>
-									 </div>
+								{% if arrMessage is defined %}
+								{% for message in arrMessage %}
+									<div class="chat-box-html">
+										{{  message_id.username  }}:
+										<div class="chat-box-message">
+										  {{  message.message }}
+										</div>
+									</div>
 								{% endfor %}
+								{% endif %}
 							</div>
 							<input type="hidden" name="chat_id" id="chat-id" placeholder="Name" class="chat-input" required value="{{ message_id.chat_id }}"/>
 							<input type="hidden" name="chat_user" id="chat-user" placeholder="Name" class="chat-input" required value="{{ message_id.username }}"/>

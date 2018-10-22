@@ -66,8 +66,8 @@ class ChatController extends Controller
         // CHAT ID
 //        $chat_id = $request->getParam('chat_id');;
         $result = Chat::addMessage($message, $chat_id);
-        var_dump($result);die;
-        var_dump($result);
+        // var_dump($result);die;
+        // var_dump($result);
 
 
         
