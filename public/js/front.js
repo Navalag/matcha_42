@@ -143,10 +143,33 @@ $(document).ready(function () {
 		window.open($(this).attr("href"));
 	});
 
+	// ------------------------------------------------------- //
+	// Highlight current page menu item
+	// ------------------------------------------------------ //
+
+	$(function () {
+		var url = window.location.pathname; 
+		var activePage = url.substring(url.lastIndexOf('/') + 1);
+
+	  $('.main-menu li a').each(function() {
+	      var linkPage = this.href.substring(this.href.lastIndexOf('/') + 1); 
+
+	      if (activePage == linkPage) { 
+	          $(this).closest("li").addClass("active"); 
+	      }
+	  });
+	  /*
+	  ** it's a shame, I know :( but I had to do it fast
+	  */
+	  if (url.includes('/user-page')) {
+      $('.main-menu li').eq(4).addClass("active");
+    }
+    if (url.includes('/auth/edit/user')) {
+      $('.main-menu li').eq(0).addClass("active");
+    }
+	});
+
 });
-
-
-
 
 // google maps api key
 // AIzaSyBfXFjp3bYD9ZVLAn61pokhELgCOwYKsEE
