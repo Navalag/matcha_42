@@ -34,7 +34,7 @@ class LikeNope extends Model
 			]);
 
 
-        Notifications::addNew($user_id, "like");
+        // Notifications::addNew($user_id, "like");
 
 
 

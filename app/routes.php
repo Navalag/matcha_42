@@ -87,7 +87,8 @@ $app->group('', function () {
 	** my matches
 	*/
 	$this->get('/my-matches', 'MyMatchesController:getMyMatches')->setName('my-matches');
-	// $this->get('/my-matches', 'MyMatchesController:getMyMatches')->setName('my-matches');
+	$this->get('/my-matches/{user_id}', 'MyMatchesController:getOtherUserProfile')->setName('/my-matches.{user_id}');
+	$this->get('/my-matches/unmatch/{user_id}', 'MyMatchesController:getUnmatch')->setName('my-matches.unmatch.{user_id}');
 	/*
 	** my activity log
 	*/
@@ -105,7 +106,7 @@ $app->group('', function () {
 	/*
 	** chat
 	*/
-	$this->get('/chat/{chat_id}', 'ChatController:index')->setName('chat');;
+	$this->get('/chat/{chat_id}', 'ChatController:index')->setName('chat');
     $this->post('/chat/addMessage', 'ChatController:addMessage')->setName('chat.addMessage');
 	
 	// $this->get('/user/edit/photo', 'PhotoController:getPhotoProfile')->setName('user.edit.photo');

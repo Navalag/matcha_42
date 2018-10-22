@@ -105,7 +105,7 @@ class SearchActionsController extends Controller
 				if (($old_rating->fame_rating + $rating) <= 95) {
 					User::updateRating($_SESSION['user'], $old_rating->fame_rating + 5);
 				}
-				echo "new match";
+				// echo "new match";
 			}
 			/*
 			** update rating

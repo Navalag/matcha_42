@@ -35,17 +35,17 @@ class MatchedPeople extends Model
 		// print_r($myMatches); die();
 	}
 
-	// public static function unsetMatcha($first_id, $second_id)
-	// {
-	// 	$allMatcha = Matcha::all();
-
-	// 	foreach ($allMatcha as $row)
-	// 	{
-	// 		if ($row->first_id == $first_id && $row->second_id == $second_id ||
-	// 			$row->first_id == $second_id && $row->second_id == $first_id) {
-	// 			Matcha::where('id', $row->id)->delete();
-	// 			return ;
-	// 		}
-	// 	}
-	// }
+	public static function setUnmatch($user_id)
+	{
+		MatchedPeople::
+						where([
+							'first_id' => $_SESSION['user'],
+							'second_id' => $user_id
+						])
+					  ->orWhere([
+					  		'first_id' => $user_id,
+							'second_id' => $_SESSION['user']
+					  	])
+					  ->delete();
+	}
 }

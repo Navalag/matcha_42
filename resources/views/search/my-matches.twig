@@ -20,17 +20,18 @@
 					<div class="item d-flex align-items-center">
 						<div class="image" style="background-image: url('{{ user.photo[0] }}')"></div>
 						<div class="text">
-							<a href="#">
+							<a href="/my-matches/{{ user.basic_info.id }}" class="open-user">
 								<h3 class="h5">{{ user.basic_info.username }}</h3>
 							</a>
 							<div class="CTAs">
 								<a href="/chat/{{ user.chat_id }}" class="btn btn-xs btn-secondary">Open Chat</a>
-								<a href="#" class="btn btn-xs btn-secondary">Unmatch</a>
+								<a href="/my-matches/unmatch/{{ user.basic_info.id }}" class="btn btn-xs btn-secondary">Unmatch</a>
 							</div>
 						</div>
 					</div>
 					{% endfor %}
 					{% endif %}
+
 				</div>
 			</div>
 		</div><!-- end My Matches-->
@@ -39,10 +40,5 @@
 </div>
 </section>
 
-<script src="{{ base_url() }}/js/my-matches.js"></script>
-<script>
-	var info = {{ array | json_encode | raw}};
-	console.log(info);
-</script>
 {% include 'templates/partials/footer.twig' %}
 {% endblock %}
