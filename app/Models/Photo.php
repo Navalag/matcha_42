@@ -62,4 +62,9 @@ class Photo extends Model
 	{
 		return Photo::where('user_id', $_SESSION['user'])->first();
 	}
+
+	public static function getAvatarImgByUserId($user_id)
+	{
+		return Photo::where('user_id', $user_id)->first();
+	}
 }

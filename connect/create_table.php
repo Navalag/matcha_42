@@ -130,15 +130,16 @@
 		// $conn->exec($sql);
 
 		/* 
-		** CREATE like_nope TABLE
+		** CREATE like_nope_check TABLE
 		*/
 		$sql = "CREATE "
 			. " TABLE IF NOT EXISTS "
-			. $dbLikeNope
+			. $dbLikeNopeCheck
 			. " (id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 			user_id INT(11) NOT NULL, 
 			action_user_id INT(11) NOT NULL, 
-			like_nope INT(1) NOT NULL, 
+			like_nope INT(1) NOT NULL DEFAULT 0, 
+			check_profile INT(1) NOT NULL DEFAULT 0, 
 			created_at TIMESTAMP NULL DEFAULT NULL, 
 			updated_at TIMESTAMP NULL DEFAULT NULL)";
 

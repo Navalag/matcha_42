@@ -87,12 +87,15 @@ $app->group('', function () {
 	** my matches
 	*/
 	$this->get('/my-matches', 'MyMatchesController:getMyMatches')->setName('my-matches');
-	$this->get('/my-matches/{user_id}', 'MyMatchesController:getOtherUserProfile')->setName('/my-matches.{user_id}');
 	$this->get('/my-matches/unmatch/{user_id}', 'MyMatchesController:getUnmatch')->setName('my-matches.unmatch.{user_id}');
 	/*
 	** my activity log
 	*/
 	$this->get('/activity-log', 'MyLogController:getActivityLog')->setName('activity-log');
+	/*
+	** other user profile
+	*/
+	$this->get('/user-page/{user_id}', 'MyMatchesController:getOtherUserProfile')->setName('user-page.{user_id}');
 
 
 

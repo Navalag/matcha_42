@@ -8,7 +8,7 @@ use Slim\Http\Response;
 
 use Matcha\Models\User;
 use Matcha\Models\CheckProfileLog;
-use Matcha\Models\LikeNope;
+use Matcha\Models\LikeNopeCheck;
 use Matcha\Models\FakeAccountReport;
 use Matcha\Models\BlockUsersList;
 use Matcha\Models\MatchedPeople;
@@ -66,9 +66,9 @@ class SearchActionsController extends Controller
 		}
 
 		$action_user_id = $request->getParam('action_user_id');
-		if (!CheckProfileLog::checkIfFirstTimeOpenProfile($action_user_id)) 
+		if (!LikeNopeCheck::checkIfFirstTimeOpenProfile($action_user_id)) 
 		{
-			CheckProfileLog::setRecord($action_user_id);
+			LikeNopeCheck::setCheckRecord($action_user_id);
 			$old_rating = User::getUserInfoById($action_user_id);
 			if (($old_rating->fame_rating + 2) <= 100) {
 				User::updateRating($action_user_id, $old_rating->fame_rating + 2);
@@ -95,10 +95,10 @@ class SearchActionsController extends Controller
 		$rating = 0;
 		$liked_user_id = $request->getParam('action_user_id');
 
-		if (!LikeNope::checkRecord($liked_user_id))
+		if (!LikeNopeCheck::checkIfLike($liked_user_id))
 		{
-			LikeNope::createNewRecord($liked_user_id, 1);
-			if (LikeNope::checkIfMatch($liked_user_id)) {
+			LikeNopeCheck::createNewRecord($liked_user_id, 1);
+			if (LikeNopeCheck::checkIfMatch($liked_user_id)) {
 				MatchedPeople::setAMatch($liked_user_id);
 				$rating += 5;
 				$old_rating = User::getUserInfoById($_SESSION['user']);
@@ -137,9 +137,9 @@ class SearchActionsController extends Controller
 
 		$nope_user_id = $request->getParam('action_user_id');
 
-		if (!LikeNope::checkRecord($nope_user_id))
+		if (!LikeNopeCheck::checkRecord($nope_user_id))
 		{
-			LikeNope::createNewRecord($nope_user_id, 0);
+			LikeNopeCheck::createNewRecord($nope_user_id, 0);
 			// return 'success';
 			/*
 			** send csrf values for ajax request

@@ -7,6 +7,7 @@ use Matcha\Models\User;
 use Matcha\Models\Photo;
 use Matcha\Models\UserInterest;
 use Matcha\Models\MatchedPeople;
+use Matcha\Models\LikeNopeCheck;
 
 use Respect\Validation\Validator as v;
 
@@ -45,16 +46,22 @@ class MyMatchesController extends Controller
 		$route = $request->getAttribute('route');
 		$user_id = $route->getArgument('user_id');
 
-		$userInfo = User::getUserInfoById($user_id);
-		$userPhoto = Photo::getPhotoSrcByUserId($user_id);
-		$userInterests = UserInterest::getInterestsValueByUserId($user_id);
-		$viewArray[] = array(
-							'basic_info' => $userInfo, 
-							'photo' => $userPhoto,
-							'interests' => $userInterests
-							);
-		$this->container->view->getEnvironment()->addGlobal('user', $viewArray);
-		return $this->view->render($response, 'search/other-user.twig');
+		if (LikeNopeCheck::checkIfMatch($user_id) 
+			|| LikeNopeCheck::checkIfUserLikeOrVisitMe($user_id)) 
+		{
+			$userInfo = User::getUserInfoById($user_id);
+			$userPhoto = Photo::getPhotoSrcByUserId($user_id);
+			$userInterests = UserInterest::getInterestsValueByUserId($user_id);
+			$viewArray[] = array(
+								'basic_info' => $userInfo, 
+								'photo' => $userPhoto,
+								'interests' => $userInterests
+								);
+			$this->container->view->getEnvironment()->addGlobal('user', $viewArray);
+
+			return $this->view->render($response, 'search/other-user.twig');
+		}
+		return $response->withRedirect($this->router->pathFor('home'));
 	}
 
 	public function getUnmatch($request, $response) {

@@ -3,14 +3,12 @@
 namespace  Matcha\Controllers\Search;
 
 use Matcha\Controllers\Controller;
-// use Slim\Http\Request;
-// use Slim\Http\Response;
 use Matcha\Models\User;
 use Matcha\Models\DiscoverySettings;
 use Matcha\Models\UserDiscoveryInterests;
 use Matcha\Models\UserInterest;
 use Matcha\Models\BlockUsersList;
-use Matcha\Models\LikeNope;
+use Matcha\Models\LikeNopeCheck;
 use Matcha\Models\Photo;
 use Respect\Validation\Validator as v;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -66,7 +64,7 @@ class SearchController extends Controller
 
 	public function checkAlreadyLikeNope($usersToFilter)
 	{
-		$likeTable = LikeNope::getAll();
+		$likeTable = LikeNopeCheck::getAllLikeNope();
 		$result = [];
 		$i = 0;
 
