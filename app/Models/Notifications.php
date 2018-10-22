@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notifications extends Model
 {
-    protected $table = 'notifications';
+    protected $table = 'notification';
 
     protected $fillable = [
         'id',
@@ -26,7 +26,8 @@ class Notifications extends Model
     public static function addNew($user_id, $type)
     {
         $type = 0;
-        if ($type == "like")
+
+        if ($type == 1)
             $type = 1;
 
         Notifications::create([
@@ -40,8 +41,7 @@ class Notifications extends Model
             'user_id' => $user_id,
             'see' => 0,
         ])->all();
-
-        var_dump($count);die;
-        $this->container->view->getEnvironment()->addGlobal('notification_count', $count);
+        var_dump($count);
+//        $this->container->view->getEnvironment()->addGlobal('notification_count', $count);
     }
 }
