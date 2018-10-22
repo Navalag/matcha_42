@@ -3,13 +3,11 @@
 namespace Matcha\Controllers\Search;
 
 use Matcha\Controllers\Controller;
-use Slim\Http\Request;
-use Slim\Http\Response;
-use Matcha\Controllers\Check\CheckController;
 use Matcha\Models\User;
 use Matcha\Models\InterestList;
 use Matcha\Models\DiscoverySettings;
 use Matcha\Models\UserDiscoveryInterests;
+
 use Respect\Validation\Validator as v;
 
 class DiscoverySettingsController extends Controller
@@ -19,6 +17,7 @@ class DiscoverySettingsController extends Controller
 		$userInfo = DiscoverySettings::getAllSettings();
 		$interestsResult = $this->checker->allValueOfInterestsToSearch();
 		$allInterests = InterestList::showAllInterests();
+		$userAll = User::getAllUserInfo();
 
 		$settings['max_distanse'] = $userInfo->max_distanse;
 		$settings['min_age'] = $userInfo->min_age;
@@ -26,8 +25,8 @@ class DiscoverySettingsController extends Controller
 		$settings['min_rating'] = $userInfo->min_rating;
 		$settings['max_rating'] = $userInfo->max_rating;
 		$settings['looking_for'] = $userInfo->looking_for;
-		$settings['lat'] = $userInfo->lat;
-		$settings['lng'] = $userInfo->lng;
+		$settings['lat'] = $userAll->lat;
+		$settings['lng'] = $userAll->lng;
 
 		$this->container->view->getEnvironment()->addGlobal('interests', $interestsResult);
 		$this->container->view->getEnvironment()->addGlobal('allInterests', $allInterests);
@@ -45,6 +44,8 @@ class DiscoverySettingsController extends Controller
 			'min-age' => v::notEmpty()->numeric(),
 			'max-age' => v::notEmpty()->numeric(),
 			'looking_for' => v::notEmpty()->alpha(),
+			'lat' => v::notEmpty()->numeric(),
+			'lng' => v::notEmpty()->numeric(),
 		]);
 
 		if ($validation->failed()) {
@@ -58,10 +59,13 @@ class DiscoverySettingsController extends Controller
 		$settings['min_age'] = $request->getParam('min-age');
 		$settings['max_age'] = $request->getParam('max-age');
 		$settings['looking_for'] = $request->getParam('looking_for');
+		$settings['lat'] = $request->getParam('lat');
+		$settings['lng'] = $request->getParam('lng');
 		$this->container->view->getEnvironment()->addGlobal('settings', $settings);
 		// var_dump($settings); die();
 
 		DiscoverySettings::setAll($settings);
+		User::setGpsLocation($settings['lat'], $settings['lng']);
 		return $response->withRedirect($this->router->pathFor('user.search.discovery_settings'));
 	}
 

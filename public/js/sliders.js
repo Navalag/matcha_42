@@ -237,10 +237,25 @@ $(document).ready(function() {
 
 
 // ------------------------------------------------------ //
-// Geolocation
+// Manage Geolocation inputs
 // ------------------------------------------------------ //
 
-$('.geolocation').toggle('#showGeolocation');
+$(document).ready(function() {
+	$('.geolocation').hide();
+	$('#wrapHideGeolocation').hide();
+
+	$('#showGeolocation').on('click', function() {
+		$('.geolocation').show();
+		$('#wrapHideGeolocation').show();
+		$('#wrapShowGeolocation').hide();
+	});
+	$('#wrapHideGeolocation').on('click', function() {
+		$('.geolocation').hide();
+		$('#wrapHideGeolocation').hide();
+		$('#wrapShowGeolocation').show();
+	});
+});
+
 
 
 
