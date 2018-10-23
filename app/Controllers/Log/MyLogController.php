@@ -30,7 +30,7 @@ class MyLogController extends Controller
 								 				: 'check your page',
 								 'photo' => $userPhoto,
 								 'date' => $parseDate['month'].'.'.$parseDate['day'],
-								 'online' => $onlineStatus == 1 ? '1' 
+								 'online' => $onlineStatus == 1 ? 'online' 
 								 			:$onlineStatus
 								);
 		}

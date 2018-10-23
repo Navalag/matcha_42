@@ -45,7 +45,7 @@ class LastActivityStatus extends Model
 				$diff = $diff / 60;
 				if ($diff < 50) {
 					// print_r($diff); die();
-					return 'less than hour ago';
+					return 'few minutes ago';
 				} else if ($diff > 50 && $diff <= 70) {
 					// print_r($diff); die();
 					return 'about hour ago';
@@ -56,12 +56,12 @@ class LastActivityStatus extends Model
 						return 'today';
 					} else {
 						// print_r($diff); die();
-						return 'more than 1 day ago';
+						return 'more than day ago';
 					}
 				}
 			}
 			// print_r($dif); die();
 		}
-		return false;
+		return 'offline';
 	}
 }

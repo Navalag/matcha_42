@@ -283,6 +283,9 @@ function openUserProfile() {
 	*/
 	// 1)
 	$("#name-age").append(
+		"<span class=\"online-status\">" +
+		usersJSON[jsonId].online
+		+"</span>"+
 		"<h3>"+
 		usersJSON[jsonId].basic_info.first_name
 		+" "+

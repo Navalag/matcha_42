@@ -18,14 +18,16 @@
 						<div class="item">
 							<div class="feed d-flex justify-content-between">
 								<div class="feed-body d-flex justify-content-between">
-									<a href="/user-page/{{ user.basic_info.id }}" class="feed-profile"><div class="image" style="background-image: url('{{ user.photo }}')"></div></a>
+									<a href="/user-page/{{ user.basic_info.id }}" class="feed-profile"><div class="image" style="background-image: url('{{ user.photo }}')">
+										{% if user.online == 'online' %}<div class="status bg-green"></div>{% endif %}
+									</div></a>
 									<div class="content">
 										<h5>{{ user.basic_info.username }}</h5>
 										<span>{{ user.action_type }} </span>
 										<!-- <div class="full-date"><small>{{ user.date }}</small></div> -->
 									</div>
 								</div>
-								<!-- <div class="date text-right"><small>5min ago</small></div> -->
+								<div class="date text-right"><small>{{ user.online }}</small></div>
 							</div>
 						</div>
 						{% endfor %}

@@ -8,6 +8,7 @@ use Matcha\Models\Photo;
 use Matcha\Models\UserInterest;
 use Matcha\Models\MatchedPeople;
 use Matcha\Models\LikeNopeCheck;
+use Matcha\Models\LastActivityStatus;
 
 use Respect\Validation\Validator as v;
 
@@ -20,6 +21,10 @@ class MyMatchesController extends Controller
 
 		$viewArray = [];
 		foreach ($matchedPeople as $row) {
+			$onlineStatus = LastActivityStatus::checkIfUserOnline(
+							($row->first_id == $_SESSION['user']) 
+							? $row->second_id : $row->first_id
+						);
 			$userInfo = User::getUserInfoById(
 							($row->first_id == $_SESSION['user']) 
 							? $row->second_id : $row->first_id
@@ -28,14 +33,16 @@ class MyMatchesController extends Controller
 							($row->first_id == $_SESSION['user']) 
 							? $row->second_id : $row->first_id
 						);
-			$userInterests = UserInterest::getInterestsValueByUserId(
-							($row->first_id == $_SESSION['user']) 
-							? $row->second_id : $row->first_id
-						);
+			// $userInterests = UserInterest::getInterestsValueByUserId(
+			// 				($row->first_id == $_SESSION['user']) 
+			// 				? $row->second_id : $row->first_id
+			// 			);
 			$viewArray[] = array('chat_id' => $row->chat_id,
 								 'basic_info' => $userInfo, 
 								 'photo' => $userPhoto,
-								 'interests' => $userInterests);
+								 'online' => $onlineStatus == 1 ? 'online' 
+								 			:$onlineStatus
+								);
 		}
 		$this->container->view->getEnvironment()->addGlobal('array', $viewArray);
 
@@ -49,13 +56,16 @@ class MyMatchesController extends Controller
 		if (LikeNopeCheck::checkIfMatch($user_id) 
 			|| LikeNopeCheck::checkIfUserLikeOrVisitMe($user_id)) 
 		{
+			$onlineStatus = LastActivityStatus::checkIfUserOnline($user_id);
 			$userInfo = User::getUserInfoById($user_id);
 			$userPhoto = Photo::getPhotoSrcByUserId($user_id);
 			$userInterests = UserInterest::getInterestsValueByUserId($user_id);
 			$viewArray[] = array(
 								'basic_info' => $userInfo, 
 								'photo' => $userPhoto,
-								'interests' => $userInterests
+								'interests' => $userInterests,
+								'online' => $onlineStatus == 1 ? 'online' 
+								 			:$onlineStatus
 								);
 			$this->container->view->getEnvironment()->addGlobal('user', $viewArray);
 

@@ -10,7 +10,7 @@ use Matcha\Models\LikeNopeCheck;
 use Matcha\Models\FakeAccountReport;
 use Matcha\Models\BlockUsersList;
 use Matcha\Models\MatchedPeople;
-use Matcha\Models\Notifications;
+// use Matcha\Models\Notifications;
 
 use Respect\Validation\Validator as v;
 
@@ -96,21 +96,21 @@ class SearchActionsController extends Controller
 
 		if (!LikeNopeCheck::checkIfLike($liked_user_id))
 		{
-                $type = 1;
+            // $type = 1;
 
-            Notifications::create([
-                'user_id' => $liked_user_id,
-                'from_user_id' => $_SESSION['user'],
-                'type' => $type,
-                'see' => 0,
-            ]);
+            // Notifications::create([
+            //     'user_id' => $liked_user_id,
+            //     'from_user_id' => $_SESSION['user'],
+            //     'type' => $type,
+            //     'see' => 0,
+            // ]);
 
-            $count = Notifications::where([
-                'user_id' => $liked_user_id,
-                'see' => 0,
-            ])->get();
-            $notif = 'notification_count_' . $liked_user_id;
-            $this->container->view->getEnvironment()->addGlobal($notif, $count);
+            // $count = Notifications::where([
+            //     'user_id' => $liked_user_id,
+            //     'see' => 0,
+            // ])->get();
+            // $notif = 'notification_count_' . $liked_user_id;
+            // $this->container->view->getEnvironment()->addGlobal($notif, $count);
 
 
 			LikeNopeCheck::createNewRecord($liked_user_id, 1);

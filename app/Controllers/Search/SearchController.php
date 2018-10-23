@@ -10,6 +10,7 @@ use Matcha\Models\UserInterest;
 use Matcha\Models\BlockUsersList;
 use Matcha\Models\LikeNopeCheck;
 use Matcha\Models\Photo;
+use Matcha\Models\LastActivityStatus;
 use Respect\Validation\Validator as v;
 use Illuminate\Database\Capsule\Manager as DB;
 
@@ -141,10 +142,14 @@ class SearchController extends Controller
 		foreach ($finalArray as $row) {
 			$userPhoro = Photo::getPhotoSrcByUserId($row->id);
 			$userInterests = UserInterest::getInterestsValueByUserId($row->id);
+			$onlineStatus = LastActivityStatus::checkIfUserOnline($row->id);
 			$viewArray[] = array('active' => $user->active,
 								 'basic_info' => $row, 
 								 'photo' => $userPhoro,
-								 'interests' => $userInterests);
+								 'interests' => $userInterests,
+								 'online' => $onlineStatus == 1 ? 'online' 
+								 			:$onlineStatus
+								);
 		}
 		$this->container->view->getEnvironment()->addGlobal('array', $viewArray);
 		// print_r($viewArray); die();

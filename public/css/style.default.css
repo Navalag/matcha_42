@@ -430,9 +430,9 @@ nav.side-navbar .sidebar-header {
 nav.side-navbar .avatar {
 	width: 55px;
 	height: 55px;
-    background-size: cover;
-    background-position: top center;
-    border-radius: 50%;
+	background-size: cover;
+	background-position: top center;
+	border-radius: 50%;
 }
 
 nav.side-navbar .title {
@@ -1213,6 +1213,13 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 }
 
 /*====== Client Profile Box ======*/
+.online-status {
+	margin-top: -17px !important;
+  margin-bottom: 10px;
+	display: block !important;
+	color: #ccc !important;
+}
+
 .client .client-avatar {
 	width: 100px;
 	height: 100px;
@@ -1370,14 +1377,15 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 
 .articles .item .image {
 	min-width: 60px;
-    max-width: 60px;
-    height: 60px;
+	max-width: 60px;
+	height: 60px;
 	margin-right: 15px;
 	background-size: cover;
-    background-position: top center;
-    border-radius: 50%;
-    /*padding: 3px;*/
+	background-position: top center;
+	border-radius: 50%;
+	/*padding: 3px;*/
 	border: 2px solid #28a745;
+	position: relative;
 }
 
 .articles .item img {
@@ -1504,13 +1512,26 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 
 .daily-feeds .image {
 	min-width: 60px;
-    max-width: 60px;
-    height: 60px;
-    margin-right: 15px;
-    background-size: cover;
-    background-position: top center;
-    border-radius: 50%;
-    /*border: 2px solid #28a745;*/
+	max-width: 60px;
+	height: 60px;
+	margin-right: 15px;
+	background-size: cover;
+	background-position: top center;
+	border-radius: 50%;
+	position: relative;
+	/*border: 2px solid #28a745;*/
+}
+
+.status {
+	content: '';
+	display: block;
+	width: 18px;
+	height: 18px;
+	border: 3px solid #fff;
+	border-radius: 50%;
+	position: absolute;
+	right: -5px;
+  bottom: -1px;
 }
 
 /*====== Recent Activities Box ======*/
