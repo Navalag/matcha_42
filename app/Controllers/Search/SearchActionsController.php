@@ -3,8 +3,6 @@
 namespace Matcha\Controllers\Search;
 
 use Matcha\Controllers\Controller;
-use Slim\Http\Request;
-use Slim\Http\Response;
 
 use Matcha\Models\User;
 use Matcha\Models\CheckProfileLog;
@@ -111,7 +109,7 @@ class SearchActionsController extends Controller
                 'user_id' => $liked_user_id,
                 'see' => 0,
             ])->get();
-            $notif = 'notification_count_' . $liked_user_id$
+            $notif = 'notification_count_' . $liked_user_id;
             $this->container->view->getEnvironment()->addGlobal($notif, $count);
 
 

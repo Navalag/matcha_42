@@ -2,13 +2,12 @@
 
 namespace Matcha\Middleware;
 
-
 class Middleware
 {
-    protected $container;
+	protected $container;
 
-    public function __construct($container)
-    {
-        $this->container = $container;
-    }
+	public function __construct($container)
+	{
+		$this->container = $container;
+	}
 }

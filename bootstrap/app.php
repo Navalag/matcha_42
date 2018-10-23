@@ -82,7 +82,7 @@ $container['view'] = function ($container) {
 	 * а и на стороне представления
 	 * */
 	$view->getEnvironment()->addGlobal('auth', [
-		'check' => $container->checker->check(),
+		// 'check' => $container->checker->check(),
 		'user' => $container->checker->user(),
 		'avatar' => $container->checker->avatarImg(),
 	]);
@@ -178,23 +178,14 @@ $container['logger'] = function($container) {
 		$logger->pushHandler($file_handler);
 		return $logger;
 };
-/*
- * такое добавление классов через $app->add
- * позволяет им быть всегда в режиме прослушки запроса
- * поэтому все функции вызваны через магический метод __invoke
- * чтобы все запросы прошли через них без явного вызова функции
- * */
+
 $app->add(new \Matcha\Middleware\ValidationErrorsMiddleware($container));
-$app->add(new \Matcha\Middleware\OldInputMiddleware($container));
+// $app->add(new \Matcha\Middleware\OldInputMiddleware($container));
 $app->add(new \Matcha\Middleware\CsrfViewMiddleware($container));
-/* ???
- * csrf folder $container['csrf'] = function ($container) {}
- * активация самого Guard
- * */
+$app->add(new \Matcha\Middleware\CheckOnlineStatusMiddleware($container));
+
 $app->add($container->csrf);
-/* Доделать 404 страничку
- * изменить стандартный вывод об ошибке 404
- * */
+
 $container['notFoundHandler'] = function ($container) {
 	return function ($request, $response) use ($container) {
 		return $container->response

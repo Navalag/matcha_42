@@ -32,3 +32,5 @@
 	$dbFakeAccountReport = "fake_account_report";
 	
 	$dbCheckProfileLog = "check_profile_log";
+
+	$dbLastActivityStatus = "last_activity_status";

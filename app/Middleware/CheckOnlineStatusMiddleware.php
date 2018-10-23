@@ -2,13 +2,14 @@
 
 namespace Matcha\Middleware;
 
-class GuestMiddleware extends Middleware
+use Matcha\Models\LastActivityStatus;
+
+class CheckOnlineStatusMiddleware extends Middleware
 {
 	public function __invoke($request, $response, $next)
 	{
-		// if ($this->container->checker->check()) {
 		if (isset($_SESSION['user'])) {
-			return $response->withRedirect($this->container->router->pathFor('home'));
+			$activity = LastActivityStatus::updateActivity();
 		}
 
 		$response = $next($request, $response);

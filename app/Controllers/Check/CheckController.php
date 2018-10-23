@@ -7,6 +7,7 @@ use Matcha\Models\Photo;
 use Matcha\Models\UserInterest;
 use Matcha\Models\InterestList;
 use Matcha\Models\UserDiscoveryInterests;
+use Matcha\Models\LastActivityStatus;
 
 class CheckController
 {
@@ -101,6 +102,10 @@ class CheckController
 	{
 		return isset($_SESSION['user']);
 	}
+
+	// public function checkOnlineStatus($user_id) {
+	// 	$online = LastActivityStatus::checkIfUserOnline($user_id);
+	// }
 
 	/*
 	 * получаем для входа email и password

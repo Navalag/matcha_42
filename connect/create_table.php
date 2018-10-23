@@ -25,6 +25,7 @@
 			email_confirmed INT(1) NULL DEFAULT 0 COMMENT 'after registration user must confirm account via email', 
 			fake_account INT(1) NULL DEFAULT 0 COMMENT 'if 5 users comlains that account is fake, active status become false', 
 			active INT(1) NULL DEFAULT 0 COMMENT 'set true when user has at least one photo and account is confirmed and not fake account', 
+			online INT(1) NOT NULL DEFAULT 0, 
 			about_me VARCHAR(255) NULL DEFAULT NULL,
 			gender VARCHAR(255) NULL DEFAULT NULL,
 			age INT(11) NOT NULL DEFAULT 18,
@@ -267,6 +268,22 @@
 			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 			user_id INT(11) NOT NULL, 
 			check_profile_user_id INT(11) NOT NULL, 
+			created_at TIMESTAMP NULL DEFAULT NULL,
+			updated_at TIMESTAMP NULL DEFAULT NULL
+		)";
+
+		$conn->exec($sql);
+
+		/* 
+		** CREATE last_activity_status TABLE
+		*/
+		$sql = "CREATE "
+			. " TABLE IF NOT EXISTS "
+			. $dbLastActivityStatus
+			. " (
+			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+			user_id INT(11) NOT NULL, 
+			last_activity datetime NOT NULL, 
 			created_at TIMESTAMP NULL DEFAULT NULL,
 			updated_at TIMESTAMP NULL DEFAULT NULL
 		)";

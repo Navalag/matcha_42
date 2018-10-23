@@ -17,6 +17,7 @@ class User extends Model
 		'email_confirmed',
 		'fake_account',
 		'active',
+		'online',
 		'about_me',
 		'gender',
 		'age',
