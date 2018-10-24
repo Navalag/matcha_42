@@ -66,21 +66,21 @@ class ChatHandler {
 		"Sec-WebSocket-Accept:$secAccept\r\n\r\n";
 		socket_write($client_socket_resource,$buffer,strlen($buffer));
 	}
-	
+
 	function newConnectionACK($client_ip_address) {
 		$message = 'New client ' . $client_ip_address.' joined';
 		$messageArray = array('message'=>$message,'message_type'=>'chat-connection-ack');
 		$ACK = $this->seal(json_encode($messageArray));
 		return $ACK;
 	}
-	
+
 	function connectionDisconnectACK($client_ip_address) {
 		$message = 'Client ' . $client_ip_address.' disconnected';
 		$messageArray = array('message'=>$message,'message_type'=>'chat-connection-ack');
 		$ACK = $this->seal(json_encode($messageArray));
 		return $ACK;
 	}
-	
+
 	function createChatBoxMessage($chat_user,$chat_box_message) {
 		$message = $chat_user . ": <div class='chat-box-message'>" . $chat_box_message . "</div>";
 		$messageArray = array('message'=>$message,'message_type'=>'chat-box-html');

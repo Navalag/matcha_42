@@ -12,6 +12,7 @@ socket_bind($socketResource, 0, PORT);
 socket_listen($socketResource);
 
 $clientSocketArray = array($socketResource);
+
 while (true) {
 	$newSocketArray = $clientSocketArray;
 	socket_select($newSocketArray, $null, $null, 0, 10);
@@ -19,6 +20,7 @@ while (true) {
 	if (in_array($socketResource, $newSocketArray)) {
 		$newSocket = socket_accept($socketResource);
 		$clientSocketArray[] = $newSocket;
+		// print_r($newSocket);
 
 		$header = socket_read($newSocket, 1024);
 		$chatHandler->doHandshake($header, $newSocket, HOST_NAME, PORT);

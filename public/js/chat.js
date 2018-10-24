@@ -6,20 +6,23 @@ function showMessage(messageHTML) {
 	$('#chat-box').append(messageHTML);
 }
 
-var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
+var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php?var1=value1&var2=value2&var3=value3");
 websocket.onopen = function(event) {
-	showMessage("<div class='chat-connection-ack'>Connection is established!</div>");
+	console.log(event);
+	console.log('Connection is established!');
+	// showMessage("<div class='chat-connection-ack'>Connection is established!</div>");
 }
 websocket.onmessage = function(event) {
+	console.log(event);
 	var Data = JSON.parse(event.data);
 	showMessage("<div class='"+Data.message_type+"'>"+Data.message+"</div>");
 	$('#chat-message').val('');
 };
 
-websocket.onerror = function(event){
-	showMessage("<div class='error'>Problem due to some Error</div>");
+websocket.onerror = function(event) {
+	showMessage("<div class='error'>Please check if socket server is running</div>");
 };
-websocket.onclose = function(event){
+websocket.onclose = function(event) {
 	showMessage("<div class='chat-connection-ack'>Connection Closed</div>");
 };
 
@@ -36,12 +39,12 @@ $('#frmChat').on("submit",function(event){
 	var tokenName =  $('input[name="csrf_name"]');
 	var tokenValue =  $('input[name="csrf_value"]');
 	var data = {
-	        		"chat_id" : $('#chat-id').val(),
-							"chat_user" : $('#chat-user').val(),
-							"chat_message": $('#chat-message').val(),
-							"csrf_name" : tokenName.attr('value'),
-							"csrf_value" : tokenValue.attr('value')
-						};
+        		"chat_id" : $('#chat-id').val(),
+				"chat_user" : $('#chat-user').val(),
+				"chat_message": $('#chat-message').val(),
+				"csrf_name" : tokenName.attr('value'),
+				"csrf_value" : tokenValue.attr('value')
+				};
 	$.post(url, data, function(response) {
 		console.log(response);
 		var obj = JSON.parse(response);

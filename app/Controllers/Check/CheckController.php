@@ -11,9 +11,6 @@ use Matcha\Models\LastActivityStatus;
 
 class CheckController
 {
-	/* find вернет user->id
-	 * */
-
 	private $container;
 
 	public function __construct($container)
@@ -102,20 +99,6 @@ class CheckController
 	{
 		return isset($_SESSION['user']);
 	}
-
-	// public function checkOnlineStatus($user_id) {
-	// 	$online = LastActivityStatus::checkIfUserOnline($user_id);
-	// }
-
-	/*
-	 * получаем для входа email и password
-	 * отправляем email в model User и запрагиваем поиск по email
-	 * просим вернуть первую найденую строку она же и единственная с таким email
-	 * елси ответ путой false
-	 * после взять переданный пароль и проверить на совпадение
-	 * если и пароль есть то  все ok true
-	 * иначе выйдет с if и return false
-	 */
 
 	public function attempt($email, $password)
 	{

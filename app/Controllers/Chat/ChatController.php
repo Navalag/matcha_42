@@ -6,13 +6,6 @@ use Respect\Validation\Validator as v;
 use Matcha\Models\Chat;
 use Matcha\Models\MatchedPeople;
 
-/**
- * Created by PhpStorm.
- * User: ozharko
- * Date: 10/11/18
- * Time: 6:53 PM
- */
-
 class ChatController extends Controller
 {
     public function index($request, $response)
