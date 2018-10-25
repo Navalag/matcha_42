@@ -23,3 +23,4 @@ class Notifications extends Model
 
 	}
 }
+	// 'message', 'check_prof', 'like', 'match', 'unmatch'

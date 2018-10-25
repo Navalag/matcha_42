@@ -81,7 +81,7 @@ class MyMatchesController extends Controller
 		$myMatches = MatchedPeople::getMyMatches();
 		foreach ($myMatches as $row) {
 			if ($row->first_id == $user_id || $row->second_id == $user_id) {
-				MatchedPeople::setUnmatch($user_id);
+				MatchedPeople::setUnmatch($row->chat_id);
 			}
 		}
 		

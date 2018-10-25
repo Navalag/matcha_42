@@ -29,24 +29,15 @@ class MatchedPeople extends Model
 	public static function getMyMatches()
 	{
 		return MatchedPeople::
-						where('first_id', $_SESSION['user'])
-					  ->orWhere('second_id', $_SESSION['user'])
-					  ->get();
+				where('first_id', $_SESSION['user'])
+			  ->orWhere('second_id', $_SESSION['user'])
+			  ->get();
 		// print_r($myMatches); die();
 	}
 
-	public static function setUnmatch($user_id)
+	public static function setUnmatch($chat_id)
 	{
-		MatchedPeople::
-						where([
-							'first_id' => $_SESSION['user'],
-							'second_id' => $user_id
-						])
-					  ->orWhere([
-					  		'first_id' => $user_id,
-							'second_id' => $_SESSION['user']
-					  	])
-					  ->delete();
+		MatchedPeople::where('chat_id', $chat_id)->delete();
 	}
 
 	public static function getUsersByChatId($chat_id)
