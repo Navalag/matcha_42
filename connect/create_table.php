@@ -65,7 +65,8 @@
 			. $dbChat
 			. " (id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 			chat_id INT(11) NOT NULL, 
-			user_id INT(11) NOT NULL, 
+			author_user_id INT(11) NOT NULL, 
+			dest_user_id INT(11) NOT NULL, 
 			message VARCHAR(255) NULL DEFAULT NULL,
 			created_at TIMESTAMP NULL DEFAULT NULL,
 			updated_at TIMESTAMP NULL DEFAULT NULL)";

@@ -48,4 +48,9 @@ class MatchedPeople extends Model
 					  	])
 					  ->delete();
 	}
+
+	public static function getUsersByChatId($chat_id)
+	{
+		return MatchedPeople::where('chat_id', $chat_id)->first();
+	}
 }

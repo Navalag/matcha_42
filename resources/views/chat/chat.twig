@@ -3,7 +3,6 @@
 {% block content %}
 {% include 'templates/partials/side-nav.twig' %}
 
-<!-- Client Section-->
 <section class="forms">
 	<div class="container">
 		<div class="row">
@@ -11,22 +10,23 @@
 				<div class="card">
 					<div class="card-body">
 						<form name="frmChat" action="{{ path_for('chat.addMessage') }}" method="post"  id="frmChat" >
-						{#<form name="frmChat"  id="frmChat" >#}
 							<div id="chat-box">
-								{% if arrMessage is defined %}
-								{% for message in arrMessage %}
+							{% if msg_array is defined %}
+								{% for message in msg_array %}
 									<div class="chat-box-html">
-										{{  message_id.username  }}:
+										{% if message.author_user_id == msg_attr.active_user_id %}
+											{{ msg_attr.active_username }}:
+										{% else %}
+											{{ msg_attr.dest_username }}:
+										{% endif %}
 										<div class="chat-box-message">
-										  {{  message.message }}
+										  {{ message.message }}
 										</div>
 									</div>
 								{% endfor %}
-								{% endif %}
+							{% endif %}
 							</div>
-							<input type="hidden" name="chat_id" id="chat-id" placeholder="Name" class="chat-input" required value="{{ message_id.chat_id }}"/>
-							<input type="hidden" name="chat_user" id="chat-user" placeholder="Name" class="chat-input" required value="{{ message_id.username }}"/>
-							<input type="text" name="chat_message" id="chat-message" placeholder="Message"  class="chat-input chat-message" required />
+							<input type="text" name="chat_message" id="chat-message" placeholder="Type a message..."  class="chat-input chat-message" required />
 							<input type="submit" id="btnSend" name="send-chat-message" value="Send" >
 							{{ csrf.field | raw }}{# raw скроет строку #}
 						</form>
@@ -37,6 +37,10 @@
 	</div>
 </section>
 
+<script>
+	var msgAttr = {{ msg_attr | json_encode | raw }};
+	console.log(msgAttr);
+</script>
 <script src="{{ base_url() }}/js/chat.js"></script>
 {% include 'templates/partials/footer.twig' %}
 {% endblock %}

@@ -11,22 +11,24 @@ class Chat extends Model
 	protected $fillable = [
 		'id',
 		'chat_id',
-		'user_id',
+		'author_user_id',
+		'dest_user_id',
 		'message',
 		'created_at',
 		'updated_at',
 	];
 
-	public static function sendMessage($first, $second, $chat_id)
+	public static function getAllMessagesByChatId($chat_id)
 	{
-
+		return Chat::where('chat_id', $chat_id)->get();
 	}
 
-	public static function addMessage($message, $chat_id)
+	public static function addMessage($message, $chatId, $activeUser, $destUser)
 	{
 		Chat::create([
-			'chat_id' => $chat_id,
-			'user_id' => $_SESSION['user'],
+			'chat_id' => $chatId,
+			'author_user_id' => $activeUser,
+			'dest_user_id' => $destUser,
 			'message' => $message,
 		]);
 	}

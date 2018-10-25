@@ -39,7 +39,7 @@ while (true) {
 			$socketMessage = $chatHandler->unseal($socketData);
 			$messageObj = json_decode($socketMessage);
 
-			$chat_box_message = $chatHandler->createChatBoxMessage($messageObj->chat_user, $messageObj->chat_message);
+			$chat_box_message = $chatHandler->createChatBoxMessage($messageObj->chat_id, $messageObj->active_user_name, $messageObj->dest_user_name, $messageObj->chat_message, $messageObj->active_user_id, $messageObj->dest_user_id);
 			$chatHandler->send($chat_box_message);
 			break 2;
 		}

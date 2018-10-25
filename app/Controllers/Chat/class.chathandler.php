@@ -81,11 +81,19 @@ class ChatHandler {
 		return $ACK;
 	}
 
-	function createChatBoxMessage($chat_user,$chat_box_message) {
-		$message = $chat_user . ": <div class='chat-box-message'>" . $chat_box_message . "</div>";
-		$messageArray = array('message'=>$message,'message_type'=>'chat-box-html');
-		$chatMessage = $this->seal(json_encode($messageArray));
-		return $chatMessage;
+	function createChatBoxMessage($chatId,$activeUsername,$destUsername,$chatMessage,$activeUserId,$destUserId) {
+		$message = $activeUsername . ": <div class='chat-box-message'>" . $chatMessage . "</div>";
+		$messageArray = array(
+			'chat_id'=>$chatId,
+			'active_user_id'=>$activeUserId,
+			'active_user_name'=>$activeUsername,
+			'dest_user_id'=>$destUserId,
+			'dest_user_name'=>$destUsername,
+			'message'=>$message,
+			'message_type'=>'chat-box-html'
+		);
+		$finalMessage = $this->seal(json_encode($messageArray));
+		return $finalMessage;
 	}
 }
 ?>
