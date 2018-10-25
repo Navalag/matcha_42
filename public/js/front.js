@@ -1,25 +1,6 @@
 $(document).ready(function () {
 
-	'use strict';
-
-	// ------------------------------------------------------- //
-	// Search Box
-	// ------------------------------------------------------ //
-	// $('#search').on('click', function (e) {
-	// 	e.preventDefault();
-	// 	$('.search-box').fadeIn();
-	// });
-	// $('.dismiss').on('click', function () {
-	// 	$('.search-box').fadeOut();
-	// });
-
-	// ------------------------------------------------------- //
-	// Card Close
-	// ------------------------------------------------------ //
-	// $('.card-close a.remove').on('click', function (e) {
-	// 	e.preventDefault();
-	// 	$(this).parents('.card').fadeOut();
-	// });
+	// 'use strict';
 
 	// ------------------------------------------------------- //
 	// Tooltips init
@@ -154,22 +135,22 @@ $(document).ready(function () {
 		var url = window.location.pathname; 
 		var activePage = url.substring(url.lastIndexOf('/') + 1);
 
-	  $('.main-menu li a').each(function() {
-	      var linkPage = this.href.substring(this.href.lastIndexOf('/') + 1); 
+		$('.main-menu li a').each(function() {
+				var linkPage = this.href.substring(this.href.lastIndexOf('/') + 1); 
 
-	      if (activePage == linkPage) { 
-	          $(this).closest("li").addClass("active"); 
-	      }
-	  });
-	  /*
-	  ** it's a shame, I know :( but I had to do it fast
-	  */
-	  if (url.includes('/user-page')) {
-      $('.main-menu li').eq(4).addClass("active");
-    }
-    if (url.includes('/auth/edit/user')) {
-      $('.main-menu li').eq(0).addClass("active");
-    }
+				if (activePage == linkPage) { 
+						$(this).closest("li").addClass("active"); 
+				}
+		});
+		/*
+		** it's a shame, I know :( but I had to do it fast
+		*/
+		if (url.includes('/user-page')) {
+			$('.main-menu li').eq(4).addClass("active");
+		}
+		if (url.includes('/auth/edit/user')) {
+			$('.main-menu li').eq(0).addClass("active");
+		}
 	});
 
 });
@@ -177,6 +158,104 @@ $(document).ready(function () {
 // google maps api key
 // AIzaSyBfXFjp3bYD9ZVLAn61pokhELgCOwYKsEE
 
+// ------------------------------------------------------ //
+// Notifications
+// ------------------------------------------------------ //
+
+var url = window.location.pathname; 
+
+// function showMessage(messageHTML) {
+// 	$('#new-message').html(messageHTML);
+// }
+
+var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
+websocket.onopen = function(event) {
+	// console.log(event);
+	console.log('Connection is established!');
+	// showMessage("<div class='chat-connection-ack'>Connection is established!</div>");
+}
+//window.msgAttr
+// console.log(globalUser.user.id);
+websocket.onmessage = function(event) {
+	var Msg = JSON.parse(event.data);
+	/*
+	** check if user is not on current event chat page
+	*/
+	if (!url.includes(Msg.chat_id)) {
+		/*
+		** check if this is message event
+		*/
+		if (Msg.chat_id) {
+			/*
+			** check if current user should receive this message
+			*/
+			if (Msg.dest_user_id == globalUser.user.id) {
+				console.log(Msg);
+				let msgCount = $('#new-message').text();
+				msgCount++;
+				$('#new-message').html(msgCount);
+				sendNotificationToServer(Msg);
+			}
+		}
+	}
+};
+
+websocket.onerror = function(event) {
+	console.log('Please check if socket server is running');
+	// showMessage("<div class='error'>Please check if socket server is running</div>");
+};
+
+websocket.onclose = function(event) {
+	console.log('Connection Closed');
+	// showMessage("<div class='chat-connection-ack'>Connection Closed</div>");
+};
+
+function sendNotificationToServer(data) {
+	var url = '/chat/addMessage';
+	var tokenName = $('input[name="csrf_name"]');
+	var tokenValue = $('input[name="csrf_value"]');
+	var messageText = $('#chat-message').val();
+
+	$.post(url, ajaxMsg, function(response) {
+		console.log(response);
+		var obj = JSON.parse(response);
+		tokenName.val(obj.csrf_name);
+		tokenValue.val(obj.csrf_value);
+	});
+}
+// $('#frmChat').on("submit",function(event){
+// 	event.preventDefault();
+// 	var url = '/chat/addMessage';
+// 	var tokenName = $('input[name="csrf_name"]');
+// 	var tokenValue = $('input[name="csrf_value"]');
+// 	var messageText = $('#chat-message').val();
+
+// 	var socketMsg = {
+// 		"chat_id": msgAttr.chat_id,
+// 		"active_user_id": msgAttr.active_user_id,
+// 		"active_user_name": msgAttr.active_username,
+// 		"dest_user_id": msgAttr.dest_user_id,
+// 		"dest_user_name": msgAttr.dest_username,
+// 		"chat_message": messageText
+// 	};
+// 	websocket.send(JSON.stringify(socketMsg));
+
+// 	var ajaxMsg = {
+// 		"chat_id": msgAttr.chat_id,
+// 		"active_user_id": msgAttr.active_user_id,
+// 		"dest_user_id": msgAttr.dest_user_id,
+// 		"chat_message": messageText,
+// 		"csrf_name" : tokenName.attr('value'),
+// 		"csrf_value" : tokenValue.attr('value')
+// 	};
+// 	console.log(ajaxMsg);
+// 	$.post(url, ajaxMsg, function(response) {
+// 		console.log(response);
+// 		var obj = JSON.parse(response);
+// 		tokenName.val(obj.csrf_name);
+// 		tokenValue.val(obj.csrf_value);
+// 	});
+// });
 
 
 

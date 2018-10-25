@@ -924,9 +924,8 @@ form .bright-heading {
 	border-radius: 4px;
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
-	min-height: 300px;
+	min-height: 400px;
 	padding: 10px;
-	overflow: auto;
 	overflow-y: scroll;
     max-height: 400px;
 }

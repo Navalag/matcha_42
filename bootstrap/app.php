@@ -9,33 +9,14 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../connect/create_table.php'; // DB
 // require_once __DIR__ . '/../php-ref-master/ref.php'; // для тестов
 
-/* все настройки в отдельном файле потом ложаться в Slim __construct */
 $settings = require_once __DIR__ . '/../conf/settings.php';
 $app = new \Slim\App(['settings' => $settings]);
 $container = $app->getContainer();
 
-/* 
- * создать движок для работы с базой данных Laravel
- * Сначала создайте новый экземпляр менеджера «Capsule». 
- * Капсула стремится максимально упростить настройку библиотеки для использования вне рамок Laravel.
- * use Illuminate\Database\Capsule\Manager as Capsule; || $capsule = new Capsule;
- * дает возможность сортировки, выборки и т.д.
-**/
-
 $capsule = new DB;
 $capsule->addConnection($container['settings']['db']);
-//Make this Capsule instance available globally.
 $capsule->setAsGlobal();
-// Setup the Eloquent ORM.
 $capsule->bootEloquent();
-
-/* read Laravel Documentation
- * создать движок для работы с БД а затем добавить его в container
- * длы работы с ним через db
- * use говорит о том что мне будет доступно все что храниться в переменной capsule
- * а добавление к db что я смогу получить это именно при работе с базой
- * так как с этой точки доступны все логины пароли и имена БД
- * */
 
 $container['db'] = function ($container) use ($capsule) {
 	return $capsule;
@@ -44,56 +25,32 @@ $container['db'] = function ($container) use ($capsule) {
 //    return new Matcha\Auth\Auth($container);
 //};
 
-/* сообщения что должны всплывать для подсказок пользователю 
- * взяты со сторонней библиотеки
- */
-
 $container['flash'] = function ($container) {
 	return new \Slim\Flash\Messages;
 };
-
-/* устлвив Twig через композер он добавился по пути Slim\Views\twig
- * мы создали объект по его главнуму классу
- * в конструктор передать путь где лежат файлы представления
- * и настройки по кэшу
- */
 
 $container['view'] = function ($container) {
 	$view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
 		'cache' => false,
 	]);
-	/* addExtension вызвать метод Slim который к изначально созданому объекту
-	 * 
-	 * добавит еще один объект который можно будет использовать внутри главного объекта
-	 * добавить расширение в объект Twig через addExtension дополнительный объект TwigExtension
-	 * в котором указаны возможности router и request->getUri() что лежат в контейнере
-	 */
+
 	$view->addExtension(new \Slim\Views\TwigExtension(
 		$container->router,
 		$container->request->getUri()
 	));
-	/* addGlobal это чисто Twig-кий функционал и он определяет по каким ключевым словам будет доступен 
-	 * тот или иной метод
-	 * 
-	 * добавить в view часть того что есть в контейнере по auth
-	 * auth class available inside of templates
-	 * мы добавили класс auth в класс view
-	 * помимо его общего доступа по всему приложению
-	 * а и на стороне представления
-	 * */
+
 	$view->getEnvironment()->addGlobal('auth', [
 		// 'check' => $container->checker->check(),
 		'user' => $container->checker->user(),
 		'avatar' => $container->checker->avatarImg(),
 	]);
-	/* добавить в объект view набор возможностей flash чтобы использовать его на шаблонах twig */
+
 	$view->getEnvironment()->addGlobal('flash', $container->flash);
 	return $view;
 };
 $container['validator'] = function ($container) {
 	return new \Matcha\Validation\Validator;
 };
-/* добавить класс в контроллер чтобы юзать его по всей проге */
 $container['HomeController'] = function ($container) {
 	return new \Matcha\Controllers\HomeController($container);
 };
@@ -194,15 +151,5 @@ $container['notFoundHandler'] = function ($container) {
 			->write('404 Error: Page not found');
 		};
 };
-/*
- * allows this validation library to use out rules
- * give the name space to where out rules are kept
- * loading in all out rules
- * подключить библиотеку в наш класс Validator
- * сверху через use указан путь к библиотеке что надо использовать
- *
- * добавляет все методы что есть в библиотеке
- * их можно использовать как статические методы
- * */
 v::with('Matcha\\Validation\\Rules\\');
 require_once __DIR__ . '/../app/routes.php';

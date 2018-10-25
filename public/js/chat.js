@@ -13,8 +13,8 @@ websocket.onopen = function(event) {
 	// showMessage("<div class='chat-connection-ack'>Connection is established!</div>");
 }
 websocket.onmessage = function(event) {
-	// console.log(event);
 	var Msg = JSON.parse(event.data);
+	console.log(Msg);
 	if (msgAttr.chat_id == Msg.chat_id) {
 		showMessage("<div class='"+Msg.message_type+"'>"+Msg.message+"</div>");
 		if (msgAttr.active_user_id == Msg.active_user_id) {
@@ -57,9 +57,8 @@ $('#frmChat').on("submit",function(event){
 		"csrf_name" : tokenName.attr('value'),
 		"csrf_value" : tokenValue.attr('value')
 	};
-	console.log(ajaxMsg);
 	$.post(url, ajaxMsg, function(response) {
-		console.log(response);
+		// console.log(response);
 		var obj = JSON.parse(response);
 		tokenName.val(obj.csrf_name);
 		tokenValue.val(obj.csrf_value);

@@ -34,3 +34,5 @@
 	$dbCheckProfileLog = "check_profile_log";
 
 	$dbLastActivityStatus = "last_activity_status";
+
+	$dbNotifications = "notifications";

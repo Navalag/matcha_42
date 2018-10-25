@@ -290,6 +290,24 @@
 		)";
 
 		$conn->exec($sql);
+
+		/* 
+		** CREATE notifications TABLE
+		*/
+		$sql = "CREATE "
+			. " TABLE IF NOT EXISTS "
+			. $dbNotifications
+			. " (
+			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+			user_id INT(11) NOT NULL,
+			dest_user_id INT(11) NOT NULL,
+			notif_type VARCHAR(10) NOT NULL, 
+			seen INT(1) NULL DEFAULT 0,
+			created_at TIMESTAMP NULL DEFAULT NULL,
+			updated_at TIMESTAMP NULL DEFAULT NULL 
+		)";
+
+		$conn->exec($sql);
 	}
 	catch(PDOException $e) {
 		echo $sql . "<br>" . $e->getMessage();
