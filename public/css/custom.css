@@ -927,6 +927,8 @@ form .bright-heading {
 	min-height: 300px;
 	padding: 10px;
 	overflow: auto;
+	overflow-y: scroll;
+    max-height: 400px;
 }
 
 .chat-box-html {
