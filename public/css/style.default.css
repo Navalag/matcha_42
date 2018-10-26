@@ -660,10 +660,10 @@ nav.navbar {
 	/*==== Dropdowns ====*/
 }
 
-nav.navbar .badge {
+header.page-header .badge {
 	width: 22px;
 	height: 22px;
-	line-height: 22px;
+	line-height: 24px;
 	text-align: center;
 	padding: 0;
 	border-radius: 50%;
@@ -746,11 +746,11 @@ header.page-header .menu-btn.active span:last-of-type {
 }
 /* end of toggle button */
 
-nav.navbar .nav-link {
+header.page-header .nav-link {
 	position: relative;
 }
 
-nav.navbar .nav-link span.badge-corner {
+header.page-header .nav-link span.badge-corner {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -763,11 +763,11 @@ nav.navbar .nav-link.language span {
 	vertical-align: middle;
 }
 
-nav.navbar .nav-link.logout i {
+header.page-header .nav-link.logout i {
 	margin-left: 10px;
 }
 
-nav.navbar .nav-menu {
+header.page-header .nav-menu {
 	margin-bottom: 0;
 }
 
