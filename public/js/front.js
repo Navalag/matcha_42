@@ -5,9 +5,7 @@ $(document).ready(function () {
 	// ------------------------------------------------------- //
 	// Tooltips init
 	// ------------------------------------------------------ //    
-
 	$('[data-toggle="tooltip"]').tooltip()    
-
 
 	// ------------------------------------------------------- //
 	// Adding fade effect to dropdowns
@@ -77,7 +75,6 @@ $(document).ready(function () {
 	// ------------------------------------------------------- //
 	// Material Inputs
 	// ------------------------------------------------------ //
-
 	var materialInputs = $('input.input-material');
 
 	// activate labels for prefilled values
@@ -102,7 +99,6 @@ $(document).ready(function () {
 	// ------------------------------------------------------- //
 	// Footer 
 	// ------------------------------------------------------ //   
-
 	var contentInner = $('.content-inner');
 
 	$(document).on('sidebarChanged', function () {
@@ -120,7 +116,7 @@ $(document).ready(function () {
 
 	// ------------------------------------------------------- //
 	// External links to new window
-	// ------------------------------------------------------ //
+	// ------------------------------------------------------- //
 	$('.external').on('click', function (e) {
 
 		e.preventDefault();
@@ -129,8 +125,7 @@ $(document).ready(function () {
 
 	// ------------------------------------------------------- //
 	// Highlight current page menu item
-	// ------------------------------------------------------ //
-
+	// ------------------------------------------------------- //
 	$(function () {
 		var url = window.location.pathname; 
 		var activePage = url.substring(url.lastIndexOf('/') + 1);
@@ -163,19 +158,19 @@ $(document).ready(function () {
 // ------------------------------------------------------ //
 
 var url = window.location.pathname; 
-
-// function showMessage(messageHTML) {
-// 	$('#new-message').html(messageHTML);
-// }
-
 var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
+
 websocket.onopen = function(event) {
-	// console.log(event);
 	console.log('Connection is established!');
-	// showMessage("<div class='chat-connection-ack'>Connection is established!</div>");
 }
+websocket.onerror = function(event) {
+	console.log('Please check if socket server is running');
+};
+websocket.onclose = function(event) {
+	console.log('Connection Closed');
+};
+
 //window.msgAttr
-// console.log(globalUser.user.id);
 websocket.onmessage = function(event) {
 	var Msg = JSON.parse(event.data);
 	/*
@@ -197,21 +192,10 @@ websocket.onmessage = function(event) {
 	}
 };
 
-websocket.onerror = function(event) {
-	console.log('Please check if socket server is running');
-	// showMessage("<div class='error'>Please check if socket server is running</div>");
-};
-
-websocket.onclose = function(event) {
-	console.log('Connection Closed');
-	// showMessage("<div class='chat-connection-ack'>Connection Closed</div>");
-};
-
 function sendNotificationToServer(data) {
 	var url = '/notifications/new-message';
 	var tokenName = $('input[name="csrf_name"]');
 	var tokenValue = $('input[name="csrf_value"]');
-	// var messageText = $('#chat-message').val();
 	var ajaxMsg = {
 		"socket_array" : data,
 		"csrf_name" : tokenName.attr('value'),
@@ -219,69 +203,108 @@ function sendNotificationToServer(data) {
 	};
 
 	$.post(url, ajaxMsg, function(response) {
-		console.log(response);
-		/*
-		** increase counter for unread messages
-		*/
-		let msgCount = $('#new-message').text();
-		msgCount++;
-		$('#new-message').html(msgCount);
-
 		var obj = JSON.parse(response);
+		console.log(obj);
 		/*
 		** update csrf
 		*/
-		tokenName.val(obj[0].csrf_name);
-		tokenValue.val(obj[0].csrf_value);
+		tokenName.val(obj.csrf.csrf_name);
+		tokenValue.val(obj.csrf.csrf_value);
+		if (!obj.new_msg) {
+			/*
+			** update unread messages
+			*/
+			$('.nav-menu ul#message-list').prepend(
+				'<li class="new-message-block">' +
+					'<a rel="nofollow" href="/chat/'+ obj.user.chat_id +'" class="dropdown-item d-flex">' +
+						'<div class="avatar" style="background-image: url('+ obj.user.avatar +')"></div>' +
+						'<div class="msg-body">' +
+							'<h3 class="h5">'+ obj.user.username +'</h3><span>Sent You Message</span>' +
+						'</div>' +
+					'</a>' +
+				'</li>'
+			);
+			/*
+			** increase counter for unread messages
+			*/
+			let msgCount = $('#new-message').text();
+			msgCount++;
+			$('#new-message').html(msgCount);
+		}
+	});
+}
+
+/*
+** when user click on open message
+*/
+// $('.nav-menu ul#message-list').on('click', function(event) {
+// 	event.preventDefault();
+// 	console.log(event.target.children[0].getAttribute("data-id"));
+// });
+
+/*
+** load notification box on page load
+*/
+$(window).on("load", function() {
+	var url = '/notifications/load-messages';
+	var tokenName = $('input[name="csrf_name"]');
+	var tokenValue = $('input[name="csrf_value"]');
+	var ajaxMsg = {
+		"csrf_name" : tokenName.attr('value'),
+		"csrf_value" : tokenValue.attr('value')
+	};
+
+	$.post(url, ajaxMsg, function(response) {
+		var obj = JSON.parse(response);
+		// console.log(obj);
+		/*
+		** increase counter for unread messages
+		*/
+		if (obj.notif_count != 0){
+			$('#new-message').html(obj.notif_count);
+		}
+		/*
+		** update csrf
+		*/
+		tokenName.val(obj.csrf.csrf_name);
+		tokenValue.val(obj.csrf.csrf_value);
 		/*
 		** update unread messages
 		*/
-		$('.nav-menu ul#message-list').prepend(
-			'<li class="new-message-block">' +
-				'<a rel="nofollow" href="/chat/'+ obj.chat_id +'" class="dropdown-item d-flex">' +
-					'<div class="avatar" style="background-image: url('+ obj.avatar +')"></div>' +
-					'<div class="msg-body">' +
-						'<h3 class="h5">'+ obj.username +'</h3><span>Sent You Message</span>' +
-					'</div>' +
-				'</a>' +
-			'</li>'
-		);
-		// $('#new-msg-avatar').css('background-image', 'url(' + obj.avatar + ')');
+		$.each(obj, function (key, val) {
+			if (key == 'notif_count' || key == 'csrf') {
+				return ;
+			}
+			$('.nav-menu ul#message-list').prepend(
+				'<li class="new-message-block">' +
+					'<a rel="nofollow" href="/chat/'+ val.chat_id +'" class="dropdown-item d-flex">' +
+						'<div class="avatar" style="background-image: url('+ val.avatar +')"></div>' +
+						'<div class="msg-body">' +
+							'<h3 class="h5">'+ val.username +'</h3><span>Sent You Message</span>' +
+						'</div>' +
+					'</a>' +
+				'</li>'
+			);
+			console.log(key, val);
+		});
 	});
-}
-// $('#frmChat').on("submit",function(event){
-// 	event.preventDefault();
-// 	var url = '/chat/addMessage';
-// 	var tokenName = $('input[name="csrf_name"]');
-// 	var tokenValue = $('input[name="csrf_value"]');
-// 	var messageText = $('#chat-message').val();
+});
 
-// 	var socketMsg = {
-// 		"chat_id": msgAttr.chat_id,
-// 		"active_user_id": msgAttr.active_user_id,
-// 		"active_user_name": msgAttr.active_username,
-// 		"dest_user_id": msgAttr.dest_user_id,
-// 		"dest_user_name": msgAttr.dest_username,
-// 		"chat_message": messageText
-// 	};
-// 	websocket.send(JSON.stringify(socketMsg));
 
-// 	var ajaxMsg = {
-// 		"chat_id": msgAttr.chat_id,
-// 		"active_user_id": msgAttr.active_user_id,
-// 		"dest_user_id": msgAttr.dest_user_id,
-// 		"chat_message": messageText,
-// 		"csrf_name" : tokenName.attr('value'),
-// 		"csrf_value" : tokenValue.attr('value')
-// 	};
-// 	console.log(ajaxMsg);
-// 	$.post(url, ajaxMsg, function(response) {
-// 		console.log(response);
-// 		var obj = JSON.parse(response);
-// 		tokenName.val(obj.csrf_name);
-// 		tokenValue.val(obj.csrf_value);
-// 	});
-// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -114,7 +114,9 @@ $app->group('', function () {
     /*
 	** notifications
 	*/
-	$this->post('/notifications/new-message', 'NotificationsController:addMessageNotification')->setName('chat.addMessage');
+	$this->post('/notifications/new-message', 'NotificationsController:addMessageNotification');
+	$this->post('/notifications/load-messages', 'NotificationsController:loadMessageNotifications');
+	$this->post('/notifications/open-message', 'NotificationsController:openMessage');
 
 	
 })->add(new AuthMiddleware($container));

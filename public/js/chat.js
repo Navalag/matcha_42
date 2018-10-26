@@ -14,7 +14,7 @@ websocket.onopen = function(event) {
 }
 websocket.onmessage = function(event) {
 	var Msg = JSON.parse(event.data);
-	console.log(Msg);
+	// console.log(Msg);
 	if (msgAttr.chat_id == Msg.chat_id) {
 		showMessage("<div class='"+Msg.message_type+"'>"+Msg.message+"</div>");
 		if (msgAttr.active_user_id == Msg.active_user_id) {

@@ -18,14 +18,32 @@ class Notifications extends Model
 		'updated_at',
 	];
 
-	public static function addNewMessage($activeUserId, $destUserId)
+	public static function addNewMessage($actionUserId, $destUserId)
 	{
 		return Notifications::create([
-			'action_user_id' => $activeUserId,
+			'action_user_id' => $actionUserId,
 			'dest_user_id' => $destUserId,
 			'notif_type' => 'message',
-			'seen' => 0
+			'seen' => '0'
 		]);
 	}
+
+	public static function checkIfUnique($actionUserId, $destUserId)
+	{
+		return Notifications::where([
+			'action_user_id' => $actionUserId,
+			'dest_user_id' => $destUserId,
+			'notif_type' => 'message',
+			'seen' => '0'
+		])->first();
+	}
+
+	public static function getAllMessageNotifForUser()
+	{
+		return Notifications::where('dest_user_id', $_SESSION['user'])
+							->where('notif_type', 'message')
+							->where('seen', '0')
+							->get();
+	}
 }
-	// 'message', 'check_prof', 'like', 'match', 'unmatch'
+// 'message', 'check_prof', 'like', 'match', 'unmatch'

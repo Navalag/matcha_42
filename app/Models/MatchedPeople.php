@@ -44,4 +44,18 @@ class MatchedPeople extends Model
 	{
 		return MatchedPeople::where('chat_id', $chat_id)->first();
 	}
+
+	public static function getUserChatId($first_user, $second_user)
+	{
+		return MatchedPeople::
+				where([
+					'first_id' => $first_user,
+					'second_id' => $second_user
+				])
+			  ->orWhere([
+			  		'first_id' => $second_user,
+			  		'second_id' => $first_user
+			  	])
+			  ->first();
+	}
 }
