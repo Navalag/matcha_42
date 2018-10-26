@@ -111,7 +111,10 @@ $app->group('', function () {
 	*/
 	$this->get('/chat/{chat_id}', 'ChatController:index')->setName('chat');
     $this->post('/chat/addMessage', 'ChatController:addMessage')->setName('chat.addMessage');
-	
-	// $this->get('/user/edit/photo', 'PhotoController:getPhotoProfile')->setName('user.edit.photo');
+    /*
+	** notifications
+	*/
+	$this->post('/notifications/new-message', 'NotificationsController:addMessageNotification')->setName('chat.addMessage');
+
 	
 })->add(new AuthMiddleware($container));

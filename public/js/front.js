@@ -191,9 +191,6 @@ websocket.onmessage = function(event) {
 			*/
 			if (Msg.dest_user_id == globalUser.user.id) {
 				console.log(Msg);
-				let msgCount = $('#new-message').text();
-				msgCount++;
-				$('#new-message').html(msgCount);
 				sendNotificationToServer(Msg);
 			}
 		}
@@ -211,16 +208,45 @@ websocket.onclose = function(event) {
 };
 
 function sendNotificationToServer(data) {
-	var url = '/chat/addMessage';
+	var url = '/notifications/new-message';
 	var tokenName = $('input[name="csrf_name"]');
 	var tokenValue = $('input[name="csrf_value"]');
-	var messageText = $('#chat-message').val();
+	// var messageText = $('#chat-message').val();
+	var ajaxMsg = {
+		"socket_array" : data,
+		"csrf_name" : tokenName.attr('value'),
+		"csrf_value" : tokenValue.attr('value')
+	};
 
 	$.post(url, ajaxMsg, function(response) {
 		console.log(response);
+		/*
+		** increase counter for unread messages
+		*/
+		let msgCount = $('#new-message').text();
+		msgCount++;
+		$('#new-message').html(msgCount);
+
 		var obj = JSON.parse(response);
-		tokenName.val(obj.csrf_name);
-		tokenValue.val(obj.csrf_value);
+		/*
+		** update csrf
+		*/
+		tokenName.val(obj[0].csrf_name);
+		tokenValue.val(obj[0].csrf_value);
+		/*
+		** update unread messages
+		*/
+		$('.nav-menu ul#message-list').prepend(
+			'<li class="new-message-block">' +
+				'<a rel="nofollow" href="/chat/'+ obj.chat_id +'" class="dropdown-item d-flex">' +
+					'<div class="avatar" style="background-image: url('+ obj.avatar +')"></div>' +
+					'<div class="msg-body">' +
+						'<h3 class="h5">'+ obj.username +'</h3><span>Sent You Message</span>' +
+					'</div>' +
+				'</a>' +
+			'</li>'
+		);
+		// $('#new-msg-avatar').css('background-image', 'url(' + obj.avatar + ')');
 	});
 }
 // $('#frmChat').on("submit",function(event){

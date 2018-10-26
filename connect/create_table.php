@@ -299,7 +299,7 @@
 			. $dbNotifications
 			. " (
 			id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-			user_id INT(11) NOT NULL,
+			action_user_id INT(11) NOT NULL,
 			dest_user_id INT(11) NOT NULL,
 			notif_type VARCHAR(10) NOT NULL, 
 			seen INT(1) NULL DEFAULT 0,
