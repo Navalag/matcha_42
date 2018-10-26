@@ -216,7 +216,7 @@ function sendNotificationToServer(data) {
 			*/
 			$('.nav-menu ul#message-list').prepend(
 				'<li class="new-message-block">' +
-					'<a rel="nofollow" href="/chat/'+ obj.user.chat_id +'" class="dropdown-item d-flex">' +
+					'<a rel="nofollow" data-id="'+ obj.user.user_id +'" data-chatlink="/chat/'+ obj.user.chat_id +'" href="#" class="dropdown-item d-flex">' +
 						'<div class="avatar" style="background-image: url('+ obj.user.avatar +')"></div>' +
 						'<div class="msg-body">' +
 							'<h3 class="h5">'+ obj.user.username +'</h3><span>Sent You Message</span>' +
@@ -237,10 +237,24 @@ function sendNotificationToServer(data) {
 /*
 ** when user click on open message
 */
-// $('.nav-menu ul#message-list').on('click', function(event) {
-// 	event.preventDefault();
-// 	console.log(event.target.children[0].getAttribute("data-id"));
-// });
+$('.nav-menu ul#message-list').on('click', function(event) {
+	event.preventDefault();
+	var url = '/notifications/open-message';
+	var tokenName = $('input[name="csrf_name"]');
+	var tokenValue = $('input[name="csrf_value"]');
+	var userId = event.target.closest('a').getAttribute('data-id');
+	var chatLink = event.target.closest('a').getAttribute('data-chatlink');
+	var ajaxMsg = {
+		"action_user_id" : userId,
+		"csrf_name" : tokenName.attr('value'),
+		"csrf_value" : tokenValue.attr('value')
+	};
+
+	$.post(url, ajaxMsg, function(response) {
+		console.log(response);
+		window.location.replace(chatLink);
+	});
+});
 
 /*
 ** load notification box on page load
@@ -277,7 +291,7 @@ $(window).on("load", function() {
 			}
 			$('.nav-menu ul#message-list').prepend(
 				'<li class="new-message-block">' +
-					'<a rel="nofollow" href="/chat/'+ val.chat_id +'" class="dropdown-item d-flex">' +
+					'<a rel="nofollow" data-id="'+ val.user_id +'" data-chatlink="/chat/'+ val.chat_id +'" href="#" class="dropdown-item d-flex">' +
 						'<div class="avatar" style="background-image: url('+ val.avatar +')"></div>' +
 						'<div class="msg-body">' +
 							'<h3 class="h5">'+ val.username +'</h3><span>Sent You Message</span>' +

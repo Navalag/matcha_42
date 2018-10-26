@@ -28,7 +28,7 @@ class Notifications extends Model
 		]);
 	}
 
-	public static function checkIfUnique($actionUserId, $destUserId)
+	public static function checkIfExist($actionUserId, $destUserId)
 	{
 		return Notifications::where([
 			'action_user_id' => $actionUserId,
@@ -44,6 +44,15 @@ class Notifications extends Model
 							->where('notif_type', 'message')
 							->where('seen', '0')
 							->get();
+	}
+
+	public static function deleteMessageNotification($actionUserId, $destUserId)
+	{
+		return Notifications::where('action_user_id', $actionUserId)
+							->where('dest_user_id', $destUserId)
+							->where('notif_type', 'message')
+							->where('seen', '0')
+							->delete();
 	}
 }
 // 'message', 'check_prof', 'like', 'match', 'unmatch'

@@ -22,7 +22,7 @@ class NotificationsController extends Controller
 		}
 		$socketArray = $request->getParam('socket_array');
 		// print_r($socketArray); die();
-		if (!Notifications::checkIfUnique($socketArray['active_user_id'],$socketArray['dest_user_id'])) 
+		if (!Notifications::checkIfExist($socketArray['active_user_id'],$socketArray['dest_user_id'])) 
 		{
 			if (Notifications::addNewMessage($socketArray['active_user_id'],$socketArray['dest_user_id']))
 			{
@@ -70,24 +70,19 @@ class NotificationsController extends Controller
 	
 	public function openMessage($request, $response)
 	{
-		$notif = Notifications::getAllMessageNotifForUser();
-		$json = [];
-		$notifCount = 0;
-		foreach ($notif as $row) {
-			$userAvatar = Photo::getAvatarImgByUserId($row->action_user_id);
-			$userName = User::getUserInfoById($row->action_user_id);
-			$userChat = MatchedPeople::getUserChatId($row->action_user_id, $row->dest_user_id);
-
-			$json[$userName->username] = array(
-				'avatar' => $userAvatar->photo_src,
-				'username' => $userName->username,
-				'chat_id' => $userChat->chat_id
-			);
-			$notifCount++;
+		$validation = $this->validator->validate($request, [
+			'action_user_id' => v::notEmpty(),
+		]);
+		if ($validation->failed()) {
+			return 'failed request';
 		}
-		$json['notif_count'] = $notifCount;
-		$json['csrf'] = $request->getAttribute('ajax_csrf');
-
-		return $response->write(json_encode($json));
+		$actionUserId = $request->getParam('action_user_id');
+		// print_r($actionUserId); die();
+		if (Notifications::checkIfExist($actionUserId,$_SESSION['user'])) 
+		{
+			Notifications::deleteMessageNotification($actionUserId,$_SESSION['user']);
+			return 'deleted';
+		}
+		return 'no such msg';
 	}
 }
