@@ -146,6 +146,9 @@ $(document).ready(function () {
 		if (url.includes('/auth/edit/user')) {
 			$('.main-menu li').eq(0).addClass("active");
 		}
+		if (url.includes('/chat')) {
+			$('.main-menu li').eq(4).addClass("active");
+		}
 	});
 
 });
@@ -157,152 +160,155 @@ $(document).ready(function () {
 // Notifications
 // ------------------------------------------------------ //
 
-var url = window.location.pathname; 
-var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
+var url = window.location.pathname;
+if (!url.includes('/auth')) {
+	var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
 
-websocket.onopen = function(event) {
-	console.log('Connection is established!');
-}
-websocket.onerror = function(event) {
-	console.log('Please check if socket server is running');
-};
-websocket.onclose = function(event) {
-	console.log('Connection Closed');
-};
-
-//window.msgAttr
-websocket.onmessage = function(event) {
-	var Msg = JSON.parse(event.data);
-	/*
-	** check if user is not on current event chat page
-	*/
-	if (!url.includes(Msg.chat_id)) {
-		/*
-		** check if this is message event
-		*/
-		if (Msg.chat_id) {
-			/*
-			** check if current user should receive this message
-			*/
-			if (Msg.dest_user_id == globalUser.user.id) {
-				console.log(Msg);
-				sendNotificationToServer(Msg);
-			}
-		}
+	websocket.onopen = function(event) {
+		console.log('Connection is established!');
 	}
-};
-
-function sendNotificationToServer(data) {
-	var url = '/notifications/new-message';
-	var tokenName = $('input[name="csrf_name"]');
-	var tokenValue = $('input[name="csrf_value"]');
-	var ajaxMsg = {
-		"socket_array" : data,
-		"csrf_name" : tokenName.attr('value'),
-		"csrf_value" : tokenValue.attr('value')
+	websocket.onerror = function(event) {
+		console.log('Please check if socket server is running');
+	};
+	websocket.onclose = function(event) {
+		console.log('Connection Closed');
 	};
 
-	$.post(url, ajaxMsg, function(response) {
-		var obj = JSON.parse(response);
-		console.log(obj);
+	//window.msgAttr
+	websocket.onmessage = function(event) {
+		var Msg = JSON.parse(event.data);
 		/*
-		** update csrf
+		** check if user is not on current event chat page
 		*/
-		tokenName.val(obj.csrf.csrf_name);
-		tokenValue.val(obj.csrf.csrf_value);
-		if (!obj.new_msg) {
+		if (!url.includes(Msg.chat_id)) {
 			/*
-			** update unread messages
+			** check if this is message event
 			*/
-			$('.nav-menu ul#message-list').prepend(
-				'<li class="new-message-block">' +
-					'<a rel="nofollow" data-id="'+ obj.user.user_id +'" data-chatlink="/chat/'+ obj.user.chat_id +'" href="#" class="dropdown-item d-flex">' +
-						'<div class="avatar" style="background-image: url('+ obj.user.avatar +')"></div>' +
-						'<div class="msg-body">' +
-							'<h3 class="h5">'+ obj.user.username +'</h3><span>Sent You Message</span>' +
-						'</div>' +
-					'</a>' +
-				'</li>'
-			);
+			if (Msg.chat_id) {
+				/*
+				** check if current user should receive this message
+				*/
+				if (Msg.dest_user_id == globalUser.user.id) {
+					console.log(Msg);
+					sendNotificationToServer(Msg);
+				}
+			}
+		}
+	};
+
+	function sendNotificationToServer(data) {
+		var url = '/notifications/new-message';
+		var tokenName = $('input[name="csrf_name"]');
+		var tokenValue = $('input[name="csrf_value"]');
+		var ajaxMsg = {
+			"socket_array" : data,
+			"csrf_name" : tokenName.attr('value'),
+			"csrf_value" : tokenValue.attr('value')
+		};
+
+		$.post(url, ajaxMsg, function(response) {
+			var obj = JSON.parse(response);
+			console.log(obj);
+			/*
+			** update csrf
+			*/
+			tokenName.val(obj.csrf.csrf_name);
+			tokenValue.val(obj.csrf.csrf_value);
+			if (!obj.new_msg) {
+				/*
+				** update unread messages
+				*/
+				$('.nav-menu ul#message-list').prepend(
+					'<li class="new-message-block">' +
+						'<a rel="nofollow" data-id="'+ obj.user.user_id +'" data-chatlink="/chat/'+ obj.user.chat_id +'" href="#" class="dropdown-item d-flex">' +
+							'<div class="avatar" style="background-image: url('+ obj.user.avatar +')"></div>' +
+							'<div class="msg-body">' +
+								'<h3 class="h5">'+ obj.user.username +'</h3><span>Sent You Message</span>' +
+							'</div>' +
+						'</a>' +
+					'</li>'
+				);
+				/*
+				** increase counter for unread messages
+				*/
+				let msgCount = $('#new-message').text();
+				msgCount++;
+				$('#new-message').html(msgCount);
+			}
+		});
+	}
+
+	/*
+	** when user click on open message
+	*/
+	$('.nav-menu ul#message-list').on('click', function(event) {
+		event.preventDefault();
+		var url = '/notifications/open-message';
+		var tokenName = $('input[name="csrf_name"]');
+		var tokenValue = $('input[name="csrf_value"]');
+		var userId = event.target.closest('a').getAttribute('data-id');
+		var chatLink = event.target.closest('a').getAttribute('data-chatlink');
+		var ajaxMsg = {
+			"action_user_id" : userId,
+			"csrf_name" : tokenName.attr('value'),
+			"csrf_value" : tokenValue.attr('value')
+		};
+
+		$.post(url, ajaxMsg, function(response) {
+			console.log(response);
+			window.location.replace(chatLink);
+		});
+	});
+
+	/*
+	** load notification box on page load
+	*/
+	$(window).on("load", function() {
+		var url = '/notifications/load-messages';
+		var tokenName = $('input[name="csrf_name"]');
+		var tokenValue = $('input[name="csrf_value"]');
+		var ajaxMsg = {
+			"csrf_name" : tokenName.attr('value'),
+			"csrf_value" : tokenValue.attr('value')
+		};
+
+		$.post(url, ajaxMsg, function(response) {
+			var obj = JSON.parse(response);
+			// console.log(obj);
 			/*
 			** increase counter for unread messages
 			*/
-			let msgCount = $('#new-message').text();
-			msgCount++;
-			$('#new-message').html(msgCount);
-		}
+			if (obj.notif_count != 0){
+				$('#new-message').html(obj.notif_count);
+			}
+			/*
+			** update csrf
+			*/
+			tokenName.val(obj.csrf.csrf_name);
+			tokenValue.val(obj.csrf.csrf_value);
+			/*
+			** update unread messages
+			*/
+			$.each(obj, function (key, val) {
+				if (key == 'notif_count' || key == 'csrf') {
+					return ;
+				}
+				$('.nav-menu ul#message-list').prepend(
+					'<li class="new-message-block">' +
+						'<a rel="nofollow" data-id="'+ val.user_id +'" data-chatlink="/chat/'+ val.chat_id +'" href="#" class="dropdown-item d-flex">' +
+							'<div class="avatar" style="background-image: url('+ val.avatar +')"></div>' +
+							'<div class="msg-body">' +
+								'<h3 class="h5">'+ val.username +'</h3><span>Sent You Message</span>' +
+							'</div>' +
+						'</a>' +
+					'</li>'
+				);
+				console.log(key, val);
+			});
+		});
 	});
 }
 
-/*
-** when user click on open message
-*/
-$('.nav-menu ul#message-list').on('click', function(event) {
-	event.preventDefault();
-	var url = '/notifications/open-message';
-	var tokenName = $('input[name="csrf_name"]');
-	var tokenValue = $('input[name="csrf_value"]');
-	var userId = event.target.closest('a').getAttribute('data-id');
-	var chatLink = event.target.closest('a').getAttribute('data-chatlink');
-	var ajaxMsg = {
-		"action_user_id" : userId,
-		"csrf_name" : tokenName.attr('value'),
-		"csrf_value" : tokenValue.attr('value')
-	};
-
-	$.post(url, ajaxMsg, function(response) {
-		console.log(response);
-		window.location.replace(chatLink);
-	});
-});
-
-/*
-** load notification box on page load
-*/
-$(window).on("load", function() {
-	var url = '/notifications/load-messages';
-	var tokenName = $('input[name="csrf_name"]');
-	var tokenValue = $('input[name="csrf_value"]');
-	var ajaxMsg = {
-		"csrf_name" : tokenName.attr('value'),
-		"csrf_value" : tokenValue.attr('value')
-	};
-
-	$.post(url, ajaxMsg, function(response) {
-		var obj = JSON.parse(response);
-		// console.log(obj);
-		/*
-		** increase counter for unread messages
-		*/
-		if (obj.notif_count != 0){
-			$('#new-message').html(obj.notif_count);
-		}
-		/*
-		** update csrf
-		*/
-		tokenName.val(obj.csrf.csrf_name);
-		tokenValue.val(obj.csrf.csrf_value);
-		/*
-		** update unread messages
-		*/
-		$.each(obj, function (key, val) {
-			if (key == 'notif_count' || key == 'csrf') {
-				return ;
-			}
-			$('.nav-menu ul#message-list').prepend(
-				'<li class="new-message-block">' +
-					'<a rel="nofollow" data-id="'+ val.user_id +'" data-chatlink="/chat/'+ val.chat_id +'" href="#" class="dropdown-item d-flex">' +
-						'<div class="avatar" style="background-image: url('+ val.avatar +')"></div>' +
-						'<div class="msg-body">' +
-							'<h3 class="h5">'+ val.username +'</h3><span>Sent You Message</span>' +
-						'</div>' +
-					'</a>' +
-				'</li>'
-			);
-			console.log(key, val);
-		});
-	});
-});
 
 
 
