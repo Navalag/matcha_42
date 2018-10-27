@@ -10,7 +10,7 @@ use Matcha\Models\LikeNopeCheck;
 use Matcha\Models\FakeAccountReport;
 use Matcha\Models\BlockUsersList;
 use Matcha\Models\MatchedPeople;
-// use Matcha\Models\Notifications;
+use Matcha\Models\Photo;
 
 use Respect\Validation\Validator as v;
 
@@ -112,13 +112,26 @@ class SearchActionsController extends Controller
 			LikeNopeCheck::createNewRecord($liked_user_id, 1);
 			if (LikeNopeCheck::checkIfMatch($liked_user_id)) {
 				MatchedPeople::setAMatch($liked_user_id);
-				$old_rating = User::getUserInfoById($_SESSION['user']);
-				if (($old_rating->fame_rating + 10) <= 90) {
-					User::updateRating($_SESSION['user'], $old_rating->fame_rating + 10);
+				$matchUserAvatar = Photo::getAvatarImgByUserId($liked_user_id);
+				$matchUser = User::getUserInfoById($liked_user_id);
+				$activeUser = User::getUserInfoById($_SESSION['user']);
+				/*
+				** update active user rating
+				*/
+				if (($activeUser->fame_rating + 10) <= 90) {
+					User::updateRating($_SESSION['user'], $activeUser->fame_rating + 10);
+				}
+				/*
+				** update liked user rating
+				*/
+				if (($matchUser->fame_rating + 10) <= 90) {
+					User::updateRating($liked_user_id, $matchUser->fame_rating + 10);
 				}
 				return $response->write(json_encode([
 					'csrf'=>$request->getAttribute('ajax_csrf'),
-					'msg'=>'new match'
+					'msg'=>'new match',
+					'match_user_avatar'=>$matchUserAvatar->photo_src,
+					'match_user_name'=>$matchUser->username
 				]));
 			}
 			/*

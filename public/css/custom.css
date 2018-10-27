@@ -853,6 +853,15 @@ form .bright-heading {
 	color: #000;
 }
 
+.avatar-match-screen {
+	width: 175px;
+	height: 175px;
+	background-size: cover;
+    background-position: top center;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
 /*
 * ==========================================================
 *     input range sliders
@@ -1236,7 +1245,7 @@ form .bright-heading {
   }
 }
 
-
+/**/
 
 
 
