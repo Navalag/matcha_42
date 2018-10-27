@@ -24,12 +24,9 @@ class NotificationsController extends Controller
 		// print_r($socketArray); die();
 		if (!Notifications::checkIfExist($socketArray['active_user_id'],$socketArray['dest_user_id'])) 
 		{
-			if (Notifications::addNewMessage($socketArray['active_user_id'],$socketArray['dest_user_id']))
+			if (Notifications::addNewNotification($socketArray['active_user_id'],$socketArray['dest_user_id'],"message"))
 			{
 				$userAvatar = Photo::getAvatarImgByUserId($socketArray['active_user_id']);
-				/*
-				** request csrf values for return
-				*/
 				$respond_json['user'] = [
 					'avatar' => $userAvatar->photo_src,
 					'user_id' => $socketArray['active_user_id'],
@@ -40,8 +37,37 @@ class NotificationsController extends Controller
 				return $response->write(json_encode($respond_json));
 			}
 		}
-		return $response->write(json_encode(['csrf'=>$request->getAttribute('ajax_csrf'),
-											'new_msg'=>'no new msg']));
+		return $response->write(json_encode([
+			'csrf'=>$request->getAttribute('ajax_csrf'),
+			'new_msg'=>'no new msg'
+		]));
+	}
+
+	public function addOtherNotification($request, $response) {
+		$validation = $this->validator->validate($request, [
+			'socket_array' => v::notEmpty(),
+		]);
+		if ($validation->failed()) {
+			return $response->write(json_encode([
+				'csrf'=>$request->getAttribute('ajax_csrf'),
+				'new_msg'=>'failed validation'
+			]));
+		}
+		$socketArray = $request->getParam('socket_array');
+		// print_r($socketArray); die();
+		if (Notifications::addNewNotification($socketArray['active_user_id'],$socketArray['dest_user_id'],$socketArray['message_type']))
+		{
+			$count = Notifications::countSameNotifications($socketArray['dest_user_id'],$socketArray['message_type']);
+
+			$respond_json['type'] = $socketArray['message_type'];
+			$respond_json['count'] = $count;
+			$respond_json['csrf'] = $request->getAttribute('ajax_csrf');
+			return $response->write(json_encode($respond_json));
+		}
+		return $response->write(json_encode([
+			'csrf'=>$request->getAttribute('ajax_csrf'),
+			'new_msg'=>'no new msg'
+		]));
 	}
 
 	public function loadMessageNotifications($request, $response)
@@ -67,8 +93,8 @@ class NotificationsController extends Controller
 
 		return $response->write(json_encode($json));
 	}
-	
-	public function openMessage($request, $response)
+
+	public function openMessageNotification($request, $response)
 	{
 		$validation = $this->validator->validate($request, [
 			'action_user_id' => v::notEmpty(),

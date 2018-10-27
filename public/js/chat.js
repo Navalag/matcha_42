@@ -40,6 +40,7 @@ $('#frmChat').on("submit",function(event){
 	var messageText =  $('#chat-message').val();
 
 	var socketMsg = {
+		"type": 'msg',
 		"chat_id": msgAttr.chat_id,
 		"active_user_id": msgAttr.active_user_id,
 		"active_user_name": msgAttr.active_username,

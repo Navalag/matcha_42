@@ -178,6 +178,8 @@ if (!url.includes('/auth')) {
 	websocket.onmessage = function(event) {
 		var Msg = JSON.parse(event.data);
 		/*
+		** Listen MESSAGE notifications
+		**
 		** check if user is not on current event chat page
 		*/
 		if (!url.includes(Msg.chat_id)) {
@@ -190,13 +192,24 @@ if (!url.includes('/auth')) {
 				*/
 				if (Msg.dest_user_id == globalUser.user.id) {
 					console.log(Msg);
-					sendNotificationToServer(Msg);
+					sendMessageNotificationToServer(Msg);
 				}
+			}
+		}
+		/*
+		** Listen LIKE, CHECK-PROF, MATCH, UNMATCH notifications
+		**
+		** check if current user should receive this message
+		*/
+		if (!Msg.chat_id) {
+			if (Msg.dest_user_id == globalUser.user.id) {
+				console.log(Msg);
+				sendOtherNotificationToServer(Msg);
 			}
 		}
 	};
 
-	function sendNotificationToServer(data) {
+	function sendMessageNotificationToServer(data) {
 		var url = '/notifications/new-message';
 		var tokenName = $('input[name="csrf_name"]');
 		var tokenValue = $('input[name="csrf_value"]');
@@ -234,6 +247,92 @@ if (!url.includes('/auth')) {
 				let msgCount = $('#new-message').text();
 				msgCount++;
 				$('#new-message').html(msgCount);
+			}
+		});
+	}
+
+	function sendOtherNotificationToServer(data) {
+		var url = '/notifications/new-notification';
+		var tokenName = $('input[name="csrf_name"]');
+		var tokenValue = $('input[name="csrf_value"]');
+		var ajaxMsg = {
+			"socket_array" : data,
+			"csrf_name" : tokenName.attr('value'),
+			"csrf_value" : tokenValue.attr('value')
+		};
+
+		$.post(url, ajaxMsg, function(response) {
+			var obj = JSON.parse(response);
+			console.log(obj);
+			var likeIcon = '<i class="fas fa-heart"></i>';
+			var checkIcon = '<i class="fas fa-check-circle"></i>';
+			var matchIcon = '<i class="fas fa-clone"></i>';
+			var unmatchIcon = '<i class="fas fa-times-circle"></i>';
+			/*
+			** update csrf
+			*/
+			tokenName.val(obj.csrf.csrf_name);
+			tokenValue.val(obj.csrf.csrf_value);
+			if (!obj.new_msg) {
+				if ($('.nav-menu ul#notif-list').find())
+				/*
+				** update unread notifications
+				*/
+				if (obj.type == 'like') {
+					if ($('.nav-menu ul#notif-list').find('#likes').length != 0) {
+						$('#likes').html(likeIcon +'You have '+ obj.count +' new likes');
+					} else {
+						$('.nav-menu ul#notif-list').prepend(
+							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
+								'<div class="notification">'+
+									'<div id="likes" class="notification-content">'+ likeIcon +'You have '+ obj.count +' new like </div>'+
+								'</div></a>'+
+							'</li>'
+						);
+					}
+				} else if (obj.type == 'check') {
+					if ($('.nav-menu ul#notif-list').find('#check').length != 0) {
+						$('#check').text(obj.count +' users check your profile');
+					} else {
+						$('.nav-menu ul#notif-list').prepend(
+							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
+								'<div class="notification">'+
+									'<div id="check" class="notification-content">'+ checkIcon + obj.count +' user check your profile</div>'+
+								'</div></a>'+
+							'</li>'
+						);
+					}
+				} else if (obj.type == 'match') {
+					if ($('.nav-menu ul#notif-list').find('#match').length != 0) {
+						$('#match').text('You have '+ obj.count +' new matches');
+					} else {
+						$('.nav-menu ul#notif-list').prepend(
+							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
+								'<div class="notification">'+
+									'<div id="match" class="notification-content">'+ matchIcon +'You have '+ obj.count +' new match </div>'+
+								'</div></a>'+
+							'</li>'
+						);
+					}
+				} else if (obj.type == 'unmatch') {
+					if ($('.nav-menu ul#notif-list').find('#unmatch').length != 0) {
+						$('#unmatch').text(obj.count +' users unmatch connection with you');
+					} else {
+						$('.nav-menu ul#notif-list').prepend(
+							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
+								'<div class="notification">'+
+									'<div id="unmatch" class="notification-content">'+ unmatchIcon + obj.count +' user unmatch connection with you</div>'+
+								'</div></a>'+
+							'</li>'
+						);
+					}
+				}
+				/*
+				** increase counter for unread messages
+				*/
+				let msgCount = $('#notif-count').text();
+				msgCount++;
+				$('#notif-count').html(msgCount);
 			}
 		});
 	}

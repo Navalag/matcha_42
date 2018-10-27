@@ -18,14 +18,23 @@ class Notifications extends Model
 		'updated_at',
 	];
 
-	public static function addNewMessage($actionUserId, $destUserId)
+	public static function addNewNotification($actionUserId, $destUserId, $notifType)
 	{
 		return Notifications::create([
 			'action_user_id' => $actionUserId,
 			'dest_user_id' => $destUserId,
-			'notif_type' => 'message',
+			'notif_type' => $notifType,
 			'seen' => '0'
 		]);
+	}
+
+	public static function countSameNotifications($destUserId, $notifType)
+	{
+		return Notifications::where([
+			'dest_user_id' => $destUserId,
+			'notif_type' => $notifType,
+			'seen' => '0'
+		])->count();
 	}
 
 	public static function checkIfExist($actionUserId, $destUserId)

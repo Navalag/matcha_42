@@ -98,10 +98,29 @@ function sendActionToServer(action, userId, active = 1) {
 	if (action == 'love' && active == 1) {
 		$.post(urlLove, data, function(response) {
 			console.log(response);
+			/*
+			** show match screen
+			*/
 			// if (match) {
 				// machScreen.style.zIndex = 999;
 				// machScreen.style.opacity = 1;
 			// }
+			/*
+			** send socket notification
+			*/
+			var socketMsg = {
+				"type": 'like',
+				"chat_id": 'null',
+				"active_user_id": globalUser.user.id,
+				"active_user_name": 'null',
+				"dest_user_id": userId,
+				"dest_user_name": 'null',
+				"chat_message": 'null'
+			};
+			websocket.send(JSON.stringify(socketMsg));
+			/*
+			** update csrf
+			*/
 			updateCSRF(response);
 		});
 	} else if (action == 'skip' && active == 1) {

@@ -96,16 +96,6 @@ $app->group('', function () {
 	** other user profile
 	*/
 	$this->get('/user-page/{user_id}', 'MyMatchesController:getOtherUserProfile')->setName('user-page.{user_id}');
-
-
-
-	// $this->get('/user/edit/info', 'AboutController:getEditProfile')->setName('user.edit.info');
-	// $this->post('/user/edit/info', 'AboutController:postEditProfile');
-
-	// $this->get('/user/edit/interests', 'InterestsController:getInterestsProfile')->setName('user.edit.interests');
-	// $this->post('/user/edit/interests', 'InterestsController:postInterestsProfile');
-	
-
 	/*
 	** chat
 	*/
@@ -116,7 +106,8 @@ $app->group('', function () {
 	*/
 	$this->post('/notifications/new-message', 'NotificationsController:addMessageNotification');
 	$this->post('/notifications/load-messages', 'NotificationsController:loadMessageNotifications');
-	$this->post('/notifications/open-message', 'NotificationsController:openMessage');
+	$this->post('/notifications/open-message', 'NotificationsController:openMessageNotification');
+	$this->post('/notifications/new-notification', 'NotificationsController:addOtherNotification');
 
 	
 })->add(new AuthMiddleware($container));

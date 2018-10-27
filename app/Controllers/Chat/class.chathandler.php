@@ -81,17 +81,29 @@ class ChatHandler {
 		return $ACK;
 	}
 
-	function createChatBoxMessage($chatId,$activeUsername,$destUsername,$chatMessage,$activeUserId,$destUserId) {
-		$message = $activeUsername . ": <div class='chat-box-message'>" . $chatMessage . "</div>";
-		$messageArray = array(
-			'chat_id'=>$chatId,
-			'active_user_id'=>$activeUserId,
-			'active_user_name'=>$activeUsername,
-			'dest_user_id'=>$destUserId,
-			'dest_user_name'=>$destUsername,
-			'message'=>$message,
-			'message_type'=>'chat-box-html'
-		);
+	function createChatBoxMessage($type,$chatId,$activeUsername,$destUsername,$chatMessage,$activeUserId,$destUserId) {
+		/*
+		** check message type
+		*/
+		if ($type == 'msg') {
+			$message = $activeUsername . ": <div class='chat-box-message'>" . $chatMessage . "</div>";
+			$messageArray = array(
+				'chat_id'=>$chatId,
+				'active_user_id'=>$activeUserId,
+				'active_user_name'=>$activeUsername,
+				'dest_user_id'=>$destUserId,
+				'dest_user_name'=>$destUsername,
+				'message'=>$message,
+				'message_type'=>'chat-box-html'
+			);
+		} else {
+			$messageArray = array(
+				'active_user_id'=>$activeUserId,
+				'dest_user_id'=>$destUserId,
+				'message_type'=>$type
+			);
+		}
+		
 		$finalMessage = $this->seal(json_encode($messageArray));
 		return $finalMessage;
 	}
