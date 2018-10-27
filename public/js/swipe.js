@@ -98,13 +98,15 @@ function sendActionToServer(action, userId, active = 1) {
 	if (action == 'love' && active == 1) {
 		$.post(urlLove, data, function(response) {
 			console.log(response);
+			var obj = JSON.parse(response);
+			updateCSRF(obj);
 			/*
 			** show match screen
 			*/
-			// if (match) {
-				// machScreen.style.zIndex = 999;
-				// machScreen.style.opacity = 1;
-			// }
+			if (obj.msg == 'new match') {
+				machScreen.style.zIndex = 999;
+				machScreen.style.opacity = 1;
+			}
 			/*
 			** send socket notification
 			*/
@@ -118,37 +120,32 @@ function sendActionToServer(action, userId, active = 1) {
 				"chat_message": 'null'
 			};
 			websocket.send(JSON.stringify(socketMsg));
-			/*
-			** update csrf
-			*/
-			updateCSRF(response);
 		});
 	} else if (action == 'skip' && active == 1) {
 		$.post(urlSkip, data, function(response) {
-			console.log(response);
-			updateCSRF(response);
+			var obj = JSON.parse(response);
+			updateCSRF(obj);
 		});
 	} else if (action == 'block') {
 		$.post(urlBlock, data, function(response) {
 			console.log(response);
-			updateCSRF(response);
+			var obj = JSON.parse(response);
+			updateCSRF(obj);
 			$('#ModalSuccess').modal();
 		});
 	} else if (action == 'report_fake') {
 		$.post(urlReportFake, data, function(response) {
 			console.log(response);
-			updateCSRF(response);
+			var obj = JSON.parse(response);
+			updateCSRF(obj);
 			$('#ModalSuccess').modal();
 		});
 	} else if (action == 'check_profile') {
 		$.post(urlCheckProfile, data, function(response) {
 			// console.log(response);
-			/*
-			** TODO: fix lines below later
-			*/
 			var obj = JSON.parse(response);
-			var csrf = obj.csrf;
-			updateCSRF(JSON.stringify(csrf));
+			// var csrf = obj.csrf;
+			updateCSRF(obj);
 			/*
 			** send socket notification
 			*/
@@ -169,10 +166,10 @@ function sendActionToServer(action, userId, active = 1) {
 		$('#ModalAddPhoto').modal();
 	}
 
-	function updateCSRF(response) {
-		var obj = JSON.parse(response);
-		tokenName.val(obj.csrf_name);
-		tokenValue.val(obj.csrf_value);
+	function updateCSRF(obj) {
+		// var obj = JSON.parse(response);
+		tokenName.val(obj.csrf.csrf_name);
+		tokenValue.val(obj.csrf.csrf_value);
 	}
 }
 
@@ -221,7 +218,7 @@ machScreen.querySelector('.match-return-btn').addEventListener('click', function
 });
 
 // ------------------------------------------------------ //
-// Open user profile on find a match page
+// Open user profile
 // ------------------------------------------------------ //
 
 $(document).ready(function () {

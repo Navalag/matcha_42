@@ -22,17 +22,19 @@ class SearchActionsController extends Controller
 			'action_user_id' => v::notEmpty(),
 		]);
 		if ($validation->failed()) {
-			return 'failed request';
+			return $response->write(json_encode([
+				'csrf'=>$request->getAttribute('ajax_csrf'),
+				'msg'=>'error validation'
+			]));
 		}
 
 		$action_user_id = $request->getParam('action_user_id');
 		BlockUsersList::setBlockUser($action_user_id);
-		// return 'User is blocked';
-		/*
-		** send csrf values for ajax request
-		*/
-		$ajax_csrf = $request->getAttribute('ajax_csrf');
-		return $response->write(json_encode($ajax_csrf));
+		
+		return $response->write(json_encode([
+			'csrf'=>$request->getAttribute('ajax_csrf'),
+			'msg'=>'user is blocked'
+		]));
 	}
 
 	public function getRepotFakeAccount($request, $response)
@@ -41,18 +43,19 @@ class SearchActionsController extends Controller
 			'action_user_id' => v::notEmpty(),
 		]);
 		if ($validation->failed()) {
-			return 'failed request';
+			return $response->write(json_encode([
+				'csrf'=>$request->getAttribute('ajax_csrf'),
+				'msg'=>'error validation'
+			]));
 		}
 
 		$action_user_id = $request->getParam('action_user_id');
-		// print_r($action_user_id); die();
 		FakeAccountReport::setFakeReport($action_user_id);
-		// return 'Report Fake Account Success';
-		/*
-		** send csrf values for ajax request
-		*/
-		$ajax_csrf = $request->getAttribute('ajax_csrf');
-		return $response->write(json_encode($ajax_csrf));
+
+		return $response->write(json_encode([
+			'csrf'=>$request->getAttribute('ajax_csrf'),
+			'msg'=>'Report Fake Account Success'
+		]));
 	}
 
 	public function getCheckProfile($request, $response)
@@ -61,7 +64,10 @@ class SearchActionsController extends Controller
 			'action_user_id' => v::notEmpty(),
 		]);
 		if ($validation->failed()) {
-			return 'failed request';
+			return $response->write(json_encode([
+				'csrf'=>$request->getAttribute('ajax_csrf'),
+				'msg'=>'error validation'
+			]));
 		}
 
 		$action_user_id = $request->getParam('action_user_id');
@@ -92,7 +98,10 @@ class SearchActionsController extends Controller
 			'action_user_id' => v::notEmpty(),
 		]);
 		if ($validation->failed()) {
-			return 'failed request';
+			return $response->write(json_encode([
+				'csrf'=>$request->getAttribute('ajax_csrf'),
+				'msg'=>'error validation'
+			]));
 		}
 
 		$rating = 0;
@@ -103,12 +112,14 @@ class SearchActionsController extends Controller
 			LikeNopeCheck::createNewRecord($liked_user_id, 1);
 			if (LikeNopeCheck::checkIfMatch($liked_user_id)) {
 				MatchedPeople::setAMatch($liked_user_id);
-				$rating += 5;
 				$old_rating = User::getUserInfoById($_SESSION['user']);
-				if (($old_rating->fame_rating + $rating) <= 95) {
-					User::updateRating($_SESSION['user'], $old_rating->fame_rating + 5);
+				if (($old_rating->fame_rating + 10) <= 90) {
+					User::updateRating($_SESSION['user'], $old_rating->fame_rating + 10);
 				}
-				// echo "new match";
+				return $response->write(json_encode([
+					'csrf'=>$request->getAttribute('ajax_csrf'),
+					'msg'=>'new match'
+				]));
 			}
 			/*
 			** update rating
@@ -119,14 +130,18 @@ class SearchActionsController extends Controller
 				$rating = $old_rating->fame_rating + $rating + 5;
 				User::updateRating($liked_user_id, $rating);
 			}
-			// return 'success';
 			/*
 			** send csrf values for ajax request
 			*/
-			$ajax_csrf = $request->getAttribute('ajax_csrf');
-			return $response->write(json_encode($ajax_csrf));
+			return $response->write(json_encode([
+				'csrf'=>$request->getAttribute('ajax_csrf'),
+				'msg'=>'success'
+			]));
 		}
-		return ';-( some error occurred ;-(';
+		return $response->write(json_encode([
+			'csrf'=>$request->getAttribute('ajax_csrf'),
+			'msg'=>'some error occurred'
+		]));
 	}
 
 	public function getNope($request, $response)
@@ -135,21 +150,23 @@ class SearchActionsController extends Controller
 			'action_user_id' => v::notEmpty(),
 		]);
 		if ($validation->failed()) {
-			return 'failed request';
+			return $response->write(json_encode([
+				'csrf'=>$request->getAttribute('ajax_csrf'),
+				'msg'=>'error validation'
+			]));
 		}
 
 		$nope_user_id = $request->getParam('action_user_id');
 
-		if (!LikeNopeCheck::checkRecord($nope_user_id))
-		{
-			LikeNopeCheck::createNewRecord($nope_user_id, 0);
-			// return 'success';
-			/*
-			** send csrf values for ajax request
-			*/
-			$ajax_csrf = $request->getAttribute('ajax_csrf');
-			return $response->write(json_encode($ajax_csrf));
+		if (LikeNopeCheck::createNewRecord($nope_user_id, 0)) {
+			return $response->write(json_encode([
+				'csrf'=>$request->getAttribute('ajax_csrf'),
+				'msg'=>'success'
+			]));
 		}
-		return ';-( some error occurred ;-(';
+		return $response->write(json_encode([
+			'csrf'=>$request->getAttribute('ajax_csrf'),
+			'msg'=>'some error occurred'
+		]));
 	}
 }

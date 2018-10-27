@@ -3,7 +3,6 @@
 namespace Matcha\Models;
 
 use Illuminate\Database\Eloquent\Model;
-// use Matcha\Models\Notifications;
 
 class LikeNopeCheck extends Model
 {
@@ -42,21 +41,15 @@ class LikeNopeCheck extends Model
 					'user_id' => $_SESSION['user'],
 					'action_user_id' => $user_id,
 					'like_nope' => 1
-					])->first();
+				])->first();
 	}
 
 	public static function createNewRecord($user_id, $action) {
 		LikeNopeCheck::create([
-				'user_id' => $_SESSION['user'],
-				'action_user_id' => $user_id,
-				'like_nope' => $action,
-			]);
-
-
-        // Notifications::addNew($user_id, "like");
-
-
-
+			'user_id' => $_SESSION['user'],
+			'action_user_id' => $user_id,
+			'like_nope' => $action,
+		]);
 	}
 
 	public static function checkIfMatch($user_id) {
@@ -67,10 +60,10 @@ class LikeNopeCheck extends Model
 			])->first();
 
 		$secondUser = LikeNopeCheck::where([
-				'user_id' => $user_id,
-				'action_user_id' => $_SESSION['user'],
-				'like_nope' => 1,
-			])->first();
+			'user_id' => $user_id,
+			'action_user_id' => $_SESSION['user'],
+			'like_nope' => 1,
+		])->first();
 
 		if ($firstUser && $secondUser) {
 			return true;
@@ -80,28 +73,28 @@ class LikeNopeCheck extends Model
 
 	public static function setCheckRecord($user_id) {
 		LikeNopeCheck::create([
-				'user_id' => $_SESSION['user'],
-				'action_user_id' => $user_id,
-				'check_profile' => 1,
-			]);
+			'user_id' => $_SESSION['user'],
+			'action_user_id' => $user_id,
+			'check_profile' => 1,
+		]);
 	}
 
 	public static function checkIfFirstTimeOpenProfile($user_id) {
 		return LikeNopeCheck::where([
-					'user_id' => $_SESSION['user'],
-					'action_user_id' => $user_id,
-					'check_profile' => 1,
-				])->first();
+			'user_id' => $_SESSION['user'],
+			'action_user_id' => $user_id,
+			'check_profile' => 1,
+		])->first();
 	}
 
 	public static function checkIfUserLikeOrVisitMe($user_id) {
 		return LikeNopeCheck::
-					where(function ($query) use ($user_id) {
-							$query->where('action_user_id', $_SESSION['user'])
-								  ->where('user_id', $user_id);
-						})->where(function ($query) {
-							$query->where('like_nope', 1)
-								  ->orWhere('check_profile', 1);
-						})->first();
+				where(function ($query) use ($user_id) {
+						$query->where('action_user_id', $_SESSION['user'])
+							  ->where('user_id', $user_id);
+					})->where(function ($query) {
+						$query->where('like_nope', 1)
+							  ->orWhere('check_profile', 1);
+					})->first();
 	}
 }
