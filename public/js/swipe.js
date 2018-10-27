@@ -142,8 +142,28 @@ function sendActionToServer(action, userId, active = 1) {
 		});
 	} else if (action == 'check_profile') {
 		$.post(urlCheckProfile, data, function(response) {
-			console.log(response);
-			updateCSRF(response);
+			// console.log(response);
+			/*
+			** TODO: fix lines below later
+			*/
+			var obj = JSON.parse(response);
+			var csrf = obj.csrf;
+			updateCSRF(JSON.stringify(csrf));
+			/*
+			** send socket notification
+			*/
+			if (obj.msg == 'success new record') {
+				var socketMsg = {
+					"type": 'check_prof',
+					"chat_id": 'null',
+					"active_user_id": globalUser.user.id,
+					"active_user_name": 'null',
+					"dest_user_id": userId,
+					"dest_user_name": 'null',
+					"chat_message": 'null'
+				};
+				websocket.send(JSON.stringify(socketMsg));
+			}
 		});
 	} else if (active == 0) {
 		$('#ModalAddPhoto').modal();

@@ -72,14 +72,18 @@ class SearchActionsController extends Controller
 			if (($old_rating->fame_rating + 2) <= 100) {
 				User::updateRating($action_user_id, $old_rating->fame_rating + 2);
 			}
-			// return 'check profile record success';
+			return $response->write(json_encode([
+				'csrf'=>$request->getAttribute('ajax_csrf'),
+				'msg'=>'success new record'
+			]));
 		}
-		// return 'not first check';
 		/*
 		** send csrf values for ajax request
 		*/
-		$ajax_csrf = $request->getAttribute('ajax_csrf');
-		return $response->write(json_encode($ajax_csrf));
+		return $response->write(json_encode([
+			'csrf'=>$request->getAttribute('ajax_csrf'),
+			'msg'=>'no new record'
+		]));
 	}
 
 	public function getLike($request, $response)
@@ -96,23 +100,6 @@ class SearchActionsController extends Controller
 
 		if (!LikeNopeCheck::checkIfLike($liked_user_id))
 		{
-            // $type = 1;
-
-            // Notifications::create([
-            //     'user_id' => $liked_user_id,
-            //     'from_user_id' => $_SESSION['user'],
-            //     'type' => $type,
-            //     'see' => 0,
-            // ]);
-
-            // $count = Notifications::where([
-            //     'user_id' => $liked_user_id,
-            //     'see' => 0,
-            // ])->get();
-            // $notif = 'notification_count_' . $liked_user_id;
-            // $this->container->view->getEnvironment()->addGlobal($notif, $count);
-
-
 			LikeNopeCheck::createNewRecord($liked_user_id, 1);
 			if (LikeNopeCheck::checkIfMatch($liked_user_id)) {
 				MatchedPeople::setAMatch($liked_user_id);

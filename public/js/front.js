@@ -290,21 +290,21 @@ if (!url.includes('/auth')) {
 							'</li>'
 						);
 					}
-				} else if (obj.type == 'check') {
-					if ($('.nav-menu ul#notif-list').find('#check').length != 0) {
-						$('#check').text(obj.count +' users check your profile');
+				} else if (obj.type == 'check_prof') {
+					if ($('.nav-menu ul#notif-list').find('#check_prof').length != 0) {
+						$('#check_prof').html(checkIcon + obj.count +' users check your profile');
 					} else {
 						$('.nav-menu ul#notif-list').prepend(
 							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
 								'<div class="notification">'+
-									'<div id="check" class="notification-content">'+ checkIcon + obj.count +' user check your profile</div>'+
+									'<div id="check_prof" class="notification-content">'+ checkIcon + obj.count +' user check your profile</div>'+
 								'</div></a>'+
 							'</li>'
 						);
 					}
 				} else if (obj.type == 'match') {
 					if ($('.nav-menu ul#notif-list').find('#match').length != 0) {
-						$('#match').text('You have '+ obj.count +' new matches');
+						$('#match').html(matchIcon +'You have '+ obj.count +' new matches');
 					} else {
 						$('.nav-menu ul#notif-list').prepend(
 							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
@@ -316,7 +316,7 @@ if (!url.includes('/auth')) {
 					}
 				} else if (obj.type == 'unmatch') {
 					if ($('.nav-menu ul#notif-list').find('#unmatch').length != 0) {
-						$('#unmatch').text(obj.count +' users unmatch connection with you');
+						$('#unmatch').html(unmatchIcon + obj.count +' users unmatch connection with you');
 					} else {
 						$('.nav-menu ul#notif-list').prepend(
 							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
