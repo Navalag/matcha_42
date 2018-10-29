@@ -104,7 +104,6 @@ class SearchActionsController extends Controller
 			]));
 		}
 
-		$rating = 0;
 		$liked_user_id = $request->getParam('action_user_id');
 
 		if (!LikeNopeCheck::checkIfLike($liked_user_id))
@@ -120,12 +119,18 @@ class SearchActionsController extends Controller
 				*/
 				if (($activeUser->fame_rating + 10) <= 90) {
 					User::updateRating($_SESSION['user'], $activeUser->fame_rating + 10);
+				} else if ($activeUser->fame_rating < 100 &&
+						   $activeUser->fame_rating > 90) {
+					User::updateRating($_SESSION['user'], 100);
 				}
 				/*
 				** update liked user rating
 				*/
 				if (($matchUser->fame_rating + 10) <= 90) {
 					User::updateRating($liked_user_id, $matchUser->fame_rating + 10);
+				} else if ($matchUser->fame_rating < 100 &&
+						   $matchUser->fame_rating > 90) {
+					User::updateRating($liked_user_id, 100);
 				}
 				return $response->write(json_encode([
 					'csrf'=>$request->getAttribute('ajax_csrf'),
@@ -139,13 +144,13 @@ class SearchActionsController extends Controller
 			*/
 			$old_rating = User::getUserInfoById($liked_user_id);
 
-			if (($old_rating->fame_rating + $rating) <= 95) {
-				$rating = $old_rating->fame_rating + $rating + 5;
-				User::updateRating($liked_user_id, $rating);
+			if (($old_rating->fame_rating + 5) <= 95) {
+				User::updateRating($liked_user_id, $old_rating->fame_rating + 5);
+			} else if ($old_rating->fame_rating < 100 &&
+					   $old_rating->fame_rating > 95) {
+				User::updateRating($liked_user_id, 100);
 			}
-			/*
-			** send csrf values for ajax request
-			*/
+
 			return $response->write(json_encode([
 				'csrf'=>$request->getAttribute('ajax_csrf'),
 				'msg'=>'success'

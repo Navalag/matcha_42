@@ -2,9 +2,17 @@
 
 {% block content %}
 <div class="match-screen">
-	<img id="match-fancy-text-img" src="{{ base_url() }}/img/match_text.png">
-	<p id="match-msg"></p>
 	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 offset-lg-3">
+				<img id="match-fancy-text-img" src="{{ base_url() }}/img/match_text.png">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6 offset-lg-3">
+				<p id="match-msg"></p>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-lg-3 offset-lg-3">
 				<div id="active-user-avatar" class="avatar-match-screen"></div>
@@ -13,14 +21,14 @@
 				<div id="matched-user-avatar" class="avatar-match-screen"></div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-lg-6 offset-lg-3">
+				<button class="match-return-btn">
+					<i class="fa fa-user"></i> Keep Playing
+				</button>
+			</div>
+		</div>
 	</div>
-	<!-- <div class="match-images clearfix">
-		
-		
-	</div> -->
-	<button class="match-return-btn">
-		<i class="fa fa-user"></i> Keep Playing
-	</button>
 </div>
 {% include 'templates/partials/side-nav.twig' %}
 

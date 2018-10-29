@@ -104,7 +104,7 @@ function sendActionToServer(action, userId, active = 1) {
 			** show match screen
 			*/
 			if (obj.msg == 'new match') {
-				showMatchScreen(obj);
+				showMatchScreen(obj, userId);
 			}
 			/*
 			** send socket notification
@@ -171,12 +171,26 @@ function sendActionToServer(action, userId, active = 1) {
 		tokenValue.val(obj.csrf.csrf_value);
 	}
 
-	function showMatchScreen(obj) {
+	function showMatchScreen(obj, userId) {
+		console.log(userId);
 		$('#match-msg').text('You and '+ obj.match_user_name +' have liked each other.');
 		$('#active-user-avatar').css("background-image", "url("+ globalUser.avatar +")");
 		$('#matched-user-avatar').css("background-image", "url("+ obj.match_user_avatar +")");
 		machScreen.style.zIndex = 999;
 		machScreen.style.opacity = 1;
+		/*
+		** send socket notification
+		*/
+		var socketMsg = {
+			"type": 'match',
+			"chat_id": 'null',
+			"active_user_id": globalUser.user.id,
+			"active_user_name": 'null',
+			"dest_user_id": userId,
+			"dest_user_name": 'null',
+			"chat_message": 'null'
+		};
+		websocket.send(JSON.stringify(socketMsg));
 	}
 }
 
