@@ -67,7 +67,7 @@ $container['AuthController'] = function ($container) {
 	return new \Matcha\Controllers\Auth\AuthController($container);
 };
 $container['PasswordController'] = function ($container) {
-	return new \Matcha\Controllers\Auth\PasswordController($container);
+	return new \Matcha\Controllers\Profile\PasswordController($container);
 };
 /*
 ** Profile controllers

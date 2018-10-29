@@ -55,12 +55,12 @@ $app->group('', function () {
 	/*
 	** account settings (change email and password)
 	*/
-	$this->get('/auth/password/change', 'PasswordController:getChangePassword')->setName('auth.password.change');
-	$this->post('/auth/password/change', 'PasswordController:postChangePassword');
+	$this->get('/user/password/change', 'PasswordController:getChangePassword')->setName('auth.password.change');
+	$this->post('/user/password/change', 'PasswordController:postChangePassword');
 	/*
 	** account settings (reset password)
 	*/
-	$this->post('/auth/password/reset', 'PasswordController:postResetPassword');
+	$this->post('/user/password/reset', 'PasswordController:postResetPassword');
 	/*
 	** discovery settings
 	*/
