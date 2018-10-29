@@ -4,6 +4,7 @@ namespace Matcha\Controllers\Auth;
 
 use Matcha\Models\CheckEmail;
 use Matcha\Models\User;
+use Matcha\Models\DiscoverySettings;
 use Matcha\Controllers\Controller;
 use Respect\Validation\Validator as v;
 
@@ -68,10 +69,10 @@ class AuthController extends Controller
 		$password1 = $request->getParam('password');
 		$password2 = $request->getParam('password_repeat');
 
-		// if (!preg_match("/^.*(?=.{8,})(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$/", $password1)) {
-		// 	$this->flash->addMessage('error', 'Password must be at least 8 characters and must contain at least one lower case letter, one upper case letter and one digit');
-		// 	return $response->withRedirect($this->router->pathFor('auth.signup'));
-		// }
+		if (!preg_match("/^.*(?=.{8,})(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$/", $password1)) {
+			$this->flash->addMessage('error', 'Password must be at least 8 characters and must contain at least one lower case letter, one upper case letter and one digit');
+			return $response->withRedirect($this->router->pathFor('auth.signup'));
+		}
 		if ($this->checker->comparePasswords($password1, $password2, $response)) {
 			$this->flash->addMessage('error', 'Passwords does not match');
 			return $response->withRedirect($this->router->pathFor('auth.signup'));
@@ -87,7 +88,7 @@ class AuthController extends Controller
 			'last_name' => $request->getParam('surname'),
 			'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
 		]);
-
+		DiscoverySettings::createAndSetDefault($user->id);
 		$checkEmail = CheckEmail::create([
 			'email' => $user->email,
 			'uniq_id' => md5(uniqid(rand(),time())),

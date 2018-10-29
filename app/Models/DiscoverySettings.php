@@ -22,9 +22,9 @@ class DiscoverySettings extends Model
 		return DiscoverySettings::where('user_id', $_SESSION['user'])->first();
 	}
 
-	public static function createAndSetDefault() {
+	public static function createAndSetDefault($userId) {
 		DiscoverySettings::create([
-			'user_id' => $_SESSION['user'],
+			'user_id' => $userId,
 			'max_distanse' => 20,
 			'min_age' => 18,
 			'max_age' => 55,

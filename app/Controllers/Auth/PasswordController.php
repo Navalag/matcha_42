@@ -71,10 +71,10 @@ class PasswordController extends Controller
 
 		$password1 = $request->getParam('password_new');
 		$password2 = $request->getParam('password_repeat');
-		// if (!preg_match("/^.*(?=.{8,})(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$/", $password1)) {
-		// 	$this->flash->addMessage('error', 'Password must be at least 8 characters and must contain at least one lower case letter, one upper case letter and one digit');
-		// 	return $response->withRedirect($this->router->pathFor('auth.password.change'));
-		// }
+		if (!preg_match("/^.*(?=.{8,})(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$/", $password1)) {
+			$this->flash->addMessage('error', 'Password must be at least 8 characters and must contain at least one lower case letter, one upper case letter and one digit');
+			return $response->withRedirect($this->router->pathFor('auth.password.change'));
+		}
 		if ($this->checker->comparePasswords($password1, $password2, $response)) {
 			$this->flash->addMessage('error', 'New passwords does not match');
 			return $response->withRedirect($this->router->pathFor('auth.password.change'));
