@@ -72,10 +72,13 @@ class NotificationsController extends Controller
 
 	public function loadMessageNotifications($request, $response)
 	{
-		$notif = Notifications::getAllMessageNotifForUser();
+		$messageNotif = Notifications::getAllMessageNotifForUser();
 		$json = [];
 		$notifCount = 0;
-		foreach ($notif as $row) {
+		/*
+		** prepare message notifications
+		*/
+		foreach ($messageNotif as $row) {
 			$userAvatar = Photo::getAvatarImgByUserId($row->action_user_id);
 			$userName = User::getUserInfoById($row->action_user_id);
 			$userChat = MatchedPeople::getUserChatId($row->action_user_id, $row->dest_user_id);
@@ -88,7 +91,21 @@ class NotificationsController extends Controller
 			);
 			$notifCount++;
 		}
-		$json['notif_count'] = $notifCount;
+		/*
+		** prepare other notifications
+		*/
+		$countLike = Notifications::getCountLikeNotifForUser();
+		$countCheckProf = Notifications::getCountCheckProfileNotifForUser();
+		$countMatch = Notifications::getCountMatchNotifForUser();
+		$countUnmatch = Notifications::getCountUnmatchNotifForUser();
+		$json['count_like'] = $countLike;
+		$json['count_check_prof'] = $countCheckProf;
+		$json['count_match'] = $countMatch;
+		$json['count_unmatch'] = $countUnmatch;
+
+		$json['other_notif_count'] = $countLike + $countCheckProf + $countMatch + $countUnmatch;
+		$json['msg_notif_count'] = $notifCount;
+
 		$json['csrf'] = $request->getAttribute('ajax_csrf');
 
 		return $response->write(json_encode($json));
@@ -110,5 +127,18 @@ class NotificationsController extends Controller
 			return 'deleted';
 		}
 		return 'no such msg';
+	}
+
+	public function openLikeCheckProfNotification($request, $response)
+	{
+		Notifications::deleteUserLikeCheckProfNotification();
+		return $response->withRedirect($this->router->pathFor('activity-log'));
+	}
+
+	public function openMatchUnmatchNotification($request, $response)
+	{
+		Notifications::deleteUserMatchUnmatchNotification();
+		return $response->withRedirect($this->router->pathFor('my-matches'));
+
 	}
 }

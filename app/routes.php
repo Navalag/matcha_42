@@ -102,12 +102,16 @@ $app->group('', function () {
 	$this->get('/chat/{chat_id}', 'ChatController:index')->setName('chat');
     $this->post('/chat/addMessage', 'ChatController:addMessage')->setName('chat.addMessage');
     /*
-	** notifications
+	** notifications (messages)
 	*/
 	$this->post('/notifications/new-message', 'NotificationsController:addMessageNotification');
 	$this->post('/notifications/load-messages', 'NotificationsController:loadMessageNotifications');
 	$this->post('/notifications/open-message', 'NotificationsController:openMessageNotification');
+	/*
+	** notifications (all other notif)
+	*/
 	$this->post('/notifications/new-notification', 'NotificationsController:addOtherNotification');
+	$this->get('/notifications/open-activity-log', 'NotificationsController:openLikeCheckProfNotification');
+	$this->get('/notifications/open-my-matches', 'NotificationsController:openMatchUnmatchNotification');
 
-	
 })->add(new AuthMiddleware($container));

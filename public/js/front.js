@@ -283,7 +283,7 @@ if (!url.includes('/auth')) {
 						$('#likes').html(likeIcon +'You have '+ obj.count +' new likes');
 					} else {
 						$('.nav-menu ul#notif-list').prepend(
-							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
+							'<li><a rel="nofollow" href="/notifications/open-activity-log" class="dropdown-item">'+
 								'<div class="notification">'+
 									'<div id="likes" class="notification-content">'+ likeIcon +'You have '+ obj.count +' new like </div>'+
 								'</div></a>'+
@@ -295,7 +295,7 @@ if (!url.includes('/auth')) {
 						$('#check_prof').html(checkIcon + obj.count +' users check your profile');
 					} else {
 						$('.nav-menu ul#notif-list').prepend(
-							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
+							'<li><a rel="nofollow" href="/notifications/open-activity-log" class="dropdown-item">'+
 								'<div class="notification">'+
 									'<div id="check_prof" class="notification-content">'+ checkIcon + obj.count +' user check your profile</div>'+
 								'</div></a>'+
@@ -307,7 +307,7 @@ if (!url.includes('/auth')) {
 						$('#match').html(matchIcon +'You have '+ obj.count +' new matches');
 					} else {
 						$('.nav-menu ul#notif-list').prepend(
-							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
+							'<li><a rel="nofollow" href="/notifications/open-my-matches" class="dropdown-item">'+
 								'<div class="notification">'+
 									'<div id="match" class="notification-content">'+ matchIcon +'You have '+ obj.count +' new match </div>'+
 								'</div></a>'+
@@ -319,7 +319,7 @@ if (!url.includes('/auth')) {
 						$('#unmatch').html(unmatchIcon + obj.count +' users unmatch connection with you');
 					} else {
 						$('.nav-menu ul#notif-list').prepend(
-							'<li><a rel="nofollow" href="#" class="dropdown-item">'+
+							'<li><a rel="nofollow" href="/notifications/open-my-matches" class="dropdown-item">'+
 								'<div class="notification">'+
 									'<div id="unmatch" class="notification-content">'+ unmatchIcon + obj.count +' user unmatch connection with you</div>'+
 								'</div></a>'+
@@ -360,7 +360,7 @@ if (!url.includes('/auth')) {
 	});
 
 	/*
-	** load notification box on page load
+	** load message notification box on page load
 	*/
 	$(window).on("load", function() {
 		var url = '/notifications/load-messages';
@@ -373,12 +373,18 @@ if (!url.includes('/auth')) {
 
 		$.post(url, ajaxMsg, function(response) {
 			var obj = JSON.parse(response);
-			// console.log(obj);
+			console.log(obj);
 			/*
 			** increase counter for unread messages
 			*/
-			if (obj.notif_count != 0){
-				$('#new-message').html(obj.notif_count);
+			if (obj.msg_notif_count != 0){
+				$('#new-message').html(obj.msg_notif_count);
+			}
+			/*
+			** increase counter for unread other notif
+			*/
+			if (obj.other_notif_count != 0){
+				$('#notif-count').html(obj.other_notif_count);
 			}
 			/*
 			** update csrf
@@ -389,7 +395,9 @@ if (!url.includes('/auth')) {
 			** update unread messages
 			*/
 			$.each(obj, function (key, val) {
-				if (key == 'notif_count' || key == 'csrf') {
+				if (key == 'msg_notif_count' || key == 'csrf' || key == 'count_like'
+						|| key == 'count_check_prof' || key == 'count_match' || key == 'count_unmatch'
+						|| key == 'other_notif_count') {
 					return ;
 				}
 				$('.nav-menu ul#message-list').prepend(
@@ -404,8 +412,53 @@ if (!url.includes('/auth')) {
 				);
 				console.log(key, val);
 			});
+			/*
+			** update unread other notifications
+			*/
+			var likeIcon = '<i class="fas fa-heart"></i>';
+			var checkIcon = '<i class="fas fa-check-circle"></i>';
+			var matchIcon = '<i class="fas fa-fire"></i>';
+			var unmatchIcon = '<i class="fas fa-times-circle"></i>';
+			if (obj.count_like != 0) {
+				$('.nav-menu ul#notif-list').append(
+					'<li><a rel="nofollow" href="/notifications/open-activity-log" class="dropdown-item">'+
+						'<div class="notification">'+
+							'<div id="likes" class="notification-content">'+ likeIcon +'You have '+ obj.count_like +' new lik'+ (obj.count_like > 1 ? 'es' : 'e') +'</div>'+
+						'</div></a>'+
+					'</li>'
+				);
+			}
+			if (obj.count_check_prof != 0) {
+				$('.nav-menu ul#notif-list').append(
+					'<li><a rel="nofollow" href="/notifications/open-activity-log" class="dropdown-item">'+
+						'<div class="notification">'+
+							'<div id="check_prof" class="notification-content">'+ checkIcon + obj.count_check_prof +' user'+ (obj.count_check_prof > 1 ? 's' : '') +' check your profile</div>'+
+						'</div></a>'+
+					'</li>'
+				);
+			}
+			if (obj.count_match != 0) {
+				$('.nav-menu ul#notif-list').append(
+					'<li><a rel="nofollow" href="/notifications/open-my-matches" class="dropdown-item">'+
+						'<div class="notification">'+
+							'<div id="match" class="notification-content">'+ matchIcon +'You have '+ obj.count_match +' new match'+ (obj.count_match > 1 ? 'es' : '') +'</div>'+
+						'</div></a>'+
+					'</li>'
+				);
+			}
+			if (obj.count_unmatch != 0) {
+				$('.nav-menu ul#notif-list').append(
+					'<li><a rel="nofollow" href="/notifications/open-my-matches" class="dropdown-item">'+
+						'<div class="notification">'+
+							'<div id="unmatch" class="notification-content">'+ unmatchIcon + obj.count_unmatch +' user'+ (obj.count_unmatch > 1 ? 's' : '') +' unmatch connection with you</div>'+
+						'</div></a>'+
+					'</li>'
+				);
+			}
+
 		});
 	});
+
 }
 
 

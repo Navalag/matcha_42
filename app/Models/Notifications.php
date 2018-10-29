@@ -55,6 +55,36 @@ class Notifications extends Model
 							->get();
 	}
 
+	public static function getCountLikeNotifForUser()
+	{
+		return Notifications::where('dest_user_id', $_SESSION['user'])
+							->where('notif_type', 'like')
+							->where('seen', '0')
+							->count();
+	}
+
+	public static function getCountCheckProfileNotifForUser()
+	{
+		return Notifications::where('dest_user_id', $_SESSION['user'])
+							->where('notif_type', 'check_prof')
+							->where('seen', '0')
+							->count();
+	}
+	public static function getCountMatchNotifForUser()
+	{
+		return Notifications::where('dest_user_id', $_SESSION['user'])
+							->where('notif_type', 'match')
+							->where('seen', '0')
+							->count();
+	}
+	public static function getCountUnmatchNotifForUser()
+	{
+		return Notifications::where('dest_user_id', $_SESSION['user'])
+							->where('notif_type', 'unmatch')
+							->where('seen', '0')
+							->count();
+	}
+
 	public static function deleteMessageNotification($actionUserId, $destUserId)
 	{
 		return Notifications::where('action_user_id', $actionUserId)
@@ -62,6 +92,26 @@ class Notifications extends Model
 							->where('notif_type', 'message')
 							->where('seen', '0')
 							->delete();
+	}
+
+	public static function deleteUserLikeCheckProfNotification()
+	{
+		return Notifications::where(function ($query) {
+						$query->where('dest_user_id', $_SESSION['user']);
+					})->where(function ($query) {
+						$query->where('notif_type', 'like')
+							  ->orWhere('notif_type', 'check_prof');
+					})->delete();
+	}
+
+	public static function deleteUserMatchUnmatchNotification()
+	{
+		return Notifications::where(function ($query) {
+						$query->where('dest_user_id', $_SESSION['user']);
+					})->where(function ($query) {
+						$query->where('notif_type', 'match')
+							  ->orWhere('notif_type', 'unmatch');
+					})->delete();
 	}
 }
 // 'message', 'check_prof', 'like', 'match', 'unmatch'
