@@ -16,7 +16,6 @@ class MyMatchesController extends Controller
 {
 	public function getMyMatches($request, $response)
 	{
-		// $user = User::getAllUserInfo();
 		$matchedPeople = MatchedPeople::getMyMatches();
 
 		$viewArray = [];
@@ -33,10 +32,6 @@ class MyMatchesController extends Controller
 							($row->first_id == $_SESSION['user']) 
 							? $row->second_id : $row->first_id
 						);
-			// $userInterests = UserInterest::getInterestsValueByUserId(
-			// 				($row->first_id == $_SESSION['user']) 
-			// 				? $row->second_id : $row->first_id
-			// 			);
 			$viewArray[] = array('chat_id' => $row->chat_id,
 								 'basic_info' => $userInfo, 
 								 'photo' => $userPhoto,
@@ -84,7 +79,6 @@ class MyMatchesController extends Controller
 				MatchedPeople::setUnmatch($row->chat_id);
 			}
 		}
-		
 		return $response->withRedirect($this->router->pathFor('my-matches'));
 	}
 }

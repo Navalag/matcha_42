@@ -6,7 +6,6 @@
 <section class="feeds">
 <div class="container">
 	<div class="row">
-
 		<!-- My matches-->
 		<div class="col-lg-6 offset-lg-3">
 			<div class="articles card">
@@ -16,49 +15,34 @@
 				</div>
 				<div class="card-body no-padding">
 					{% if array is defined %}
-					{% for user in array %}
-					<div class="item">
-						<div class="feed d-flex justify-content-between">
-							<div class="feed-body d-flex justify-content-between">
-								<a href="/user-page/{{ user.basic_info.id }}" class="feed-profile"><div class="image" style="background-image: url('{{ user.photo[0] }}')">
-									{% if user.online == 'online' %}<div class="status bg-green"></div>{% endif %}
-								</div></a>
-								<div class="content">
-									<h5>{{ user.basic_info.username }}</h5>
-									<div class="CTAs">
-										<a href="/chat/{{ user.chat_id }}" class="btn btn-xs btn-secondary">Open Chat</a>
-										<a href="/my-matches/unmatch/{{ user.basic_info.id }}" class="btn btn-xs btn-secondary">Unmatch</a>
+						{% for user in array %}
+						<div class="item">
+							<div class="feed d-flex justify-content-between">
+								<div class="feed-body d-flex justify-content-between">
+									<a href="/user-page/{{ user.basic_info.id }}" class="feed-profile"><div class="image" style="background-image: url('{{ user.photo[0] }}')">
+										{% if user.online == 'online' %}<div class="status bg-green"></div>{% endif %}
+									</div></a>
+									<div class="content">
+										<h5>{{ user.basic_info.username }}</h5>
+										<div class="CTAs">
+											<a href="/chat/{{ user.chat_id }}" class="btn btn-xs btn-secondary">Open Chat</a>
+											<a href="/my-matches/unmatch/{{ user.basic_info.id }}" onclick="sendUnmatchSocket({{ user.basic_info.id }})" id="unmatch" class="btn btn-xs btn-secondary">Unmatch</a>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="date text-right"><small>{{ user.online }}</small></div>
-						</div>
-					</div>
-					<!-- <div class="item d-flex align-items-center">
-						<div class="image" style="background-image: url('{{ user.photo[0] }}')">
-							{% if user.online == 'online' %}<div class="status bg-green"></div>{% endif %}
-						</div> -->
-						<!-- <div class="text">
-							<a href="/user-page/{{ user.basic_info.id }}">
-								<h3 class="h5">{{ user.basic_info.username }}</h3>
-							</a>
-							<div class="date text-right"><small>{{ user.online }}</small></div>
-							<div class="CTAs">
-								<a href="/chat/{{ user.chat_id }}" class="btn btn-xs btn-secondary">Open Chat</a>
-								<a href="/my-matches/unmatch/{{ user.basic_info.id }}" class="btn btn-xs btn-secondary">Unmatch</a>
+								<div class="date text-right"><small>{{ user.online }}</small></div>
 							</div>
 						</div>
-					</div> -->
-					{% endfor %}
+						{% endfor %}
 					{% endif %}
-
 				</div>
 			</div>
 		</div><!-- end My Matches-->
-		
 	</div>
 </div>
 </section>
+
+<script src="{{ base_url() }}/js/my-matches.js"></script>
 
 {% include 'templates/partials/footer.twig' %}
 {% endblock %}

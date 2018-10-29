@@ -105,6 +105,7 @@ function sendActionToServer(action, userId, active = 1) {
 			*/
 			if (obj.msg == 'new match') {
 				showMatchScreen(obj, userId);
+				return ;
 			}
 			/*
 			** send socket notification
@@ -172,7 +173,6 @@ function sendActionToServer(action, userId, active = 1) {
 	}
 
 	function showMatchScreen(obj, userId) {
-		console.log(userId);
 		$('#match-msg').text('You and '+ obj.match_user_name +' have liked each other.');
 		$('#active-user-avatar').css("background-image", "url("+ globalUser.avatar +")");
 		$('#matched-user-avatar').css("background-image", "url("+ obj.match_user_avatar +")");
@@ -190,6 +190,7 @@ function sendActionToServer(action, userId, active = 1) {
 			"dest_user_name": 'null',
 			"chat_message": 'null'
 		};
+		console.log(socketMsg);
 		websocket.send(JSON.stringify(socketMsg));
 	}
 }

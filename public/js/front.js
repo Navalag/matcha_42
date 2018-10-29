@@ -266,7 +266,7 @@ if (!url.includes('/auth')) {
 			console.log(obj);
 			var likeIcon = '<i class="fas fa-heart"></i>';
 			var checkIcon = '<i class="fas fa-check-circle"></i>';
-			var matchIcon = '<i class="fas fa-clone"></i>';
+			var matchIcon = '<i class="fas fa-fire"></i>';
 			var unmatchIcon = '<i class="fas fa-times-circle"></i>';
 			/*
 			** update csrf
@@ -274,7 +274,7 @@ if (!url.includes('/auth')) {
 			tokenName.val(obj.csrf.csrf_name);
 			tokenValue.val(obj.csrf.csrf_value);
 			if (!obj.new_msg) {
-				if ($('.nav-menu ul#notif-list').find())
+				// if ($('.nav-menu ul#notif-list').find())
 				/*
 				** update unread notifications
 				*/
