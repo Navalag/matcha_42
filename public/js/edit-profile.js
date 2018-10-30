@@ -77,7 +77,7 @@ $(document).ready(function() {
 			/*
 			** handel respond from server
 			*/
-			console.log(response);
+			// console.log(response);
 			var obj = JSON.parse(response);
 			tokenName.val(obj.csrf_name);
 			tokenValue.val(obj.csrf_value);
@@ -129,7 +129,7 @@ $(document).ready(function() {
 			/*
 			** handel respond from server
 			*/
-			console.log(response);
+			// console.log(response);
 			var obj = JSON.parse(response);
 			tokenName.val(obj.csrf_name);
 			tokenValue.val(obj.csrf_value);
@@ -153,13 +153,13 @@ function getLocation() {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(showPosition, showError);
 	} else {
-		console.log("Geolocation is not supported by this browser.");
+		// console.log("Geolocation is not supported by this browser.");
 	}
 }
 
 function showPosition(position) {
-	console.log(position.coords.latitude);
-	console.log(position.coords.longitude);
+	// console.log(position.coords.latitude);
+	// console.log(position.coords.longitude);
 
 	$.ajax({
 		url: '/user/edit/set_geolocation',
@@ -172,22 +172,22 @@ function showPosition(position) {
 		type: 'POST',
 		success: function(response)
 		{
-			console.log(response);
+			// console.log(response);
 			var obj = JSON.parse(response);
 			tokenName.val(obj.csrf_name);
 			tokenValue.val(obj.csrf_value);
 		},
 		error: function(error)
 		{
-			console.log(error);
+			// console.log(error);
 		}
 	});
 }
 
 function showError(error) {
 	$.getJSON('https://json.geoiplookup.io', function(data) {
-		console.log(data.latitude);
-		console.log(data.longitude);
+		// console.log(data.latitude);
+		// console.log(data.longitude);
 
 		$.ajax({
 			url: '/user/edit/set_geolocation',
@@ -200,14 +200,14 @@ function showError(error) {
 			type: 'POST',
 			success: function(response)
 			{
-				console.log(response);
+				// console.log(response);
 				var obj = JSON.parse(response);
 				tokenName.val(obj.csrf_name);
 				tokenValue.val(obj.csrf_value);
 			},
 			error: function(error)
 			{
-				console.log(error);
+				// console.log(error);
 			}
 		});
 	});
@@ -259,7 +259,7 @@ $(document).ready(function() {
 				contentType: false, // Set content type to false as jQuery will tell the server its a query string request
 				success: function(data, textStatus, jqXHR)
 				{
-					console.log('success');
+					// console.log('success');
 					var obj = JSON.parse(data);
 					tokenName.val(obj[0].csrf_name);
 					tokenValue.val(obj[0].csrf_value);
@@ -273,19 +273,10 @@ $(document).ready(function() {
 				error: function(jqXHR, textStatus, errorThrown)
 				{
 					// Handle errors here
-					console.log('ERRORS: ' + textStatus);
+					// console.log('ERRORS: ' + textStatus);
 					// STOP LOADING SPINNER
 				}
 			});
-
-			//   $label
-			// 	.addClass('file-ok')
-			// 	.css('background-image', 'url(' + bg_img + ')');
-			// 		$labelText.text(fileName);
-			// } else {
-			// 	$label.removeClass('file-ok');
-			// 	$labelText.text(labelDefault);
-			// }
 		});
 
 		// When close link is clicked
@@ -310,7 +301,7 @@ $(document).ready(function() {
 				contentType: false, // Set content type to false as jQuery will tell the server its a query string request
 				success: function(data, textStatus, jqXHR)
 				{
-					console.log(data);
+					// console.log(data);
 					var obj = JSON.parse(data);
 					tokenName.val(obj.csrf_name);
 					tokenValue.val(obj.csrf_value);
@@ -324,12 +315,11 @@ $(document).ready(function() {
 				error: function(jqXHR, textStatus, errorThrown)
 				{
 					// Handle errors here
-					console.log('ERRORS: ' + textStatus);
+					// console.log('ERRORS: ' + textStatus);
 					// STOP LOADING SPINNER
 				}
 			});
 		});
-		
 	// End loop of file input elements  
 	});
 	// End ready function
@@ -347,11 +337,3 @@ $('textarea.form-control').keyup(function() {
 	remain = parseInt(tlength);
 	$('#remain').text(remain);
 });
-
-
-
-
-
-
-
-

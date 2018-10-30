@@ -3,7 +3,6 @@
 namespace Matcha\Models;
 
 use Illuminate\Database\Eloquent\Model;
-//namespace Matcha\Models\Chat;
 
 class MatchedPeople extends Model
 {
@@ -32,7 +31,6 @@ class MatchedPeople extends Model
 				where('first_id', $_SESSION['user'])
 			  ->orWhere('second_id', $_SESSION['user'])
 			  ->get();
-		// print_r($myMatches); die();
 	}
 
 	public static function setUnmatch($chat_id)

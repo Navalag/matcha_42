@@ -35,7 +35,6 @@ class MyLogController extends Controller
 								);
 		}
 		$this->container->view->getEnvironment()->addGlobal('array', $viewArray);
-		// print_r($myLog); die();
 
 		return $this->view->render($response, 'log/my-activity-log.twig');
 	}

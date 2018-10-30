@@ -2,7 +2,6 @@
 
 namespace Matcha\Controllers;
 
-// use Matcha\Models\CheckEmail;
 use Matcha\Models\User;
 use Matcha\Models\UserInterest;
 use Matcha\Models\Photo;

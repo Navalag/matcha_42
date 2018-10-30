@@ -60,7 +60,7 @@ $(document).ready(function () {
 			errorPlacement: function (error, element) {
 				// Add the `invalid-feedback` class to the error element
 				error.addClass("invalid-feedback");
-				console.log(element);
+				// console.log(element);
 				if (element.prop("type") === "checkbox") {
 					error.insertAfter(element.siblings("label"));
 				} 
@@ -165,13 +165,13 @@ if (!url.includes('/auth')) {
 	var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
 
 	websocket.onopen = function(event) {
-		console.log('Connection is established!');
+		// console.log('Connection is established!');
 	}
 	websocket.onerror = function(event) {
-		console.log('Please check if socket server is running');
+		// console.log('Please check if socket server is running');
 	};
 	websocket.onclose = function(event) {
-		console.log('Connection Closed');
+		// console.log('Connection Closed');
 	};
 
 	//window.msgAttr
@@ -191,7 +191,7 @@ if (!url.includes('/auth')) {
 				** check if current user should receive this message
 				*/
 				if (Msg.dest_user_id == globalUser.user.id) {
-					console.log(Msg);
+					// console.log(Msg);
 					sendMessageNotificationToServer(Msg);
 				}
 			}
@@ -203,7 +203,7 @@ if (!url.includes('/auth')) {
 		*/
 		if (!Msg.chat_id) {
 			if (Msg.dest_user_id == globalUser.user.id) {
-				console.log(Msg);
+				// console.log(Msg);
 				sendOtherNotificationToServer(Msg);
 			}
 		}
@@ -221,7 +221,7 @@ if (!url.includes('/auth')) {
 
 		$.post(url, ajaxMsg, function(response) {
 			var obj = JSON.parse(response);
-			console.log(obj);
+			// console.log(obj);
 			/*
 			** update csrf
 			*/
@@ -263,7 +263,7 @@ if (!url.includes('/auth')) {
 
 		$.post(url, ajaxMsg, function(response) {
 			var obj = JSON.parse(response);
-			console.log(obj);
+			// console.log(obj);
 			var likeIcon = '<i class="fas fa-heart"></i>';
 			var checkIcon = '<i class="fas fa-check-circle"></i>';
 			var matchIcon = '<i class="fas fa-fire"></i>';
@@ -355,7 +355,7 @@ if (!url.includes('/auth')) {
 			};
 
 			$.post(url, ajaxMsg, function(response) {
-				console.log(response);
+				// console.log(response);
 				window.location.replace(chatLink);
 			});
 		});
@@ -375,7 +375,7 @@ if (!url.includes('/auth')) {
 
 		$.post(url, ajaxMsg, function(response) {
 			var obj = JSON.parse(response);
-			console.log(obj);
+			// console.log(obj);
 			/*
 			** increase counter for unread messages
 			*/
@@ -412,7 +412,7 @@ if (!url.includes('/auth')) {
 						'</a>' +
 					'</li>'
 				);
-				console.log(key, val);
+				// console.log(key, val);
 			});
 			/*
 			** update unread other notifications

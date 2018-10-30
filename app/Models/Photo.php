@@ -54,7 +54,6 @@ class Photo extends Model
 		foreach ($rawUserPhoto as $row) {
 			$result[] = $row->photo_src;
 		}
-		// print_r($result); die();
 		return $result;
 	}
 

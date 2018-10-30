@@ -17,7 +17,6 @@ function initCards(card, index) {
 
 	newCards.forEach(function (card, index) {
 		card.style.zIndex = allCards.length - index;
-		// card.style.transform = 'scale(' + (20 - index) / 20 + ') translateY(-' + 30 * index + 'px)';
 		card.style.opacity = (10 - index) / 10;
 	});
 	
@@ -97,7 +96,7 @@ function sendActionToServer(action, userId, active = 1) {
 		};
 	if (action == 'love' && active == 1) {
 		$.post(urlLove, data, function(response) {
-			console.log(response);
+			// console.log(response);
 			var obj = JSON.parse(response);
 			updateCSRF(obj);
 			/*
@@ -128,14 +127,14 @@ function sendActionToServer(action, userId, active = 1) {
 		});
 	} else if (action == 'block') {
 		$.post(urlBlock, data, function(response) {
-			console.log(response);
+			// console.log(response);
 			var obj = JSON.parse(response);
 			updateCSRF(obj);
 			$('#ModalSuccess').modal();
 		});
 	} else if (action == 'report_fake') {
 		$.post(urlReportFake, data, function(response) {
-			console.log(response);
+			// console.log(response);
 			var obj = JSON.parse(response);
 			updateCSRF(obj);
 			$('#ModalSuccess').modal();
@@ -167,7 +166,6 @@ function sendActionToServer(action, userId, active = 1) {
 	}
 
 	function updateCSRF(obj) {
-		// var obj = JSON.parse(response);
 		tokenName.val(obj.csrf.csrf_name);
 		tokenValue.val(obj.csrf.csrf_value);
 	}
@@ -190,7 +188,7 @@ function sendActionToServer(action, userId, active = 1) {
 			"dest_user_name": 'null',
 			"chat_message": 'null'
 		};
-		console.log(socketMsg);
+		// console.log(socketMsg);
 		websocket.send(JSON.stringify(socketMsg));
 	}
 }
@@ -211,8 +209,6 @@ function createButtonListener(love) {
 		if (love) {
 			card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
 			sendActionToServer('love', userId, usersJSON[0].active);
-			// machScreen.style.zIndex = 999;
-			// machScreen.style.opacity = 1;
 			dataJSON.setAttribute('data-json-id', i);
 			i++;
 		} else {
@@ -250,23 +246,13 @@ $(document).ready(function () {
 
 function blockUser() {
 	var user_id = $('#block').attr('data-id');
-	console.log(user_id);
-	// if (sendActionToServer('block', user_id)) {
-	// 	console.log('success');
-	// } else {
-	// 	console.log('fail');
-	// }
+	// console.log(user_id);
 	sendActionToServer('block', user_id);
 }
 
 function reportFakeAccount() {
 	var user_id = $('#report').attr('data-id');
-	console.log(user_id);
-	// if (sendActionToServer('report_fake', user_id)) {
-	// 	console.log('success');
-	// } else {
-	// 	console.log('fail');
-	// }
+	// console.log(user_id);
 	sendActionToServer('report_fake', user_id);
 }
 

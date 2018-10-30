@@ -24,7 +24,6 @@
 									<div class="content">
 										<h5>{{ user.basic_info.username }}</h5>
 										<span>{{ user.action_type }} </span>
-										<!-- <div class="full-date"><small>{{ user.date }}</small></div> -->
 									</div>
 								</div>
 								<div class="date text-right"><small>{{ user.online }}</small></div>
@@ -42,7 +41,6 @@
 
 <script>
 	var array = {{ array | json_encode | raw}};
-	console.log(array);
 </script>
 {% include 'templates/partials/footer.twig' %}
 {% endblock %}

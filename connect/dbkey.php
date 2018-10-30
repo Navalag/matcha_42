@@ -1,38 +1,37 @@
 <?php
-	$servername = "localhost";
-	$username = "root";
-	$password = "123456";
 
-	$dbname = "matcha";
+$servername = "localhost";
+$username = "root";
+$password = "123456";
 
-	$dbUser = "user";
+$dbname = "matcha";
 
-	// $dbAbout = "about";
+$dbUser = "user";
 
-	$dbChat = "chat";
+$dbChat = "chat";
 
-	$dbCheckEmail = "check_email";
+$dbCheckEmail = "check_email";
 
-	$dbInterestList = "interest_list";
+$dbInterestList = "interest_list";
 
-	$dbLikeNopeCheck = "like_nope_check";
+$dbLikeNopeCheck = "like_nope_check";
 
-	$dbMatchedPeople = "matched_people";
+$dbMatchedPeople = "matched_people";
 
-	$dbPhoto = "photo";
+$dbPhoto = "photo";
 
-	$dbUserInterest = "user_interest";
+$dbUserInterest = "user_interest";
 
-	$dbDiscoverySettings = "discovery_settings";
+$dbDiscoverySettings = "discovery_settings";
 
-	$dbUserDiscoveryInterests = "user_discovery_interests";
+$dbUserDiscoveryInterests = "user_discovery_interests";
 
-	$dbBlockUsersList = "block_users_list";
+$dbBlockUsersList = "block_users_list";
 
-	$dbFakeAccountReport = "fake_account_report";
-	
-	$dbCheckProfileLog = "check_profile_log";
+$dbFakeAccountReport = "fake_account_report";
 
-	$dbLastActivityStatus = "last_activity_status";
+$dbCheckProfileLog = "check_profile_log";
 
-	$dbNotifications = "notifications";
+$dbLastActivityStatus = "last_activity_status";
+
+$dbNotifications = "notifications";

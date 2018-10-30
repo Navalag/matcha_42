@@ -37,7 +37,6 @@ class SearchController extends Controller
 				}
 			}
 		}
-		// print_r($result); die();
 		return $result;
 	}
 
@@ -59,7 +58,6 @@ class SearchController extends Controller
 			}
 			$i = 0;
 		}
-		// print_r($result); die();
 		return $result;
 	}
 
@@ -81,7 +79,6 @@ class SearchController extends Controller
 			}
 			$i = 0;
 		}
-		// print_r($result); die();
 		return $result;
 	}
 
@@ -97,7 +94,6 @@ class SearchController extends Controller
 				+ sin( radians( $user->lat ) ) 
 				* sin( radians( lat ) ) 
 			) ) AS distance FROM user HAVING distance < ?;", [$discovSet->max_distanse]);
-		// var_dump($selectedUsers);
 
 		$finalArray = [];
 		foreach ($selectedUsers as $row) {
@@ -137,7 +133,7 @@ class SearchController extends Controller
 		usort($finalArray, function($a, $b) {
 		    return $a->fame_rating < $b->fame_rating;
 		});
-		// print_r($finalArray); die();
+
 		$viewArray = [];
 		foreach ($finalArray as $row) {
 			$userPhoro = Photo::getPhotoSrcByUserId($row->id);
@@ -152,7 +148,6 @@ class SearchController extends Controller
 								);
 		}
 		$this->container->view->getEnvironment()->addGlobal('array', $viewArray);
-		// print_r($viewArray); die();
 
 		return $this->view->render($response, 'search/find-a-match.twig');
 	}

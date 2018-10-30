@@ -8,9 +8,7 @@ function showMessage(messageHTML) {
 
 var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
 websocket.onopen = function(event) {
-	// console.log(event);
-	console.log('Connection is established!');
-	// showMessage("<div class='chat-connection-ack'>Connection is established!</div>");
+	// console.log('Connection is established!');
 }
 websocket.onmessage = function(event) {
 	var Msg = JSON.parse(event.data);
@@ -24,12 +22,10 @@ websocket.onmessage = function(event) {
 };
 
 websocket.onerror = function(event) {
-	console.log('Please check if socket server is running');
-	// showMessage("<div class='error'>Please check if socket server is running</div>");
+	// console.log('Please check if socket server is running');
 };
 websocket.onclose = function(event) {
-	console.log('Connection Closed');
-	// showMessage("<div class='chat-connection-ack'>Connection Closed</div>");
+	// console.log('Connection Closed');
 };
 
 $('#frmChat').on("submit",function(event){

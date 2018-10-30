@@ -170,7 +170,7 @@ $(document).ready(function() {
 			/*
 			** handel respond from server
 			*/
-			console.log(response);
+			// console.log(response);
 			var obj = JSON.parse(response);
 			tokenName.val(obj.csrf_name);
 			tokenValue.val(obj.csrf_value);
@@ -222,7 +222,7 @@ $(document).ready(function() {
 			/*
 			** handel respond from server
 			*/
-			console.log(response);
+			// console.log(response);
 			var obj = JSON.parse(response);
 			tokenName.val(obj.csrf_name);
 			tokenValue.val(obj.csrf_value);
@@ -255,123 +255,3 @@ $(document).ready(function() {
 		$('#wrapShowGeolocation').show();
 	});
 });
-
-
-
-
-
-
-// var mapholder = document.getElementById("mapholder");
-// var latitude, longitude;
-
-// function getLocation() {
-// 	mapholder.setAttribute("style", "display: block;");
-// 	if (navigator.geolocation) {
-// 		navigator.geolocation.getCurrentPosition(showPosition, showError);
-// 	} else {
-// 		mapholder.innerHTML = "Geolocation is not supported by this browser.";
-// 	}
-// }
-
-// function showPosition(position) {
-// 	latitude = position.coords.latitude;
-// 	longitude = position.coords.longitude;
-// 	console.log(latitude, longitude);
-// }
-
-// function showError(error) {
-// 	switch(error.code) {
-// 		case error.PERMISSION_DENIED:
-// 			mapholder.innerHTML = "User denied the request for Geolocation."
-// 			break;
-// 		case error.POSITION_UNAVAILABLE:
-// 			mapholder.innerHTML = "Location information is unavailable."
-// 			break;
-// 		case error.TIMEOUT:
-// 			mapholder.innerHTML = "The request to get user location timed out."
-// 			break;
-// 		case error.UNKNOWN_ERROR:
-// 			mapholder.innerHTML = "An unknown error occurred."
-// 			break;
-// 	}
-// }
-
-// function initMap() {
-// 	// getLocation();
-//   var userPlace = {lat: latitude, lng: longitude};
-
-//   map = new google.maps.Map(document.getElementById('mapholder'), {
-//     center: userPlace,
-//     zoom: 15
-//   });
-
-//   infowindow = new google.maps.InfoWindow();
-//   var service = new google.maps.places.PlacesService(map);
-//   service.nearbySearch({
-//     location: userPlace,
-//     radius: 1000,
-//     type: ['store']
-//   }, callback);
-// }
-
-// function callback(results, status) {
-//   if (status === google.maps.places.PlacesServiceStatus.OK) {
-//     for (var i = 0; i < results.length; i++) {
-//       createMarker(results[i]);
-//     }
-//   }
-// }
-
-// function createMarker(place) {
-//   var placeLoc = place.geometry.location;
-//   var marker = new google.maps.Marker({
-//     map: map,
-//     position: place.geometry.location
-//   });
-
-//   google.maps.event.addListener(marker, 'click', function() {
-//     infowindow.setContent(place.name);
-//     infowindow.open(map, this);
-//   });
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

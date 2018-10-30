@@ -21,7 +21,7 @@ class NotificationsController extends Controller
 			return 'failed request';
 		}
 		$socketArray = $request->getParam('socket_array');
-		// print_r($socketArray); die();
+
 		if (!Notifications::checkIfExist($socketArray['active_user_id'],$socketArray['dest_user_id'])) 
 		{
 			if (Notifications::addNewNotification($socketArray['active_user_id'],$socketArray['dest_user_id'],"message"))
@@ -54,7 +54,7 @@ class NotificationsController extends Controller
 			]));
 		}
 		$socketArray = $request->getParam('socket_array');
-		// print_r($socketArray); die();
+
 		if (Notifications::addNewNotification($socketArray['active_user_id'],$socketArray['dest_user_id'],$socketArray['message_type']))
 		{
 			$count = Notifications::countSameNotifications($socketArray['dest_user_id'],$socketArray['message_type']);
@@ -120,7 +120,7 @@ class NotificationsController extends Controller
 			return 'failed request';
 		}
 		$actionUserId = $request->getParam('action_user_id');
-		// print_r($actionUserId); die();
+
 		if (Notifications::checkIfExist($actionUserId,$_SESSION['user'])) 
 		{
 			Notifications::deleteMessageNotification($actionUserId,$_SESSION['user']);

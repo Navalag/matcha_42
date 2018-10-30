@@ -2,14 +2,13 @@
 
 namespace Matcha\Validation\Exceptions;
 
-
 use Respect\Validation\Exceptions\ValidationException;
 
 class MatchesPasswordException extends ValidationException
 {
-    public static $defaultTemplates = [
-        self::MODE_DEFAULT => [
-            self::STANDARD => 'Passwords does not match',
-        ],
-    ];
+	public static $defaultTemplates = [
+		self::MODE_DEFAULT => [
+			self::STANDARD => 'Passwords does not match',
+		],
+	];
 }

@@ -7,15 +7,15 @@ use Matcha\Models\User;
 
 class MatchesPassword extends AbstractRule
 {
-    protected $password;
+	protected $password;
 
-    public function __construct($password)
-    {
-        $this->password = $password;
-    }
+	public function __construct($password)
+	{
+		$this->password = $password;
+	}
 
-    public function validate($input)
-    {
-        return password_verify($input, $this->password);
-    }
+	public function validate($input)
+	{
+		return password_verify($input, $this->password);
+	}
 }

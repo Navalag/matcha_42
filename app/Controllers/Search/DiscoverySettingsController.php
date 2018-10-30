@@ -49,7 +49,6 @@ class DiscoverySettingsController extends Controller
 		]);
 
 		if ($validation->failed()) {
-			var_dump($validation); die();
 			return $response->withRedirect($this->router->pathFor('user.search.discovery_settings'));
 		}
 
@@ -62,7 +61,6 @@ class DiscoverySettingsController extends Controller
 		$settings['lat'] = $request->getParam('lat');
 		$settings['lng'] = $request->getParam('lng');
 		$this->container->view->getEnvironment()->addGlobal('settings', $settings);
-		// var_dump($settings); die();
 
 		DiscoverySettings::setAll($settings);
 		User::setGpsLocation($settings['lat'], $settings['lng']);

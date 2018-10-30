@@ -143,9 +143,7 @@
 </section>
 
 <script>
-	var usersJSON = {{ array | json_encode | raw}};
-	// var obj = JSON.parse(usersJSON);
-	
+	var usersJSON = {{ array | json_encode | raw}};	
 </script>
 <script src='https://hammerjs.github.io/dist/hammer.min.js'></script>
 <script src="{{ base_url() }}/js/swipe.js"></script>

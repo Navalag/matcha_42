@@ -56,10 +56,11 @@
 	</div>
 </section>
 
-<script src="{{ base_url() }}/js/other-user.js"></script>
 <script>
-	var userPhoto = {{ user | json_encode | raw}};
-	console.log(userPhoto);
+	var userPhoto = {{ user[0].photo | json_encode | raw}};
+	// console.log(userPhoto);
 </script>
+<script src="{{ base_url() }}/js/other-user.js"></script>
+
 {% include 'templates/partials/footer.twig' %}
 {% endblock %}

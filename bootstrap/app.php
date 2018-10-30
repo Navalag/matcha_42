@@ -4,10 +4,9 @@
  */
 use \Respect\Validation\Validator as v;
 use Illuminate\Database\Capsule\Manager as DB;
-// session_start();
+
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../connect/create_table.php'; // DB
-// require_once __DIR__ . '/../php-ref-master/ref.php'; // для тестов
+require_once __DIR__ . '/../connect/create_table.php';
 
 $settings = require_once __DIR__ . '/../conf/settings.php';
 $app = new \Slim\App(['settings' => $settings]);
@@ -21,9 +20,6 @@ $capsule->bootEloquent();
 $container['db'] = function ($container) use ($capsule) {
 	return $capsule;
 };
-//$container['auth'] = function ($container) {
-//    return new Matcha\Auth\Auth($container);
-//};
 
 $container['flash'] = function ($container) {
 	return new \Slim\Flash\Messages;
@@ -40,7 +36,6 @@ $container['view'] = function ($container) {
 	));
 
 	$view->getEnvironment()->addGlobal('auth', [
-		// 'check' => $container->checker->check(),
 		'user' => $container->checker->user(),
 		'avatar' => $container->checker->avatarImg(),
 	]);
@@ -75,15 +70,9 @@ $container['PasswordController'] = function ($container) {
 $container['EditController'] = function ($container) {
 	return new \Matcha\Controllers\Profile\EditController($container);
 };
-// $container['AboutController'] = function ($container) {
-// 	return new \Matcha\Controllers\Profile\AboutController($container);
-// };
 $container['InterestsController'] = function ($container) {
 	return new \Matcha\Controllers\Profile\InterestsController($container);
 };
-// $container['UserInterest'] = function ($container) {
-// 	return new \Matcha\Controllers\Profile\UserInterest($container);
-// };
 $container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'] . 'img';
 $container['PhotoController'] = function ($container) {
 	return new \Matcha\Controllers\Profile\PhotoController($container);
@@ -137,7 +126,6 @@ $container['logger'] = function($container) {
 };
 
 $app->add(new \Matcha\Middleware\ValidationErrorsMiddleware($container));
-// $app->add(new \Matcha\Middleware\OldInputMiddleware($container));
 $app->add(new \Matcha\Middleware\CsrfViewMiddleware($container));
 $app->add(new \Matcha\Middleware\CheckOnlineStatusMiddleware($container));
 

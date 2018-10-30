@@ -15,7 +15,6 @@ class LastActivityStatus extends Model
 
 	public static function updateActivity()
 	{
-		// print_r($_SESSION); die();
 		$user = LastActivityStatus::where('user_id', $_SESSION['user'])->first();
 
 		if ($user) {
@@ -32,7 +31,6 @@ class LastActivityStatus extends Model
 
 	public static function checkIfUserOnline($user_id)
 	{
-		// print_r($_SESSION); die();
 		$user = LastActivityStatus::where('user_id', $user_id)->first();
 
 		if ($user) {
@@ -44,23 +42,18 @@ class LastActivityStatus extends Model
 			} else {
 				$diff = $diff / 60;
 				if ($diff < 50) {
-					// print_r($diff); die();
 					return 'few minutes ago';
 				} else if ($diff > 50 && $diff <= 70) {
-					// print_r($diff); die();
 					return 'about hour ago';
 				} else {
 					$diff = $diff / 60;
 					if ($diff < 24) {
-						// print_r($diff); die();
 						return 'today';
 					} else {
-						// print_r($diff); die();
 						return 'more than day ago';
 					}
 				}
 			}
-			// print_r($dif); die();
 		}
 		return 'offline';
 	}
