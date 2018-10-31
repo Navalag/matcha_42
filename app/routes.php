@@ -36,8 +36,8 @@ $app->group('', function () {
 	/*
 	** edit profile
 	*/
-	$this->get('/auth/edit/user', 'EditController:getChangeProfile')->setName('auth.edit.user');
-	$this->post('/auth/edit/user', 'EditController:postChangeProfile');
+	$this->get('/user/edit', 'EditController:getChangeProfile')->setName('user.edit');
+	$this->post('/user/edit', 'EditController:postChangeProfile')->setName('user.edit');
 	/*
 	** edit profile (handle user photo)
 	*/
