@@ -26,7 +26,6 @@ class UserInterest extends Model
 				}
 			}
 		}
-		// print_r($result); die();
 		return $result;
 	}
 }
