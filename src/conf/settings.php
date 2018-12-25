@@ -8,7 +8,7 @@ return array(
 		'host' => 'localhost',
 		'database' => 'matcha',
 		'username' => 'root',
-		'password' => '1Marlboro1',
+		'password' => '',
 		'charset' => 'utf8',
 		'collation' => 'utf8_unicode_ci',
 		'prefix' => '',
