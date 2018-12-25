@@ -3,5 +3,5 @@
 
 /matcha.conf
 # /public/img
-# src/conf/settings.php
-# src/connect/dbkey.php
+src/conf/settings.php
+src/connect/dbkey.php
