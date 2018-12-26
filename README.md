@@ -22,6 +22,7 @@ the profile of other users, like them, chat with those that “liked” back.
 <img src="/screenshots/match_sceen_1.png" alt="project screenshot" title="project screenshot 1" width="700">
 <img src="/screenshots/matcha_presentation.gif" alt="project screenshot" title="project screenshot 1" width="700">
 <img src="/screenshots/matcha_swipe.gif" alt="project screenshot" title="project screenshot 1" width="700">
+<img src="/screenshots/it's_a_match.jpg" alt="project screenshot" title="project screenshot 1" width="700">
 <img src="/screenshots/matcha_screen_2.png" alt="project screenshot" title="project screenshot 1" width="700">
 
 ## Launch and Test:
