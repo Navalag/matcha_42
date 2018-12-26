@@ -11,15 +11,18 @@ the profile of other users, like them, chat with those that “liked” back.
 
 :point_right: Slim framework
 
-:point_right: Bootstrap with custom design framework
-
 :point_right: Sockets (Realtime chat, notifications)
 
 :point_right: Custom search
 
 :point_right: User managment (create user, send confirmation email, edit profile, upload files, authorization)
 
-<img src="" alt="project screenshot" title="project screenshot 5" width="700">
+:point_right: Bootstrap with custom design framework
+
+<img src="/screenshots/match_sceen_1.png" alt="project screenshot" title="project screenshot 1" width="700">
+<img src="/screenshots/matcha_presentation.gif" alt="project screenshot" title="project screenshot 1" width="700">
+<img src="/screenshots/matcha_swipe.gif" alt="project screenshot" title="project screenshot 1" width="700">
+<img src="/screenshots/matcha_screen_2.png" alt="project screenshot" title="project screenshot 1" width="700">
 
 ## Launch and Test:
 
