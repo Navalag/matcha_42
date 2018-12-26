@@ -17,7 +17,7 @@ the profile of other users, like them, chat with those that “liked” back.
 
 :point_right: User managment (create user, send confirmation email, edit profile, upload files, authorization)
 
-:point_right: Bootstrap with custom design framework
+:point_right: Bootstrap with custom design
 
 <img src="/screenshots/match_sceen_1.png" alt="project screenshot" title="project screenshot 1" width="700">
 <img src="/screenshots/matcha_presentation.gif" alt="project screenshot" title="project screenshot 1" width="700">
